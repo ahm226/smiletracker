@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:intl/intl.dart';
 import 'package:sizer/sizer.dart';
 
 class EmojiRatingApp extends StatefulWidget {
@@ -25,18 +26,56 @@ class _EmojiRatingAppState extends State<EmojiRatingApp> {
         });
       },
       child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Emoji Rating App'),
-        ),
         body: Center(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              SizedBox(
+                height: 5.h,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    DateFormat('EEEE , d MMMM,y')
+                        .format(DateTime.now())
+                        .toString(),
+                    style: TextStyle(color: Colors.grey),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      children: [
+                        Image.asset("assest/images/calenderIcon.png"),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 8.0),
+                          child: Image.asset("assest/images/profileImage.png"),
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+              Text(
+                "How Are you Feeling today?",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+              ),
+              SizedBox(
+                height: 10.h,
+              ),
               CustomPaint(
                 painter: EmojiPainter(_rating),
                 size: const Size(300, 300),
               ),
+              const SizedBox(
+                height: 30,
+              ),
+              Text(_rating.toStringAsFixed(2) == "0.00"
+                  ? "Sad"
+                  : _rating.toStringAsFixed(2) == "5.00"
+                      ? "Happy"
+                      : "Normal"),
               const SizedBox(
                 height: 30,
               ),
@@ -71,7 +110,7 @@ class _EmojiRatingAppState extends State<EmojiRatingApp> {
               const SizedBox(
                 height: 30,
               ),
-              // Text(_rating.toStringAsFixed(2))
+              Image.asset("assest/images/moveAhead.png"),
             ],
           ),
         ),
