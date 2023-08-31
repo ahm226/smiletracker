@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:sizer/sizer.dart';
-import 'package:smiletracker/smily_face.dart';
+import 'package:smiletracker/views/onboarding/splashScreen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -30,7 +30,7 @@ class _MyAppState extends State<MyApp> {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: const EmojiRatingApp(),
+        home: const splashScreen(),
       );
     });
   }
