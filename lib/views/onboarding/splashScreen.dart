@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:smiletracker/views/home/reminder_screen.dart';
+import 'package:smiletracker/views/auth/loginScreen.dart';
 
 class splashScreen extends StatefulWidget {
   const splashScreen({Key? key}) : super(key: key);
@@ -12,7 +12,7 @@ class splashScreen extends StatefulWidget {
 class _splashScreenState extends State<splashScreen> {
   getData() {
     Future.delayed(const Duration(milliseconds: 2000), () {
-      Get.offAll(() => ReminderScreen());
+      Get.offAll(() => LoginScreen());
     });
   }
 
@@ -25,7 +25,7 @@ class _splashScreenState extends State<splashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
