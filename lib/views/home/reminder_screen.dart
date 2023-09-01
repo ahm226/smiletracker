@@ -21,11 +21,11 @@ class _ReminderScreenState extends State<ReminderScreen> {
       builder: (context, child) {
         return Theme(
           data: Theme.of(context).copyWith(
-            dialogBackgroundColor: Colors.black,
-            colorScheme: ColorScheme.light(
+            dialogBackgroundColor: Colors.white,
+            colorScheme: const ColorScheme.light(
               primary: AppColors.primaryColor, // <-- SEE HERE
-              onPrimary: AppColors.primaryColor, // <-- SEE HERE
-              onSurface: Colors.white, // <-- SEE HERE
+              onPrimary: Colors.white, // <-- SEE HERE
+              onSurface: Colors.black, // <-- SEE HERE
             ),
             textButtonTheme: TextButtonThemeData(
               style: TextButton.styleFrom(
@@ -56,15 +56,15 @@ class _ReminderScreenState extends State<ReminderScreen> {
             // Use ThemeData.dark() for a black theme
             primaryColor: Colors.black,
             hintColor: Colors.white,
-            colorScheme: ColorScheme.dark(
-              primary: Colors.white,
-              onPrimary: Colors.white,
-              surface: AppColors.primaryColor,
-              onSurface: Colors.white,
+            colorScheme: const ColorScheme.dark(
+              primary: AppColors.primaryColor,
+              onPrimary: AppColors.primaryColor,
+              surface: Colors.white,
+              onSurface: AppColors.primaryColor,
             ),
             textButtonTheme: TextButtonThemeData(
               style: TextButton.styleFrom(
-                primary: Colors.white,
+                primary: AppColors.primaryColor,
               ),
             ),
           ),
@@ -112,34 +112,16 @@ class _ReminderScreenState extends State<ReminderScreen> {
                           child: Column(
                             children: [
                               Image.asset(
-                                "assest/images/calenderIcon.png",
+                                "assest/images/sadface.png",
                                 height: 170,
                                 width: 170,
                               ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    'Completed',
-                                    // style: Bold.copyWith(
-                                    //     color: Colors.black,
-                                    //     fontSize: 18.sp)
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              Text(
-                                'Reminder for next task been sent to your athlete successfully.',
-                                textAlign: TextAlign.center,
-                                // style: Regular.copyWith(
-                                //   color: Colors.black,
-                                // ),
-                              ),
+                              Text('It is very sad to seen you unhappy!',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 17,
+                                  )),
                               const SizedBox(
                                 height: 20,
                               ),
@@ -189,9 +171,9 @@ class _ReminderScreenState extends State<ReminderScreen> {
               const SizedBox(
                 height: 30,
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
-                child: const Text(
+              const Padding(
+                padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
+                child: Text(
                   "Date:",
                   style: TextStyle(
                       fontSize: 15,
@@ -199,7 +181,7 @@ class _ReminderScreenState extends State<ReminderScreen> {
                       fontWeight: FontWeight.normal),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Container(
@@ -218,7 +200,7 @@ class _ReminderScreenState extends State<ReminderScreen> {
                         InkWell(
                           child: Text(_selectedDate,
                               textAlign: TextAlign.center,
-                              style: TextStyle(color: Colors.black)),
+                              style: const TextStyle(color: Colors.black)),
                           onTap: () {
                             _selectDate(context);
                           },
@@ -239,11 +221,11 @@ class _ReminderScreenState extends State<ReminderScreen> {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+              const Padding(
+                padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
                 child: Text(
                   "Time:",
                   style: TextStyle(
@@ -252,7 +234,7 @@ class _ReminderScreenState extends State<ReminderScreen> {
                       fontWeight: FontWeight.normal),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Container(
@@ -271,9 +253,9 @@ class _ReminderScreenState extends State<ReminderScreen> {
                         InkWell(
                           child: Text(_selectedTime,
                               textAlign: TextAlign.center,
-                              style: TextStyle(color: Colors.black)),
+                              style: const TextStyle(color: Colors.black)),
                           onTap: () {
-                            _selectDate(context);
+                            _selectTime(context);
                           },
                         ),
                         IconButton(
@@ -292,12 +274,12 @@ class _ReminderScreenState extends State<ReminderScreen> {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
-                child: const Text(
+              const Padding(
+                padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
+                child: Text(
                   "Explain your feeling of today:",
                   style: TextStyle(
                       fontSize: 15,
@@ -319,14 +301,14 @@ class _ReminderScreenState extends State<ReminderScreen> {
                     textCapitalization: TextCapitalization.sentences,
                     textInputAction: TextInputAction.done,
                     maxLines: null,
-                    cursorColor: Colors.white.withOpacity(0.7),
+                    cursorColor: AppColors.primaryColor,
                     style: const TextStyle(color: Colors.black, fontSize: 13),
-                    decoration: InputDecoration(
-                      contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 12, vertical: 12),
+                    decoration: const InputDecoration(
+                      contentPadding:
+                          EdgeInsets.symmetric(horizontal: 12, vertical: 12),
                       border: InputBorder.none,
-                      hintText:
-                          "Running Challenges\n\nRunning challenges are great for gym members\nbecause each member can go at his or her pace.\nSet realistic goals like\nhaving members run 30 miles within one\nmonth — how they choose to collect those\nmiles it up to them!",
+                      hintText: "",
+                      //  "Running Challenges\n\nRunning challenges are great for gym members\nbecause each member can go at his or her pace.\nSet realistic goals like\nhaving members run 30 miles within one\nmonth — how they choose to collect those\nmiles it up to them!",
                       hintStyle: TextStyle(color: Colors.black, fontSize: 13),
                       prefixIconColor: Colors.white,
                     ),

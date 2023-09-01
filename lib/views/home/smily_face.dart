@@ -1,8 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:sizer/sizer.dart';
+import 'package:smiletracker/views/home/reminder_screen.dart';
 
 class EmojiRatingApp extends StatefulWidget {
   const EmojiRatingApp({super.key});
@@ -110,7 +112,11 @@ class _EmojiRatingAppState extends State<EmojiRatingApp> {
               const SizedBox(
                 height: 30,
               ),
-              Image.asset("assest/images/moveAhead.png"),
+              InkWell(
+                  onTap: () {
+                    Get.to(() => const ReminderScreen());
+                  },
+                  child: Image.asset("assest/images/moveAhead.png")),
             ],
           ),
         ),

@@ -4,6 +4,7 @@ import 'package:sizer/sizer.dart';
 import 'package:smiletracker/Helpers/globalvariables.dart';
 import 'package:smiletracker/views/auth/forgotPasswordScreen.dart';
 import 'package:smiletracker/views/auth/signupScreen.dart';
+import 'package:smiletracker/views/home/smily_face.dart';
 
 import '../../Helpers/custom_widgets.dart';
 import '../../Helpers/text_form_field.dart';
@@ -72,7 +73,9 @@ class _LoginScreenState extends State<LoginScreen> {
               Center(
                 child: CustomButton(
                   buttonText: 'Login',
-                  onTap: () {},
+                  onTap: () {
+                    Get.offAll(() => const EmojiRatingApp());
+                  },
                   width: 90.w,
                 ),
               ),
