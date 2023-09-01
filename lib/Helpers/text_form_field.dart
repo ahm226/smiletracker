@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
+import 'package:smiletracker/Helpers/globalvariables.dart';
 
 class CustomTextField extends StatefulWidget {
   final String hintText;
@@ -46,8 +48,8 @@ class _CustomTextFieldState extends State<CustomTextField> {
         controller: widget.controller,
         readOnly: widget.isReadOnly ?? false,
         keyboardType: widget.keyboardType,
-        cursorColor: Colors.white.withOpacity(0.7),
-        style: TextStyle(color: Colors.white, fontSize: 13),
+        // cursorColor: Colors.white.withOpacity(0.7),
+        // style: TextStyle(color: Colors.white, fontSize: 13),
         // You can apply a custom style here if needed
         decoration: InputDecoration(
           contentPadding:
@@ -141,41 +143,49 @@ class _CustomTextFieldState extends State<CustomTextField> {
 //   }
 // }
 //
-// ///Otp Fields
-// class OtpField extends StatefulWidget {
-//   const OtpField({
-//     Key? key,
-//   }) : super(key: key);
-//
-//   @override
-//   State<OtpField> createState() => _OtpFieldState();
-// }
-//
-// class _OtpFieldState extends State<OtpField> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return OtpTextField(
-//       textStyle: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-//       numberOfFields: 6,
-//       fieldWidth: 40,
-//       borderWidth: 1.2,
-//       margin: const EdgeInsets.all(6),
-//       borderColor: Colors.black26,
-//       focusedBorderColor: AppColors.blue,
-//       enabledBorderColor: Colors.black26,
-//       disabledBorderColor: Colors.black26,
-//       cursorColor: Colors.white.withOpacity(0.7),
-//       showFieldAsBox: false,
-//       // textStyle: bodyNormal.copyWith(fontSize: 22, fontFamily: "InterSemiBold"),
-//
-//       onCodeChanged: (String code) {
-//         //handle validation or checks here
-//       },
-//       //runs when every textField is filled
-//       onSubmit: (String verificationCode) {
-//         // showCustomDialog(context, 'OTP Verified!', 'Continue', '');
-//         // Get.to(() => ResetPassword(controller: TextEditingController()));
-//       }, // end onSubmit
-//     );
-//   }
-// }
+///Otp Fields
+class OtpField extends StatefulWidget {
+  const OtpField({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  State<OtpField> createState() => _OtpFieldState();
+}
+
+class _OtpFieldState extends State<OtpField> {
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 60,
+      child: OtpTextField(
+        numberOfFields: 4,
+        fieldWidth: 56,
+        borderWidth: 1.2,
+        margin: const EdgeInsets.fromLTRB(2, 0, 4, 2),
+        keyboardType: TextInputType.number,
+        borderRadius: BorderRadius.circular(15),
+        borderColor: Colors.black26,
+        focusedBorderColor: Colors.black,
+        enabledBorderColor: Colors.black26,
+        disabledBorderColor: Colors.black26,
+        cursorColor: AppColors.primaryColor,
+        showFieldAsBox: true,
+        textStyle: TextStyle(
+            fontSize: 32,
+            color: AppColors.primaryColor,
+            fontWeight: FontWeight.bold),
+        // bodyNormal.copyWith(fontSize: 22, fontFamily: "InterSemiBold"),
+        //runs when a code is typed in
+        onCodeChanged: (String code) {
+          //handle validation or checks here
+        },
+        //runs when every textField is filled
+        onSubmit: (String verificationCode) {
+          // showCustomDialog(context, 'OTP Verified!', 'Continue', '');
+          // Get.to(() => ResetPassword(controller: TextEditingController()));
+        }, // end onSubmit
+      ),
+    );
+  }
+}
