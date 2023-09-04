@@ -4,6 +4,8 @@ import 'package:intl/intl.dart';
 import 'package:sizer/sizer.dart';
 import 'package:smiletracker/Helpers/custom_widgets.dart';
 import 'package:smiletracker/Helpers/globalvariables.dart';
+import 'package:smiletracker/Helpers/page_navigation.dart';
+import 'package:smiletracker/views/home/mood_screen.dart';
 
 class ReminderScreen extends StatefulWidget {
   const ReminderScreen({Key? key}) : super(key: key);
@@ -108,7 +110,69 @@ class _ReminderScreenState extends State<ReminderScreen> {
                         ),
                         alignment: Alignment.center,
                         child: Padding(
-                          padding: const EdgeInsets.all(8.0),
+                          padding: const EdgeInsets.all(18.0),
+                          child: Column(
+                            children: [
+                              Image.asset(
+                                "assest/images/happyface.png",
+                                height: 170,
+                                width: 170,
+                              ),
+                              Text('It is very good to seen you very happy!',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 17,
+                                  )),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              CustomButton(
+                                buttonText: 'Done',
+                                onTap: () {
+                                  Navigator.pop(context);
+                                  PageTransition.pageNavigation(
+                                      page: const MoodsScreen());
+                                },
+                                width: 190,
+                              )
+                            ],
+                          ),
+                        )),
+                  ],
+                ),
+              ],
+            );
+          });
+        });
+  }
+
+  reminderFail(BuildContext context) {
+    // set up the AlertDialog
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return StatefulBuilder(builder: (context, setState) {
+            return AlertDialog(
+              backgroundColor: Colors.white,
+              elevation: 0,
+              contentPadding: EdgeInsets.zero,
+
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(13)),
+              // title: Text("Notice"),
+              // content: Text("Launching this missile will destroy the entire universe. Is this what you intended to do?"),
+              actions: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                        decoration: const BoxDecoration(
+                          color: Colors.white,
+                        ),
+                        alignment: Alignment.center,
+                        child: Padding(
+                          padding: const EdgeInsets.all(18.0),
                           child: Column(
                             children: [
                               Image.asset(
@@ -126,9 +190,11 @@ class _ReminderScreenState extends State<ReminderScreen> {
                                 height: 20,
                               ),
                               CustomButton(
-                                buttonText: 'Go back',
+                                buttonText: 'Done',
                                 onTap: () {
-                                  Get.back();
+                                  Navigator.pop(context);
+                                  PageTransition.pageNavigation(
+                                      page: const MoodsScreen());
                                 },
                                 width: 190,
                               )
@@ -153,7 +219,7 @@ class _ReminderScreenState extends State<ReminderScreen> {
         title: CustomAppBar(
           pageTitle: "Want to add note?",
           onTap: () {
-            // Get.off(() => ForgotPassword(controller: TextEditingController()));
+            Get.back();
           },
           leadingButton: const Icon(
             Icons.arrow_back_ios,
@@ -307,8 +373,8 @@ class _ReminderScreenState extends State<ReminderScreen> {
                       contentPadding:
                           EdgeInsets.symmetric(horizontal: 12, vertical: 12),
                       border: InputBorder.none,
-                      hintText: "",
-                      //  "Running Challenges\n\nRunning challenges are great for gym members\nbecause each member can go at his or her pace.\nSet realistic goals like\nhaving members run 30 miles within one\nmonth — how they choose to collect those\nmiles it up to them!",
+                      hintText:
+                          "Running Challenges\n\nRunning challenges are great for gym members\nbecause each member can go at his or her pace.\nSet realistic goals like\nhaving members run 30 miles within one\nmonth — how they choose to collect those\nmiles it up to them!",
                       hintStyle: TextStyle(color: Colors.black, fontSize: 13),
                       prefixIconColor: Colors.white,
                     ),
@@ -318,30 +384,30 @@ class _ReminderScreenState extends State<ReminderScreen> {
               SizedBox(
                 height: 20.h,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Text(
-                    "Skip",
-                    style: TextStyle(color: Colors.grey.shade700),
-                  ),
-                  SizedBox(
-                    width: 40.w,
-                  ),
-                  CustomButton(
-                    width: 40.w,
-                    buttonText: 'Submit',
-                    onTap: () {
-                      reminderSuccess(context);
-                    },
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 20,
-              ),
             ],
           ),
+        ),
+      ),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Text(
+              "Skip",
+              style: TextStyle(color: Colors.grey.shade700),
+            ),
+            SizedBox(
+              width: 40.w,
+            ),
+            CustomButton(
+              width: 40.w,
+              buttonText: 'Submit',
+              onTap: () {
+                reminderSuccess(context);
+              },
+            ),
+          ],
         ),
       ),
     );

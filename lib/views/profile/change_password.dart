@@ -1,21 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 import 'package:smiletracker/Helpers/custom_validator.dart';
 import 'package:smiletracker/Helpers/globalvariables.dart';
-import 'package:smiletracker/Helpers/page_navigation.dart';
-import 'package:smiletracker/views/auth/loginScreen.dart';
 
 import '../../Helpers/custom_widgets.dart';
 import '../../Helpers/text_form_field.dart';
 
-class ResetPassword extends StatefulWidget {
-  const ResetPassword({Key? key}) : super(key: key);
+class ChangePassword extends StatefulWidget {
+  const ChangePassword({Key? key}) : super(key: key);
 
   @override
-  State<ResetPassword> createState() => _ResetPasswordState();
+  State<ChangePassword> createState() => _ResetPasswordState();
 }
 
-class _ResetPasswordState extends State<ResetPassword> {
+class _ResetPasswordState extends State<ChangePassword> {
   bool _obscureText = true;
   bool _obscureTextConfirm = true;
   final TextEditingController passwordEditingController =
@@ -35,9 +34,9 @@ class _ResetPasswordState extends State<ResetPassword> {
           backgroundColor: Colors.transparent,
           automaticallyImplyLeading: false,
           title: CustomAppBar(
-            pageTitle: "",
+            pageTitle: "Change Password",
             onTap: () {
-              PageTransition.pageBackNavigation(page: const LoginScreen());
+              Get.back();
             },
             leadingButton: Icon(
               Icons.arrow_back_ios,
@@ -128,12 +127,12 @@ class _ResetPasswordState extends State<ResetPassword> {
                 ),
                 Center(
                   child: CustomButton(
-                      buttonText: 'Continue',
+                      buttonText: 'Save Password',
                       width: 85.w,
                       onTap: () {
                         if (resetFormField.currentState!.validate()) {
-                          PageTransition.pageProperNavigation(
-                              page: const LoginScreen());
+                          // PageTransition.pageProperNavigation(
+                          //     page: const LoginScreen());
                         }
                       }),
                 ),

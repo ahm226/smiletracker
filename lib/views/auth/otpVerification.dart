@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 import 'package:smiletracker/Helpers/custom_widgets.dart';
 import 'package:smiletracker/Helpers/globalvariables.dart';
+import 'package:smiletracker/Helpers/page_navigation.dart';
 import 'package:smiletracker/Helpers/text_form_field.dart';
+import 'package:smiletracker/views/auth/loginScreen.dart';
 import 'package:smiletracker/views/auth/resetPassword.dart';
 
 class VerifyEmail extends StatefulWidget {
@@ -27,7 +28,7 @@ class _VerifyEmailState extends State<VerifyEmail> {
         title: CustomAppBar(
           pageTitle: "",
           onTap: () {
-            // Get.off(() => ForgotPassword(controller: TextEditingController()));
+            PageTransition.pageBackNavigation(page: const LoginScreen());
           },
           leadingButton: const Icon(
             Icons.arrow_back_ios,
@@ -102,7 +103,7 @@ class _VerifyEmailState extends State<VerifyEmail> {
                   buttonText: "Submit",
                   width: 85.w,
                   onTap: () {
-                    Get.to(() => const ResetPassword());
+                    PageTransition.pageNavigation(page: const ResetPassword());
                   }),
             ),
             const Expanded(
