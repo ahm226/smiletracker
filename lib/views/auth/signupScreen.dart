@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
+import 'package:smiletracker/Helpers/custom_validator.dart';
 import 'package:smiletracker/Helpers/globalvariables.dart';
+import 'package:smiletracker/Helpers/page_navigation.dart';
+import 'package:smiletracker/views/auth/loginScreen.dart';
 
 import '../../Helpers/custom_widgets.dart';
 import '../../Helpers/text_form_field.dart';
@@ -13,151 +16,188 @@ class SignupScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<SignupScreen> {
+  bool _obscureText = true;
+  final TextEditingController nameEditingController = TextEditingController();
+  final TextEditingController emailEditingController = TextEditingController();
+  final TextEditingController passwordEditingController =
+      TextEditingController();
+  final GlobalKey<FormState> signInFormField = GlobalKey();
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.all(15.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: 12.h,
-              ),
-              Text(
-                "Let's Start",
-                style: TextStyle(
-                    color: AppColors.primaryColor,
-                    fontSize: 40,
-                    fontWeight: FontWeight.bold),
-              ),
-              SizedBox(
-                height: 2.h,
-              ),
-              Text(
-                "Create a new account",
-                style: TextStyle(
-                  color: Colors.grey.shade800,
-                  fontSize: 15,
+    return Form(
+      key: signInFormField,
+      child: Scaffold(
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.all(15.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: 12.h,
                 ),
-              ),
-              SizedBox(
-                height: 7.h,
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: 18.0, bottom: 8.0),
-                child: CustomTextField(
-                  hintText: 'Full Name',
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: 18.0, bottom: 8.0),
-                child: CustomTextField(
-                    hintText: 'Email Address',
-                    suffixIcon: Icon(
-                      Icons.mail_outline,
+                Text(
+                  "Let's Start",
+                  style: TextStyle(
                       color: AppColors.primaryColor,
-                    )),
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: 18.0, bottom: 8.0),
-                child: CustomTextField(
+                      fontSize: 40,
+                      fontWeight: FontWeight.bold),
+                ),
+                SizedBox(
+                  height: 2.h,
+                ),
+                Text(
+                  "Create a new account",
+                  style: TextStyle(
+                    color: Colors.grey.shade800,
+                    fontSize: 15,
+                  ),
+                ),
+                SizedBox(
+                  height: 7.h,
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: 18.0, bottom: 8.0),
+                  child: CustomTextField(
+                    controller: nameEditingController,
+                    validator: (value) =>
+                        CustomValidator.isEmptyUserName(value),
+                    hintText: 'Full Name',
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: 18.0, bottom: 8.0),
+                  child: CustomTextField(
+                      controller: emailEditingController,
+                      validator: (value) => CustomValidator.email(value),
+                      hintText: 'Email Address',
+                      suffixIcon: Icon(
+                        Icons.mail_outline,
+                        color: AppColors.primaryColor,
+                      )),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: 18.0, bottom: 8.0),
+                  child: CustomTextField(
+                    controller: passwordEditingController,
+                    validator: (value) => CustomValidator.password(value),
                     hintText: 'Password',
-                    suffixIcon: Icon(
-                      Icons.lock_outline_rounded,
-                      color: AppColors.primaryColor,
-                    )),
-              ),
-              SizedBox(
-                height: 10.h,
-              ),
-              Center(
-                child: CustomButton(
-                  buttonText: 'Sign Up',
-                  onTap: () {},
-                  width: 90.w,
+                    isObscure: _obscureText,
+                    suffixIcon: InkWell(
+                      onTap: () {
+                        setState(() {
+                          _obscureText = !_obscureText;
+                        });
+                      },
+                      child: Icon(
+                        !_obscureText
+                            ? Icons.lock_open_outlined
+                            : Icons.lock_outline_rounded,
+                        color: AppColors.primaryColor,
+                      ),
+                    ),
+                  ),
                 ),
-              ),
-              Center(child: Text("--- Sign Up with ---")),
-              SizedBox(
-                height: 2.h,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    height: 56,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(16),
-                      border: Border.all(color: Colors.black12, width: 1.4),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        children: [
-                          SizedBox(
-                              height: 30,
-                              child: Image.asset("assest/images/Facebook.png")),
-                          Text("Facebook")
-                        ],
-                      ),
-                    ),
+                SizedBox(
+                  height: 10.h,
+                ),
+                Center(
+                  child: CustomButton(
+                    buttonText: 'Sign Up',
+                    onTap: () {
+                      if (signInFormField.currentState!.validate()) {
+                        PageTransition.pageProperNavigation(
+                            page: const LoginScreen());
+                      }
+                    },
+                    width: 90.w,
                   ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Container(
-                    height: 56,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(16),
-                      border: Border.all(color: Colors.black12, width: 1.4),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        children: [
-                          SizedBox(
-                              height: 30,
-                              child: Image.asset("assest/images/Google.png")),
-                          Text("Google")
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 2.h,
-              ),
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Row(
+                ),
+                Center(child: Text("--- Sign Up with ---")),
+                SizedBox(
+                  height: 2.h,
+                ),
+                Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
-                      "Already have an account?",
-                      style: bodyNormal.copyWith(color: Colors.black54),
-                      textAlign: TextAlign.center,
+                    Container(
+                      height: 56,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(16),
+                        border: Border.all(color: Colors.black12, width: 1.4),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          children: [
+                            SizedBox(
+                                height: 30,
+                                child:
+                                    Image.asset("assest/images/Facebook.png")),
+                            Text("Facebook")
+                          ],
+                        ),
+                      ),
                     ),
-                    const SizedBox(
-                      width: 5,
+                    SizedBox(
+                      width: 10,
                     ),
-                    InkWell(
-                      onTap: () {},
-                      child: Text(
-                        "Sign In",
-                        style: bodyLarge.copyWith(
-                            fontFamily: "MontserratSemiBold",
-                            color: AppColors.primaryColor,
-                            decoration: TextDecoration.underline),
-                        textAlign: TextAlign.center,
+                    Container(
+                      height: 56,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(16),
+                        border: Border.all(color: Colors.black12, width: 1.4),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          children: [
+                            SizedBox(
+                                height: 30,
+                                child: Image.asset("assest/images/Google.png")),
+                            Text("Google")
+                          ],
+                        ),
                       ),
                     ),
                   ],
                 ),
-              ),
-            ],
+                SizedBox(
+                  height: 2.h,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Already have an account?",
+                        style: bodyNormal.copyWith(color: Colors.black54),
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      InkWell(
+                        onTap: () {
+                          PageTransition.pageNavigation(
+                              page: const LoginScreen());
+                        },
+                        child: Text(
+                          "Sign In",
+                          style: bodyLarge.copyWith(
+                              fontFamily: "MontserratSemiBold",
+                              color: AppColors.primaryColor,
+                              decoration: TextDecoration.underline),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

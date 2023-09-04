@@ -1,10 +1,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:sizer/sizer.dart';
+import 'package:smiletracker/Helpers/globalvariables.dart';
+import 'package:smiletracker/Helpers/page_navigation.dart';
 import 'package:smiletracker/views/home/reminder_screen.dart';
+import 'package:smiletracker/views/profile/profile_screen.dart';
 
 class EmojiRatingApp extends StatefulWidget {
   const EmojiRatingApp({super.key});
@@ -15,6 +17,39 @@ class EmojiRatingApp extends StatefulWidget {
 
 class _EmojiRatingAppState extends State<EmojiRatingApp> {
   double _rating = 2.5;
+  String _selectedDate = '';
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? d = await showDatePicker(
+      builder: (context, child) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+            dialogBackgroundColor: Colors.white,
+            colorScheme: const ColorScheme.light(
+              primary: AppColors.primaryColor, // <-- SEE HERE
+              onPrimary: Colors.white, // <-- SEE HERE
+              onSurface: Colors.black, // <-- SEE HERE
+            ),
+            textButtonTheme: TextButtonThemeData(
+              style: TextButton.styleFrom(
+                primary: AppColors.primaryColor, // button text color
+              ),
+            ),
+          ),
+          child: child!,
+        );
+      },
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime.now(),
+      lastDate: DateTime(5090),
+    );
+    if (d != null) {
+      setState(() {
+        _selectedDate = DateFormat('EEEE , d MMMM,y').format(d);
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,28 +71,45 @@ class _EmojiRatingAppState extends State<EmojiRatingApp> {
               SizedBox(
                 height: 5.h,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    DateFormat('EEEE , d MMMM,y')
-                        .format(DateTime.now())
-                        .toString(),
-                    style: TextStyle(color: Colors.grey),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      children: [
-                        Image.asset("assest/images/calenderIcon.png"),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 8.0),
-                          child: Image.asset("assest/images/profileImage.png"),
-                        ),
-                      ],
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      _selectedDate.isEmpty
+                          ? DateFormat('EEEE , d MMMM,y')
+                              .format(DateTime.now())
+                              .toString()
+                          : _selectedDate,
+                      style: TextStyle(color: Colors.grey),
                     ),
-                  )
-                ],
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: [
+                          InkWell(
+                              onTap: () {
+                                _selectDate(context);
+                              },
+                              child: Image.asset(
+                                  "assest/images/calenderIcon.png")),
+                          InkWell(
+                            onTap: () {
+                              PageTransition.pageNavigation(
+                                  page: const ProfileScreen());
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 8.0),
+                              child:
+                                  Image.asset("assest/images/profileImage.png"),
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
               ),
               Text(
                 "How Are you Feeling today?",
@@ -114,9 +166,12 @@ class _EmojiRatingAppState extends State<EmojiRatingApp> {
               ),
               InkWell(
                   onTap: () {
-                    Get.to(() => const ReminderScreen());
+                    PageTransition.pageNavigation(page: const ReminderScreen());
                   },
-                  child: Image.asset("assest/images/moveAhead.png")),
+                  child: Container(
+                      height: 10.h,
+                      width: 20.w,
+                      child: Image.asset("assest/images/moveAhead.png"))),
             ],
           ),
         ),
