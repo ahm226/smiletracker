@@ -15,23 +15,27 @@ class AppColors {
 TextStyle headingLarge = const TextStyle(
     fontSize: 22,
     color: Colors.black,
-    fontFamily: 'MontserratBold',
+    fontFamily: 'Poppins',
     fontWeight: FontWeight.w700);
 TextStyle headingMedium = const TextStyle(
-    fontSize: 18, color: Colors.black, fontFamily: 'MontserratSemiBold');
+  fontSize: 18,
+  color: Colors.black,
+  fontFamily: 'Poppins',
+);
 TextStyle headingSmall = const TextStyle(
-    fontSize: 17, color: Colors.black, fontFamily: 'MontserratSemiBold');
+  fontSize: 17,
+  color: Colors.black,
+  fontFamily: 'Poppins',
+);
 TextStyle bodyLarge = const TextStyle(
-    fontSize: 16, color: Colors.black, fontFamily: 'MontserratRegular');
+  fontSize: 16,
+  color: Colors.black,
+  fontFamily: 'Poppins',
+);
 TextStyle bodyNormal = const TextStyle(
-    fontSize: 14, color: Colors.black, fontFamily: 'MontserratRegular');
+  fontSize: 14,
+  color: Colors.black,
+  fontFamily: 'Poppins',
+);
 TextStyle bodySmall = const TextStyle(
-    fontSize: 10,
-    color: Colors.black,
-    fontFamily: 'MontserratRegular',
-    height: 1.5);
-
-TextStyle title =
-    const TextStyle(fontSize: 12, color: Colors.white12, fontFamily: 'Inter');
-TextStyle hintText =
-    const TextStyle(fontSize: 12, color: Colors.black26, fontFamily: 'Inter');
+    fontSize: 10, color: Colors.black, fontFamily: 'Poppins', height: 1.5);

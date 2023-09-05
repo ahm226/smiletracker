@@ -26,9 +26,9 @@ class _MyAppState extends State<MyApp> {
           );
         },
         debugShowCheckedModeBanner: false,
-        title: 'BrainCraft AI',
+        title: 'Smile Tracker',
         theme: ThemeData(
-          primarySwatch: Colors.blue,
+          scaffoldBackgroundColor: Colors.transparent,
         ),
         home: const splashScreen(),
       );

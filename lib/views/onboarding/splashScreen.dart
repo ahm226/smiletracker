@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
-import 'package:smiletracker/views/home/smily_face.dart';
+import 'package:sizer/sizer.dart';
+import 'package:smiletracker/views/auth/loginScreen.dart';
 
 class splashScreen extends StatefulWidget {
   const splashScreen({Key? key}) : super(key: key);
@@ -11,9 +13,9 @@ class splashScreen extends StatefulWidget {
 
 class _splashScreenState extends State<splashScreen> {
   getData() {
-    Future.delayed(const Duration(milliseconds: 2000), () {
-      // Get.offAll(() => LoginScreen());
-      Get.offAll(() => EmojiRatingApp());
+    Future.delayed(const Duration(milliseconds: 5000), () {
+      Get.offAll(() => const LoginScreen());
+      // Get.offAll(() => const EmojiRatingApp());
     });
   }
 
@@ -26,26 +28,56 @@ class _splashScreenState extends State<splashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Center(
-            child: Text(
-              "Mood",
-              style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 50,
-                  fontWeight: FontWeight.bold),
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      body: Container(
+        height: 100.h,
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assest/images/Background.png"),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(
+              height: 30,
             ),
-          ),
-          Text(
-            "Meter",
-            style: TextStyle(
-                color: Colors.black, fontSize: 50, fontWeight: FontWeight.bold),
-          ),
-        ],
+            Column(
+              children: [
+                Center(
+                  child: Text(
+                    "Mood",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 50,
+                      fontWeight: FontWeight.w600,
+                      fontFamily: 'Poppins',
+                    ),
+                  ),
+                ),
+                Text(
+                  "Meter",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 50,
+                    fontWeight: FontWeight.w600,
+                    fontFamily: 'Poppins',
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            SpinKitCircle(
+              color: Colors.black, // Set the spinner color
+              size: 50.0, // Set the size of the spinner
+            )
+          ],
+        ),
       ),
     );
   }

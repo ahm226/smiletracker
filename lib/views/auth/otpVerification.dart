@@ -20,96 +20,121 @@ class _VerifyEmailState extends State<VerifyEmail> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.scaffoldColor,
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-        automaticallyImplyLeading: false,
-        title: CustomAppBar(
-          pageTitle: "",
-          onTap: () {
-            PageTransition.pageBackNavigation(page: const LoginScreen());
-          },
-          leadingButton: const Icon(
-            Icons.arrow_back_ios,
-            color: Colors.white,
-            size: 20,
+      resizeToAvoidBottomInset: false,
+      body: Container(
+        height: 100.h,
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assest/images/Background.png"),
+            fit: BoxFit.cover,
           ),
         ),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(15.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(
-              height: 30,
-            ),
-            const Text(
-              "Forgot ",
-              style: TextStyle(
-                  color: AppColors.primaryColor,
-                  fontSize: 40,
-                  fontWeight: FontWeight.bold),
-            ),
-            const Text(
-              "Password?",
-              style: TextStyle(
-                  color: AppColors.primaryColor,
-                  fontSize: 40,
-                  fontWeight: FontWeight.bold),
-            ),
-            const Text(
-              "We have sent an email to your email account with a verification code!",
-              style: TextStyle(
-                fontSize: 15,
+        child: Padding(
+          padding:
+              EdgeInsets.only(top: 5.h, left: 15.0, right: 15.0, bottom: 15.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              CustomAppBar(
+                pageTitle: "",
+                onTap: () {
+                  PageTransition.pageBackNavigation(page: const LoginScreen());
+                },
+                leadingButton: const Icon(
+                  Icons.arrow_back_ios,
+                  color: Colors.white,
+                  size: 20,
+                ),
               ),
-            ),
-            const Expanded(child: SizedBox()),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 22),
-              child: OtpField(),
-            ),
-            const Expanded(child: SizedBox()),
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+              const SizedBox(
+                height: 30,
+              ),
+              const Text(
+                "OTP",
+                style: TextStyle(
+                  color: AppColors.primaryColor,
+                  fontSize: 40,
+                  fontWeight: FontWeight.w600,
+                  fontFamily: 'Poppins',
+                ),
+              ),
+              const Text(
+                "Verification",
+                style: TextStyle(
+                  color: AppColors.primaryColor,
+                  fontSize: 40,
+                  fontWeight: FontWeight.w600,
+                  fontFamily: 'Poppins',
+                ),
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              Text(
+                "We have sent an email to your email account with a verification code!",
+                style: TextStyle(
+                  color: Colors.grey.shade900,
+                  fontSize: 15,
+                  fontWeight: FontWeight.w400,
+                  fontFamily: 'Poppins',
+                ),
+              ),
+              const Expanded(child: SizedBox()),
+              Stack(
                 children: [
-                  Text(
-                    "If you didn't receive a OTP?",
-                    style: bodyNormal.copyWith(color: Colors.black87),
-                    textAlign: TextAlign.center,
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 22),
+                    child: OtpField(),
                   ),
-                  const SizedBox(
-                    width: 5,
-                  ),
-                  InkWell(
-                    onTap: () {},
-                    child: Text(
-                      "Resend",
-                      style: bodyLarge.copyWith(
-                          fontFamily: "MontserratSemiBold",
-                          color: AppColors.primaryColor,
-                          decoration: TextDecoration.underline),
-                      textAlign: TextAlign.center,
-                    ),
+                  Container(
+                    width: 100.w,
+                    height: 10.h,
+                    color: Colors.transparent,
                   ),
                 ],
               ),
-            ),
-            Center(
-              child: CustomButton(
-                  buttonText: "Submit",
-                  width: 85.w,
-                  onTap: () {
-                    PageTransition.pageNavigation(page: const ResetPassword());
-                  }),
-            ),
-            const Expanded(
-              child: SizedBox(),
-            ),
-          ],
+              const Expanded(child: SizedBox()),
+              // Padding(
+              //   padding: const EdgeInsets.all(10.0),
+              //   child: Row(
+              //     mainAxisAlignment: MainAxisAlignment.center,
+              //     children: [
+              //       Text(
+              //         "If you didn't receive a OTP?",
+              //         style: bodyNormal.copyWith(color: Colors.black87),
+              //         textAlign: TextAlign.center,
+              //       ),
+              //       const SizedBox(
+              //         width: 5,
+              //       ),
+              //       InkWell(
+              //         onTap: () {},
+              //         child: Text(
+              //           "Resend",
+              //           style: bodyLarge.copyWith(
+              //               fontFamily: "MontserratSemiBold",
+              //               color: AppColors.primaryColor,
+              //               decoration: TextDecoration.underline),
+              //           textAlign: TextAlign.center,
+              //         ),
+              //       ),
+              //     ],
+              //   ),
+              // ),
+              Center(
+                child: CustomButton(
+                    buttonText: "Submit",
+                    width: 85.w,
+                    onTap: () {
+                      PageTransition.pageNavigation(
+                          page: const ResetPassword());
+                    }),
+              ),
+              const Expanded(
+                child: SizedBox(),
+              ),
+            ],
+          ),
         ),
       ),
     );

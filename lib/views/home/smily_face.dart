@@ -63,116 +63,152 @@ class _EmojiRatingAppState extends State<EmojiRatingApp> {
         });
       },
       child: Scaffold(
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SizedBox(
-                height: 5.h,
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      _selectedDate.isEmpty
-                          ? DateFormat('EEEE , d MMMM,y')
-                              .format(DateTime.now())
-                              .toString()
-                          : _selectedDate,
-                      style: TextStyle(color: Colors.grey),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        children: [
-                          InkWell(
-                              onTap: () {
-                                _selectDate(context);
-                              },
-                              child: Image.asset(
-                                  "assest/images/calenderIcon.png")),
-                          InkWell(
-                            onTap: () {
-                              PageTransition.pageNavigation(
-                                  page: const ProfileScreen());
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.only(left: 8.0),
-                              child:
-                                  Image.asset("assest/images/profileImage.png"),
-                            ),
-                          ),
-                        ],
+        resizeToAvoidBottomInset: false,
+        body: Container(
+          height: 100.h,
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage("assest/images/Background.png"),
+              fit: BoxFit.cover,
+            ),
+          ),
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(
+                  height: 5.h,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        _selectedDate.isEmpty
+                            ? DateFormat('EEEE , d MMMM,y')
+                                .format(DateTime.now())
+                                .toString()
+                            : _selectedDate,
+                        style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontFamily: 'Poppins',
+                          color: Colors.grey.shade700,
+                          fontSize: 15,
+                        ),
                       ),
-                    )
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          children: [
+                            InkWell(
+                                onTap: () {
+                                  _selectDate(context);
+                                },
+                                child: Image.asset(
+                                  "assest/images/calenderIcon.png",
+                                  height: 16,
+                                  width: 17,
+                                )),
+                            InkWell(
+                              onTap: () {
+                                PageTransition.pageNavigation(
+                                    page: const ProfileScreen());
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 8.0),
+                                child: Image.asset(
+                                  "assest/images/profileImage.png",
+                                  height: 27,
+                                  width: 27,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                Text(
+                  "How Are you Feeling today?",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 25,
+                    fontWeight: FontWeight.w500,
+                    fontFamily: 'Poppins',
+                  ),
+                ),
+                SizedBox(
+                  height: 10.h,
+                ),
+                CustomPaint(
+                  painter: EmojiPainter(_rating),
+                  size: Size(300, 300),
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+                Text(
+                  _rating.toStringAsFixed(2) == "0.00"
+                      ? "Sad"
+                      : _rating.toStringAsFixed(2) == "5.00"
+                          ? "Happy"
+                          : "Normal",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 25,
+                    fontWeight: FontWeight.w400,
+                    fontFamily: 'Poppins',
+                  ),
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+                Stack(
+                  children: [
+                    Center(
+                      child: RatingBar.builder(
+                        initialRating: _rating,
+                        minRating: 0,
+                        direction: Axis.horizontal,
+                        allowHalfRating: true,
+                        itemCount: 5,
+                        itemPadding:
+                            const EdgeInsets.symmetric(horizontal: 4.0),
+                        itemBuilder: (context, _) => const Icon(
+                          Icons.star,
+                          color: Colors.amber,
+                        ),
+                        onRatingUpdate: (rating) {
+                          if (kDebugMode) {
+                            print(rating);
+                          }
+                        },
+                      ),
+                    ),
+                    Container(
+                      width: 100.w,
+                      height: 40,
+                      color: Colors.transparent,
+                    ),
                   ],
                 ),
-              ),
-              Text(
-                "How Are you Feeling today?",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
-              ),
-              SizedBox(
-                height: 10.h,
-              ),
-              CustomPaint(
-                painter: EmojiPainter(_rating),
-                size: const Size(300, 300),
-              ),
-              const SizedBox(
-                height: 30,
-              ),
-              Text(_rating.toStringAsFixed(2) == "0.00"
-                  ? "Sad"
-                  : _rating.toStringAsFixed(2) == "5.00"
-                      ? "Happy"
-                      : "Normal"),
-              const SizedBox(
-                height: 30,
-              ),
-              Stack(
-                children: [
-                  Center(
-                    child: RatingBar.builder(
-                      initialRating: _rating,
-                      minRating: 0,
-                      direction: Axis.horizontal,
-                      allowHalfRating: true,
-                      itemCount: 5,
-                      itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
-                      itemBuilder: (context, _) => const Icon(
-                        Icons.star,
-                        color: Colors.amber,
-                      ),
-                      onRatingUpdate: (rating) {
-                        if (kDebugMode) {
-                          print(rating);
-                        }
-                      },
-                    ),
-                  ),
-                  Container(
-                    width: 100.w,
-                    height: 40,
-                    color: Colors.transparent,
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 30,
-              ),
-              InkWell(
-                  onTap: () {
-                    PageTransition.pageNavigation(page: const ReminderScreen());
-                  },
-                  child: Container(
-                      height: 10.h,
-                      width: 20.w,
-                      child: Image.asset("assest/images/moveAhead.png"))),
-            ],
+                const SizedBox(
+                  height: 30,
+                ),
+                InkWell(
+                    onTap: () {
+                      PageTransition.pageNavigation(
+                          page: const ReminderScreen());
+                    },
+                    child: Container(
+                        height: 10.h,
+                        width: 20.w,
+                        child: Image.asset("assest/images/moveAhead.png"))),
+              ],
+            ),
           ),
         ),
       ),
@@ -184,6 +220,20 @@ class EmojiPainter extends CustomPainter {
   final double rating;
 
   EmojiPainter(this.rating);
+
+  Color getColorForRating(double rating) {
+    if (rating > 2.6) {
+      return Color(0xff2F00FF);
+    } else if (rating == 0.0) {
+      return AppColors.primaryColor;
+    } else if (rating < 2.4) {
+      return Colors.orange;
+    } else if (rating < 2.6 && rating > 2.4) {
+      return Colors.yellow;
+    } else {
+      return Color(0x2F00FF);
+    }
+  }
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -201,7 +251,7 @@ class EmojiPainter extends CustomPainter {
     final Offset faceCenter = Offset(centerX, centerY);
 
     final Paint facePaint = Paint()
-      ..color = Colors.blueAccent
+      ..color = getColorForRating(rating)
       ..style = PaintingStyle.stroke
       ..strokeWidth = 5.0;
 
@@ -215,7 +265,7 @@ class EmojiPainter extends CustomPainter {
 
     const double eyeBorderWidth = 5.0;
     final Paint eyeBorderPaint = Paint()
-      ..color = Colors.blueAccent
+      ..color = getColorForRating(rating)
       ..style = PaintingStyle.stroke
       ..strokeWidth = eyeBorderWidth;
 
@@ -287,7 +337,7 @@ class EmojiPainter extends CustomPainter {
     canvas.drawPath(rightEyePath, eyeBorderPaint);
 
     final Paint mouthPaint = Paint()
-      ..color = Colors.blueAccent
+      ..color = getColorForRating(rating)
       ..style = PaintingStyle.stroke
       ..strokeWidth = 5.0;
 

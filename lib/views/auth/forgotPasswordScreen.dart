@@ -26,84 +26,106 @@ class _ForgotPasswordState extends State<ForgotPassword> {
     return Form(
       key: key,
       child: Scaffold(
-        backgroundColor: AppColors.scaffoldColor,
-        appBar: AppBar(
-          elevation: 0,
-          backgroundColor: Colors.transparent,
-          automaticallyImplyLeading: false,
-          title: CustomAppBar(
-            pageTitle: "",
-            onTap: () {
-              Get.back();
-              // Get.off(() => LoginScreen(controller: TextEditingController()));
-            },
-            leadingButton: Icon(
-              Icons.arrow_back_ios,
-              color: Colors.white,
-              size: 20,
+        resizeToAvoidBottomInset: false,
+        body: Container(
+          height: 100.h,
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage("assest/images/Background.png"),
+              fit: BoxFit.cover,
             ),
           ),
-        ),
-        body: Padding(
-          padding: const EdgeInsets.all(15.0),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  height: 30,
-                ),
-                Text(
-                  "Forgot ",
-                  style: TextStyle(
-                      color: AppColors.primaryColor,
-                      fontSize: 40,
-                      fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  "Password?",
-                  style: TextStyle(
-                      color: AppColors.primaryColor,
-                      fontSize: 40,
-                      fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  "Recover you password if you have forgot the password!",
-                  style: bodyNormal.copyWith(fontFamily: "Inter"),
-                ),
-                SizedBox(
-                  height: 80,
-                ),
-                Padding(
-                  padding: EdgeInsets.only(top: 18.0, bottom: 8.0),
-                  child: CustomTextField(
-                      validator: (value) => CustomValidator.email(value),
-                      controller: emailEditingController,
-                      hintText: 'Email Address',
-                      suffixIcon: Icon(
-                        Icons.mail_outline,
-                        color: AppColors.primaryColor,
-                      )),
-                ),
-                SizedBox(
-                  height: 100,
-                ),
-                Center(
-                  child: CustomButton(
-                    width: 90.w,
-                    buttonText: "Send Code",
+          child: Padding(
+            padding: EdgeInsets.only(
+                top: 5.h, left: 15.0, right: 15.0, bottom: 15.0),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  CustomAppBar(
+                    pageTitle: "",
                     onTap: () {
-                      if (key.currentState!.validate()) {
-                        PageTransition.pageBackNavigation(
-                            page: const VerifyEmail());
-                      }
+                      Get.back();
+                      // Get.off(() => LoginScreen(controller: TextEditingController()));
                     },
+                    leadingButton: const Icon(
+                      Icons.arrow_back_ios,
+                      color: Colors.white,
+                      size: 20,
+                    ),
                   ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-              ],
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  const Text(
+                    "Forgot ",
+                    style: TextStyle(
+                      color: AppColors.primaryColor,
+                      fontSize: 40,
+                      fontWeight: FontWeight.w600,
+                      fontFamily: 'Poppins',
+                    ),
+                  ),
+                  const Text(
+                    "Password?",
+                    style: TextStyle(
+                      color: AppColors.primaryColor,
+                      fontSize: 40,
+                      fontWeight: FontWeight.w600,
+                      fontFamily: 'Poppins',
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  Text(
+                    "Recover you password if you have forgot the password!",
+                    style: TextStyle(
+                      color: Colors.grey.shade900,
+                      fontSize: 15,
+                      fontWeight: FontWeight.w400,
+                      fontFamily: 'Poppins',
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 80,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 18.0, bottom: 8.0),
+                    child: CustomTextField(
+                        validator: (value) => CustomValidator.email(value),
+                        controller: emailEditingController,
+                        hintText: 'Email Address',
+                        prefixIcon: Padding(
+                          padding:
+                              EdgeInsetsDirectional.only(start: 12.0, end: 5.0),
+                          child: Image.asset(
+                            "assest/images/EmailIcon.png",
+                            height: 20,
+                            width: 20,
+                          ),
+                        )),
+                  ),
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                  Center(
+                    child: CustomButton(
+                      width: 90.w,
+                      buttonText: "Send Code",
+                      onTap: () {
+                        if (key.currentState!.validate()) {
+                          PageTransition.pageBackNavigation(
+                              page: const VerifyEmail());
+                        }
+                      },
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                ],
+              ),
             ),
           ),
         ),
