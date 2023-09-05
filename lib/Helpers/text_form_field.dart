@@ -47,11 +47,15 @@ class _CustomTextFieldState extends State<CustomTextField> {
       readOnly: widget.isReadOnly ?? false,
       keyboardType: widget.keyboardType,
       decoration: InputDecoration(
-        fillColor: Colors.grey.shade200,
+        fillColor: AppColors.primaryColor.withOpacity(0.1),
         filled: true,
         contentPadding:
             const EdgeInsets.symmetric(horizontal: 36, vertical: 15),
-        hintStyle: TextStyle(color: Colors.grey.shade600, fontSize: 13),
+        hintStyle: TextStyle(
+          color: Colors.grey.shade600,
+          fontSize: 16,
+          fontFamily: 'Poppins',
+        ),
         border: InputBorder.none,
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
@@ -79,8 +83,10 @@ class _CustomTextFieldState extends State<CustomTextField> {
         suffixIconColor: Colors.white.withOpacity(0.4),
         prefixIcon: widget.prefixIcon,
         prefixIconColor: Colors.black54,
+        suffixIconConstraints:
+            const BoxConstraints(minWidth: 20, maxHeight: 20),
         prefixIconConstraints:
-            const BoxConstraints(maxHeight: 18, minHeight: 18, minWidth: 60),
+            const BoxConstraints(minWidth: 20, maxHeight: 20),
       ),
     );
   }
@@ -173,36 +179,36 @@ class OtpField extends StatefulWidget {
 class _OtpFieldState extends State<OtpField> {
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 60,
-      child: OtpTextField(
-        numberOfFields: 4,
-        fieldWidth: 56,
-        borderWidth: 1.2,
-        margin: const EdgeInsets.fromLTRB(2, 0, 4, 2),
-        keyboardType: TextInputType.number,
-        borderRadius: BorderRadius.circular(15),
-        borderColor: Colors.black26,
-        focusedBorderColor: Colors.black,
-        enabledBorderColor: Colors.black26,
-        disabledBorderColor: Colors.black26,
-        cursorColor: AppColors.primaryColor,
-        showFieldAsBox: true,
-        textStyle: TextStyle(
-            fontSize: 32,
-            color: AppColors.primaryColor,
-            fontWeight: FontWeight.bold),
-        // bodyNormal.copyWith(fontSize: 22, fontFamily: "InterSemiBold"),
-        //runs when a code is typed in
-        onCodeChanged: (String code) {
-          //handle validation or checks here
-        },
-        //runs when every textField is filled
-        onSubmit: (String verificationCode) {
-          // showCustomDialog(context, 'OTP Verified!', 'Continue', '');
-          // Get.to(() => ResetPassword(controller: TextEditingController()));
-        }, // end onSubmit
-      ),
+    return OtpTextField(
+      autoFocus: true,
+      fillColor: AppColors.primaryColor.withOpacity(0.1),
+      filled: true,
+      numberOfFields: 4,
+      fieldWidth: 55,
+      margin: const EdgeInsets.fromLTRB(2, 0, 4, 2),
+      keyboardType: TextInputType.number,
+      borderRadius: BorderRadius.circular(15),
+      borderColor: Colors.transparent,
+      focusedBorderColor: Colors.transparent,
+      enabledBorderColor: Colors.transparent,
+      disabledBorderColor: Colors.transparent,
+      cursorColor: AppColors.primaryColor,
+      showFieldAsBox: true,
+      textStyle: TextStyle(
+          fontSize: 30,
+          fontFamily: 'Poppins',
+          color: AppColors.primaryColor,
+          fontWeight: FontWeight.w500),
+      // bodyNormal.copyWith(fontSize: 22, fontFamily: "InterSemiBold"),
+      //runs when a code is typed in
+      onCodeChanged: (String code) {
+        //handle validation or checks here
+      },
+      //runs when every textField is filled
+      onSubmit: (String verificationCode) {
+        // showCustomDialog(context, 'OTP Verified!', 'Continue', '');
+        // Get.to(() => ResetPassword(controller: TextEditingController()));
+      }, // end onSubmit
     );
   }
 }

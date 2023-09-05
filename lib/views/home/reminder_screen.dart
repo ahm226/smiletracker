@@ -118,12 +118,19 @@ class _ReminderScreenState extends State<ReminderScreen> {
                                 height: 170,
                                 width: 170,
                               ),
-                              Text('It is very good to seen you very happy!',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 17,
-                                  )),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              Text(
+                                'It is very good to seen you very happy!',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  fontFamily: 'Poppins',
+                                  color: Colors.black,
+                                  fontSize: 17,
+                                ),
+                              ),
                               const SizedBox(
                                 height: 20,
                               ),
@@ -180,12 +187,19 @@ class _ReminderScreenState extends State<ReminderScreen> {
                                 height: 170,
                                 width: 170,
                               ),
-                              Text('It is very sad to seen you unhappy!',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 17,
-                                  )),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              Text(
+                                'It is very sad to seen you unhappy!',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  fontFamily: 'Poppins',
+                                  color: Colors.black,
+                                  fontSize: 17,
+                                ),
+                              ),
                               const SizedBox(
                                 height: 20,
                               ),
@@ -212,202 +226,219 @@ class _ReminderScreenState extends State<ReminderScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-        automaticallyImplyLeading: false,
-        title: CustomAppBar(
-          pageTitle: "Want to add note?",
-          onTap: () {
-            Get.back();
-          },
-          leadingButton: const Icon(
-            Icons.arrow_back_ios,
-            color: Colors.white,
-            size: 20,
+      resizeToAvoidBottomInset: false,
+      body: Container(
+        height: 100.h,
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assest/images/Background.png"),
+            fit: BoxFit.cover,
           ),
         ),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.only(left: 15, right: 15),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(
-                height: 30,
-              ),
-              const Padding(
-                padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
-                child: Text(
-                  "Date:",
-                  style: TextStyle(
-                      fontSize: 15,
-                      color: Colors.black,
-                      fontWeight: FontWeight.normal),
+        child: Padding(
+          padding:
+              EdgeInsets.only(top: 5.h, left: 15.0, right: 15.0, bottom: 15.0),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                CustomAppBar(
+                  pageTitle: "Want to add note?",
+                  onTap: () {
+                    Get.back();
+                  },
+                  leadingButton: const Icon(
+                    Icons.arrow_back_ios,
+                    color: Colors.white,
+                    size: 20,
+                  ),
                 ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Container(
-                height: 53,
-                decoration: BoxDecoration(
+                const SizedBox(
+                  height: 30,
+                ),
+                const Padding(
+                  padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
+                  child: Text(
+                    "Date:",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontFamily: 'Poppins',
+                      color: Colors.black,
+                      fontSize: 15,
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Container(
+                  height: 53,
+                  decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12),
-                    color: Colors.grey.shade200),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                    color: AppColors.primaryColor.withOpacity(0.1),
+                  ),
                   child: Padding(
-                    padding: const EdgeInsets.only(left: 10, right: 10),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        InkWell(
-                          child: Text(_selectedDate,
-                              textAlign: TextAlign.center,
-                              style: const TextStyle(color: Colors.black)),
-                          onTap: () {
-                            _selectDate(context);
-                          },
-                        ),
-                        IconButton(
-                          icon: Image.asset(
-                            "assest/images/calenderIcon.png",
-                            height: 30,
-                            width: 30,
+                    padding: const EdgeInsets.all(8.0),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 10, right: 10),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          InkWell(
+                            child: Text(_selectedDate,
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(color: Colors.black)),
+                            onTap: () {
+                              _selectDate(context);
+                            },
                           ),
-                          tooltip: 'Select date',
-                          onPressed: () {
-                            _selectDate(context);
-                          },
-                        ),
-                      ],
+                          IconButton(
+                            icon: Image.asset(
+                              "assest/images/calenderIcon.png",
+                              height: 30,
+                              width: 30,
+                            ),
+                            tooltip: 'Select date',
+                            onPressed: () {
+                              _selectDate(context);
+                            },
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              const Padding(
-                padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
-                child: Text(
-                  "Time:",
-                  style: TextStyle(
-                      fontSize: 15,
-                      color: Colors.black,
-                      fontWeight: FontWeight.normal),
+                const SizedBox(
+                  height: 10,
                 ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Container(
-                height: 53,
-                decoration: BoxDecoration(
+                const Padding(
+                  padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
+                  child: Text(
+                    "Time:",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontFamily: 'Poppins',
+                      color: Colors.black,
+                      fontSize: 15,
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Container(
+                  height: 53,
+                  decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12),
-                    color: Colors.grey.shade200),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                    color: AppColors.primaryColor.withOpacity(0.1),
+                  ),
                   child: Padding(
-                    padding: const EdgeInsets.only(left: 10, right: 10),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        InkWell(
-                          child: Text(_selectedTime,
-                              textAlign: TextAlign.center,
-                              style: const TextStyle(color: Colors.black)),
-                          onTap: () {
-                            _selectTime(context);
-                          },
-                        ),
-                        IconButton(
-                          icon: Image.asset(
-                            "assest/images/calenderIcon.png",
-                            height: 30,
-                            width: 30,
+                    padding: const EdgeInsets.all(8.0),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 10, right: 10),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          InkWell(
+                            child: Text(_selectedTime,
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(color: Colors.black)),
+                            onTap: () {
+                              _selectTime(context);
+                            },
                           ),
-                          tooltip: 'Select Time',
-                          onPressed: () {
-                            _selectTime(context);
-                          },
-                        ),
-                      ],
+                          IconButton(
+                            icon: Image.asset(
+                              "assest/images/calenderIcon.png",
+                              height: 30,
+                              width: 30,
+                            ),
+                            tooltip: 'Select Time',
+                            onPressed: () {
+                              _selectTime(context);
+                            },
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              const Padding(
-                padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
-                child: Text(
-                  "Explain your feeling of today:",
-                  style: TextStyle(
-                      fontSize: 15,
+                const SizedBox(
+                  height: 10,
+                ),
+                const Padding(
+                  padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
+                  child: Text(
+                    "Explain your feeling of today:",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontFamily: 'Poppins',
                       color: Colors.black,
-                      fontWeight: FontWeight.normal),
-                ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Container(
-                width: 100.w,
-                decoration: BoxDecoration(
-                    color: Colors.grey.shade200,
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: Colors.transparent, width: 1.4)),
-                child: Center(
-                  child: TextFormField(
-                    textCapitalization: TextCapitalization.sentences,
-                    textInputAction: TextInputAction.done,
-                    maxLines: null,
-                    cursorColor: AppColors.primaryColor,
-                    style: const TextStyle(color: Colors.black, fontSize: 13),
-                    decoration: const InputDecoration(
-                      contentPadding:
-                          EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-                      border: InputBorder.none,
-                      hintText:
-                          "Running Challenges\n\nRunning challenges are great for gym members\nbecause each member can go at his or her pace.\nSet realistic goals like\nhaving members run 30 miles within one\nmonth — how they choose to collect those\nmiles it up to them!",
-                      hintStyle: TextStyle(color: Colors.black, fontSize: 13),
-                      prefixIconColor: Colors.white,
+                      fontSize: 15,
                     ),
                   ),
                 ),
-              ),
-              SizedBox(
-                height: 20.h,
-              ),
-            ],
+                const SizedBox(
+                  height: 10,
+                ),
+                Container(
+                  width: 100.w,
+                  decoration: BoxDecoration(
+                      color: AppColors.primaryColor.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(12),
+                      border:
+                          Border.all(color: Colors.transparent, width: 1.4)),
+                  child: Center(
+                    child: TextFormField(
+                      textCapitalization: TextCapitalization.sentences,
+                      textInputAction: TextInputAction.done,
+                      maxLines: null,
+                      cursorColor: AppColors.primaryColor,
+                      style: const TextStyle(color: Colors.black, fontSize: 13),
+                      decoration: const InputDecoration(
+                        contentPadding:
+                            EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                        border: InputBorder.none,
+                        hintText:
+                            "Running Challenges\n\nRunning challenges are great for gym members\nbecause each member can go at his or her pace.\nSet realistic goals like\nhaving members run 30 miles within one\nmonth — how they choose to collect those\nmiles it up to them!",
+                        hintStyle: TextStyle(color: Colors.black, fontSize: 13),
+                        prefixIconColor: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 23.h,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        reminderFail(context);
+                      },
+                      child: Text(
+                        "Skip",
+                        style: TextStyle(color: Colors.grey.shade700),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 40.w,
+                    ),
+                    CustomButton(
+                      width: 40.w,
+                      buttonText: 'Submit',
+                      onTap: () {
+                        reminderSuccess(context);
+                      },
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
-        ),
-      ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            Text(
-              "Skip",
-              style: TextStyle(color: Colors.grey.shade700),
-            ),
-            SizedBox(
-              width: 40.w,
-            ),
-            CustomButton(
-              width: 40.w,
-              buttonText: 'Submit',
-              onTap: () {
-                reminderSuccess(context);
-              },
-            ),
-          ],
         ),
       ),
     );

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:smiletracker/Helpers/custom_validator.dart';
+import 'package:smiletracker/Helpers/globalvariables.dart';
 
 class CountryCodePicker extends StatefulWidget {
   const CountryCodePicker({super.key});
@@ -18,8 +19,6 @@ class _CountryCodePickerState extends State<CountryCodePicker> {
   Widget build(BuildContext context) {
     return InternationalPhoneNumberInput(
       onInputChanged: (PhoneNumber number) {
-        print(number.phoneNumber);
-        print(number);
         if (_phoneController.text.isNotEmpty &&
             _phoneController.text.startsWith('0')) {
           print('_PHONECONTROLLER: ${_phoneController.text}');
@@ -45,7 +44,7 @@ class _CountryCodePickerState extends State<CountryCodePicker> {
       inputDecoration: InputDecoration(
           prefixIconConstraints:
               const BoxConstraints(maxHeight: 18, minHeight: 18, minWidth: 60),
-          fillColor: Colors.grey.shade200,
+          fillColor: AppColors.primaryColor.withOpacity(0.1),
           filled: true,
           border: InputBorder.none,
           errorBorder: OutlineInputBorder(

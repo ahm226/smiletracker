@@ -43,15 +43,34 @@ class _CustomButtonState extends State<CustomButton> {
             width: widget.width,
             height: widget.height,
             decoration: BoxDecoration(
-              color: AppColors.primaryColor,
               borderRadius: BorderRadius.circular(12),
+              image: DecorationImage(
+                image: AssetImage("assest/images/btnRectangle.png"),
+                fit: BoxFit.cover,
+              ),
+              // gradient: LinearGradient(
+              //   begin: Alignment.topCenter,
+              //   end: Alignment.bottomCenter,
+              //   colors: [
+              //     Color(0xFFFF0000), // Start color
+              //     Color(0xFFFF8700), // End color
+              //   ],
+              //   stops: [0.0, 1.0], // Color stops
+              //   transform: GradientRotation(
+              //       268.5 * 3.1415926535 / 180), // Angle in radians
+              // ),
             ),
             child: Center(
               child: Padding(
                 padding: const EdgeInsets.only(left: 5, right: 5),
                 child: Text(
                   widget.buttonText.toString(),
-                  style: TextStyle(color: Colors.white),
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500,
+                    fontFamily: 'Poppins',
+                  ),
                 ),
               ),
             )),
@@ -107,7 +126,12 @@ class _CustomAppBarState extends State<CustomAppBar> {
           ),
           Text(
             widget.pageTitle,
-            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
+            style: TextStyle(
+              fontWeight: FontWeight.w700,
+              fontFamily: 'Poppins',
+              color: Colors.black,
+              fontSize: 20,
+            ),
           ),
           SizedBox(
             width: 40,

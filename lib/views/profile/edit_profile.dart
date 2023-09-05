@@ -24,191 +24,221 @@ class _EditProfileState extends State<EditProfile> {
     return Form(
       key: key,
       child: Scaffold(
-        backgroundColor: AppColors.scaffoldColor,
-        appBar: AppBar(
-          elevation: 0,
-          backgroundColor: Colors.transparent,
-          automaticallyImplyLeading: false,
-          title: CustomAppBar(
-            pageTitle: "Edit Profile",
-            onTap: () {
-              Get.back();
-            },
-            leadingButton: Icon(
-              Icons.arrow_back_ios,
-              color: Colors.white,
-              size: 20,
+        resizeToAvoidBottomInset: false,
+        body: Container(
+          height: 100.h,
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage("assest/images/Background.png"),
+              fit: BoxFit.cover,
             ),
           ),
-        ),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 22.0),
-            child: Column(
-              children: [
-                SizedBox(
-                  height: 30,
-                ),
-                DelayedDisplay(
-                  delay: Duration(milliseconds: 400),
-                  slidingBeginOffset: Offset(0, 0),
-                  child: Stack(
-                    children: [
-                      SizedBox(
-                        height: 150,
-                        width: double.infinity,
-                        child: Container(
-                          child: Image.asset(
-                            "assest/images/profile.png",
-                          ),
-                        ),
-                      ),
-                      // CircleAvatar(
-                      //   radius: 60,
-                      //   backgroundColor: AppColors.primaryColor,
-                      //   child: CircleAvatar(
-                      //     radius: 58,
-                      //     backgroundImage:
-                      //         AssetImage("assest/images/profile.png"),
-                      //   ),
-                      // ),
-                      Positioned(
-                        right: 85,
-                        bottom: 25,
-                        child: ZoomTapAnimation(
-                          onTap: () {},
-                          onLongTap: () {},
-                          enableLongTapRepeatEvent: false,
-                          longTapRepeatDuration:
-                              const Duration(milliseconds: 100),
-                          begin: 1.0,
-                          end: 0.93,
-                          beginDuration: const Duration(milliseconds: 20),
-                          endDuration: const Duration(milliseconds: 120),
-                          beginCurve: Curves.decelerate,
-                          endCurve: Curves.fastOutSlowIn,
-                          child: CircleAvatar(
-                              radius: 16,
-                              backgroundColor: AppColors.primaryColor,
-                              child: Icon(
-                                Icons.camera_alt,
-                                color: Colors.white,
-                                size: 16,
-                              )),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: 30,
-                ),
-                DelayedDisplay(
-                  delay: Duration(milliseconds: 500),
-                  slidingBeginOffset: Offset(0, -1),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Full Name:",
-                        style: TextStyle(
-                            fontSize: 15, fontWeight: FontWeight.bold),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      CustomTextField(
-                        validator: (value) =>
-                            CustomValidator.isEmptyUserName(value),
-                        hintText: "Robert Fox",
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 20),
-                DelayedDisplay(
-                  delay: Duration(milliseconds: 500),
-                  slidingBeginOffset: Offset(0, -1),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Age:",
-                        style: TextStyle(
-                            fontSize: 15, fontWeight: FontWeight.bold),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      CustomTextField(
-                        validator: (value) => CustomValidator.isEmpty(value),
-                        hintText: "27 years",
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 20),
-                DelayedDisplay(
-                  delay: Duration(milliseconds: 700),
-                  slidingBeginOffset: Offset(0, -1),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Parent/ Student Email Address:",
-                        style: TextStyle(
-                            fontSize: 15, fontWeight: FontWeight.bold),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      CustomTextField(
-                        validator: (value) => CustomValidator.email(value),
-                        hintText: "robert123@gmail.com",
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 20),
-                DelayedDisplay(
-                  delay: Duration(milliseconds: 700),
-                  slidingBeginOffset: Offset(0, -1),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Phone Number:",
-                        style: TextStyle(
-                            fontSize: 15, fontWeight: FontWeight.bold),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      CountryCodePicker(),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                DelayedDisplay(
-                  delay: Duration(milliseconds: 1000),
-                  slidingBeginOffset: Offset(0, 0),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8),
-                    child: CustomButton(
-                      width: 100.w,
-                      buttonText: "Save Changes",
-                      onTap: () {
-                        if (key.currentState!.validate()) {}
-                      },
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.only(
+                  top: 5.h, left: 15.0, right: 15.0, bottom: 15.0),
+              child: Column(
+                children: [
+                  CustomAppBar(
+                    pageTitle: "Edit Profile",
+                    onTap: () {
+                      Get.back();
+                    },
+                    leadingButton: const Icon(
+                      Icons.arrow_back_ios,
+                      color: Colors.white,
+                      size: 20,
                     ),
                   ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-              ],
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  DelayedDisplay(
+                    delay: const Duration(milliseconds: 400),
+                    slidingBeginOffset: const Offset(0, 0),
+                    child: Stack(
+                      children: [
+                        SizedBox(
+                          height: 15.h,
+                          width: double.infinity,
+                          child: Container(
+                            child: Image.asset(
+                              "assest/images/profile.png",
+                            ),
+                          ),
+                        ),
+                        // CircleAvatar(
+                        //   radius: 60,
+                        //   backgroundColor: AppColors.primaryColor,
+                        //   child: CircleAvatar(
+                        //     radius: 58,
+                        //     backgroundImage:
+                        //         AssetImage("assest/images/profile.png"),
+                        //   ),
+                        // ),
+                        Positioned(
+                          right: 93,
+                          bottom: 10,
+                          child: ZoomTapAnimation(
+                            onTap: () {},
+                            onLongTap: () {},
+                            enableLongTapRepeatEvent: false,
+                            longTapRepeatDuration:
+                                const Duration(milliseconds: 100),
+                            begin: 1.0,
+                            end: 0.93,
+                            beginDuration: const Duration(milliseconds: 20),
+                            endDuration: const Duration(milliseconds: 120),
+                            beginCurve: Curves.decelerate,
+                            endCurve: Curves.fastOutSlowIn,
+                            child: const CircleAvatar(
+                                radius: 16,
+                                backgroundColor: AppColors.primaryColor,
+                                child: Icon(
+                                  Icons.camera_alt,
+                                  color: Colors.white,
+                                  size: 16,
+                                )),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  DelayedDisplay(
+                    delay: const Duration(milliseconds: 500),
+                    slidingBeginOffset: const Offset(0, -1),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          "Full Name:",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontFamily: 'Poppins',
+                            color: Colors.black,
+                            fontSize: 15,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        CustomTextField(
+                          validator: (value) =>
+                              CustomValidator.isEmptyUserName(value),
+                          hintText: "Robert Fox",
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  DelayedDisplay(
+                    delay: const Duration(milliseconds: 500),
+                    slidingBeginOffset: const Offset(0, -1),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          "Age:",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontFamily: 'Poppins',
+                            color: Colors.black,
+                            fontSize: 15,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        CustomTextField(
+                          validator: (value) => CustomValidator.isEmpty(value),
+                          hintText: "27 years",
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  DelayedDisplay(
+                    delay: const Duration(milliseconds: 700),
+                    slidingBeginOffset: const Offset(0, -1),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          "Parent/ Student Email Address:",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontFamily: 'Poppins',
+                            color: Colors.black,
+                            fontSize: 15,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        CustomTextField(
+                          validator: (value) => CustomValidator.email(value),
+                          hintText: "robert123@gmail.com",
+                          prefixIcon: Padding(
+                            padding: EdgeInsetsDirectional.only(
+                                start: 10.0, end: 5.0),
+                            child: Image.asset(
+                              "assest/images/EmailIcon.png",
+                              height: 20,
+                              width: 20,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  const DelayedDisplay(
+                    delay: Duration(milliseconds: 700),
+                    slidingBeginOffset: Offset(0, -1),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Phone Number:",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontFamily: 'Poppins',
+                            color: Colors.black,
+                            fontSize: 15,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        CountryCodePicker(),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  DelayedDisplay(
+                    delay: const Duration(milliseconds: 1000),
+                    slidingBeginOffset: const Offset(0, 0),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8),
+                      child: CustomButton(
+                        width: 100.w,
+                        buttonText: "Save Changes",
+                        onTap: () {
+                          if (key.currentState!.validate()) {}
+                        },
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                ],
+              ),
             ),
           ),
         ),

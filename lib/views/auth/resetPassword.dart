@@ -29,115 +29,157 @@ class _ResetPasswordState extends State<ResetPassword> {
     return Form(
       key: resetFormField,
       child: Scaffold(
-        backgroundColor: AppColors.scaffoldColor,
-        appBar: AppBar(
-          elevation: 0,
-          backgroundColor: Colors.transparent,
-          automaticallyImplyLeading: false,
-          title: CustomAppBar(
-            pageTitle: "",
-            onTap: () {
-              PageTransition.pageBackNavigation(page: const LoginScreen());
-            },
-            leadingButton: Icon(
-              Icons.arrow_back_ios,
-              color: Colors.white,
-              size: 20,
+        resizeToAvoidBottomInset: false,
+        body: Container(
+          height: 100.h,
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage("assest/images/Background.png"),
+              fit: BoxFit.cover,
             ),
           ),
-        ),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Reset ",
-                  style: TextStyle(
-                      color: AppColors.primaryColor,
-                      fontSize: 40,
-                      fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  "Password?",
-                  style: TextStyle(
-                      color: AppColors.primaryColor,
-                      fontSize: 40,
-                      fontWeight: FontWeight.bold),
-                ),
-                SizedBox(
-                  height: 2.h,
-                ),
-                Text(
-                  "Set your new password to login into your account!",
-                  style: TextStyle(
-                    fontSize: 15,
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.only(
+                  top: 5.h, left: 15.0, right: 15.0, bottom: 15.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  CustomAppBar(
+                    pageTitle: "",
+                    onTap: () {
+                      PageTransition.pageBackNavigation(
+                          page: const LoginScreen());
+                    },
+                    leadingButton: Icon(
+                      Icons.arrow_back_ios,
+                      color: Colors.white,
+                      size: 20,
+                    ),
                   ),
-                ),
-                SizedBox(
-                  height: 12.h,
-                ),
-                Padding(
-                  padding: EdgeInsets.only(top: 18.0, bottom: 8.0),
-                  child: CustomTextField(
-                    validator: (value) => CustomValidator.password(value),
-                    controller: passwordEditingController,
-                    hintText: 'Password',
-                    isObscure: _obscureText,
-                    suffixIcon: InkWell(
-                      onTap: () {
-                        setState(() {
-                          _obscureText = !_obscureText;
-                        });
-                      },
-                      child: Icon(
-                        !_obscureText
-                            ? Icons.lock_open_outlined
-                            : Icons.lock_outline_rounded,
-                        color: AppColors.primaryColor,
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  Text(
+                    "Reset ",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontFamily: 'Poppins',
+                      color: AppColors.primaryColor,
+                      fontSize: 40,
+                    ),
+                  ),
+                  Text(
+                    "Password?",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontFamily: 'Poppins',
+                      color: AppColors.primaryColor,
+                      fontSize: 40,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  Text(
+                    "Set your new password to login into your account!",
+                    style: TextStyle(
+                      color: Colors.grey.shade900,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w400,
+                      fontFamily: 'Poppins',
+                    ),
+                  ),
+                  SizedBox(
+                    height: 12.h,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 18.0, bottom: 8.0),
+                    child: CustomTextField(
+                      controller: passwordEditingController,
+                      validator: (value) => CustomValidator.password(value),
+                      hintText: 'Password',
+                      isObscure: _obscureText,
+                      suffixIcon: InkWell(
+                        onTap: () {
+                          setState(() {
+                            _obscureText = !_obscureText;
+                          });
+                        },
+                        child: Padding(
+                          padding:
+                              EdgeInsetsDirectional.only(start: 5.0, end: 12.0),
+                          child: Image.asset(
+                            !_obscureText
+                                ? "assest/images/openEye.png"
+                                : "assest/images/closeEye.png",
+                            // color: AppColors.primaryColor,
+                          ),
+                        ),
+                      ),
+                      prefixIcon: Padding(
+                        padding:
+                            EdgeInsetsDirectional.only(start: 12.0, end: 5.0),
+                        child: Image.asset(
+                          "assest/images/LockIcon.png",
+                          height: 20,
+                          width: 20,
+                        ),
                       ),
                     ),
                   ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(top: 18.0, bottom: 8.0),
-                  child: CustomTextField(
-                    validator: (value) => CustomValidator.confirmPassword(
-                        value, passwordEditingController.text),
-                    controller: confirmPasswordEditingController,
-                    hintText: 'Confirm Password',
-                    isObscure: _obscureTextConfirm,
-                    suffixIcon: InkWell(
-                      onTap: () {
-                        setState(() {
-                          _obscureTextConfirm = !_obscureTextConfirm;
-                        });
-                      },
-                      child: Icon(
-                        !_obscureTextConfirm
-                            ? Icons.lock_open_outlined
-                            : Icons.lock_outline_rounded,
-                        color: AppColors.primaryColor,
+                  Padding(
+                    padding: const EdgeInsets.only(top: 18.0, bottom: 8.0),
+                    child: CustomTextField(
+                      validator: (value) => CustomValidator.confirmPassword(
+                          value, passwordEditingController.text),
+                      controller: confirmPasswordEditingController,
+                      hintText: 'Confirm Password',
+                      isObscure: _obscureTextConfirm,
+                      suffixIcon: InkWell(
+                        onTap: () {
+                          setState(() {
+                            _obscureTextConfirm = !_obscureTextConfirm;
+                          });
+                        },
+                        child: Padding(
+                          padding:
+                              EdgeInsetsDirectional.only(start: 5.0, end: 12.0),
+                          child: Image.asset(
+                            !_obscureTextConfirm
+                                ? "assest/images/openEye.png"
+                                : "assest/images/closeEye.png",
+                            // color: AppColors.primaryColor,
+                          ),
+                        ),
+                      ),
+                      prefixIcon: Padding(
+                        padding:
+                            EdgeInsetsDirectional.only(start: 12.0, end: 5.0),
+                        child: Image.asset(
+                          "assest/images/LockIcon.png",
+                          height: 20,
+                          width: 20,
+                        ),
                       ),
                     ),
                   ),
-                ),
-                SizedBox(
-                  height: 15.h,
-                ),
-                Center(
-                  child: CustomButton(
-                      buttonText: 'Continue',
-                      width: 85.w,
-                      onTap: () {
-                        if (resetFormField.currentState!.validate()) {
-                          PageTransition.pageProperNavigation(
-                              page: const LoginScreen());
-                        }
-                      }),
-                ),
-              ],
+                  SizedBox(
+                    height: 15.h,
+                  ),
+                  Center(
+                    child: CustomButton(
+                        buttonText: 'Continue',
+                        width: 85.w,
+                        onTap: () {
+                          if (resetFormField.currentState!.validate()) {
+                            PageTransition.pageProperNavigation(
+                                page: const LoginScreen());
+                          }
+                        }),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
