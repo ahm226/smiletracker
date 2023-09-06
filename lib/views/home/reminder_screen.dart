@@ -6,6 +6,7 @@ import 'package:smiletracker/Helpers/custom_widgets.dart';
 import 'package:smiletracker/Helpers/globalvariables.dart';
 import 'package:smiletracker/Helpers/page_navigation.dart';
 import 'package:smiletracker/views/home/mood_screen.dart';
+import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 
 class ReminderScreen extends StatefulWidget {
   const ReminderScreen({Key? key}) : super(key: key);
@@ -279,33 +280,52 @@ class _ReminderScreenState extends State<ReminderScreen> {
                   ),
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 10, right: 10),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          InkWell(
-                            child: Text(_selectedDate,
-                                textAlign: TextAlign.center,
-                                style: const TextStyle(color: Colors.black)),
-                            onTap: () {
-                              _selectDate(context);
-                            },
-                          ),
-                          IconButton(
-                            icon: Image.asset(
-                              "assest/images/calenderIcon.png",
-                              height: 30,
-                              width: 30,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Row(
+                          children: [
+                            IconButton(
+                              icon: Image.asset(
+                                "assest/images/calenderIcon.png",
+                                height: 30,
+                                width: 30,
+                              ),
+                              tooltip: 'Select date',
+                              onPressed: () {
+                                _selectDate(context);
+                              },
                             ),
-                            tooltip: 'Select date',
-                            onPressed: () {
-                              _selectDate(context);
-                            },
+                            InkWell(
+                              child: Text(
+                                _selectedDate,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w500,
+                                  fontFamily: 'Poppins',
+                                ),
+                              ),
+                              onTap: () {
+                                _selectDate(context);
+                              },
+                            ),
+                          ],
+                        ),
+                        IconButton(
+                          icon: Image.asset(
+                            "assest/images/dropDown.png",
+                            height: 10,
+                            width: 10,
                           ),
-                        ],
-                      ),
+                          tooltip: 'Select date',
+                          onPressed: () {
+                            _selectDate(context);
+                          },
+                        ),
+                      ],
                     ),
                   ),
                 ),
@@ -335,33 +355,52 @@ class _ReminderScreenState extends State<ReminderScreen> {
                   ),
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 10, right: 10),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          InkWell(
-                            child: Text(_selectedTime,
-                                textAlign: TextAlign.center,
-                                style: const TextStyle(color: Colors.black)),
-                            onTap: () {
-                              _selectTime(context);
-                            },
-                          ),
-                          IconButton(
-                            icon: Image.asset(
-                              "assest/images/calenderIcon.png",
-                              height: 30,
-                              width: 30,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Row(
+                          children: [
+                            IconButton(
+                              icon: Image.asset(
+                                "assest/images/clock.png",
+                                height: 30,
+                                width: 30,
+                              ),
+                              tooltip: 'Select Time',
+                              onPressed: () {
+                                _selectTime(context);
+                              },
                             ),
-                            tooltip: 'Select Time',
-                            onPressed: () {
-                              _selectTime(context);
-                            },
+                            InkWell(
+                              child: Text(
+                                _selectedTime,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w500,
+                                  fontFamily: 'Poppins',
+                                ),
+                              ),
+                              onTap: () {
+                                _selectTime(context);
+                              },
+                            ),
+                          ],
+                        ),
+                        IconButton(
+                          icon: Image.asset(
+                            "assest/images/dropDown.png",
+                            height: 10,
+                            width: 10,
                           ),
-                        ],
-                      ),
+                          tooltip: 'Select Time',
+                          onPressed: () {
+                            _selectTime(context);
+                          },
+                        ),
+                      ],
                     ),
                   ),
                 ),
@@ -425,14 +464,58 @@ class _ReminderScreenState extends State<ReminderScreen> {
                       ),
                     ),
                     SizedBox(
-                      width: 40.w,
+                      width: 25.w,
                     ),
-                    CustomButton(
-                      width: 40.w,
-                      buttonText: 'Submit',
+                    ZoomTapAnimation(
                       onTap: () {
                         reminderSuccess(context);
                       },
+                      onLongTap: () {},
+                      enableLongTapRepeatEvent: false,
+                      longTapRepeatDuration: const Duration(milliseconds: 100),
+                      begin: 1.0,
+                      end: 0.93,
+                      beginDuration: const Duration(milliseconds: 20),
+                      endDuration: const Duration(milliseconds: 120),
+                      beginCurve: Curves.decelerate,
+                      endCurve: Curves.fastOutSlowIn,
+                      child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          width: 52.w,
+                          height: 52,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                            image: DecorationImage(
+                              image:
+                                  AssetImage("assest/images/btnRectangle.png"),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          child: Center(
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 10, right: 10),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "Submit",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w500,
+                                      fontFamily: 'Poppins',
+                                    ),
+                                  ),
+                                  Icon(
+                                    Icons.arrow_forward,
+                                    color: Colors.white,
+                                  )
+                                ],
+                              ),
+                            ),
+                          )),
                     ),
                   ],
                 ),

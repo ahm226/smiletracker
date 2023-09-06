@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
-import 'package:smiletracker/views/auth/loginScreen.dart';
+import 'package:smiletracker/views/home/smily_face.dart';
 
 class splashScreen extends StatefulWidget {
   const splashScreen({Key? key}) : super(key: key);
@@ -14,8 +14,8 @@ class splashScreen extends StatefulWidget {
 class _splashScreenState extends State<splashScreen> {
   getData() {
     Future.delayed(const Duration(milliseconds: 5000), () {
-      Get.offAll(() => const LoginScreen());
-      // Get.offAll(() => const EmojiRatingApp());
+      // Get.offAll(() => const LoginScreen());
+      Get.offAll(() => const EmojiRatingApp());
     });
   }
 

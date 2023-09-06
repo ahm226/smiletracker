@@ -43,7 +43,7 @@ class _CountryCodePickerState extends State<CountryCodePicker> {
       initialValue: number,
       inputDecoration: InputDecoration(
           prefixIconConstraints:
-              const BoxConstraints(maxHeight: 18, minHeight: 18, minWidth: 60),
+              const BoxConstraints(maxHeight: 20, minHeight: 20, minWidth: 60),
           fillColor: AppColors.primaryColor.withOpacity(0.1),
           filled: true,
           border: InputBorder.none,

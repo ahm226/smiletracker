@@ -109,43 +109,49 @@ class _ChoosePlanState extends State<ChoosePlan> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Image.asset(
-                              selectedId == 1
-                                  ? "assest/images/unSelectedRadio.png"
-                                  : "assest/images/selectedRadio.png",
-                              height: 20,
-                              width: 20,
-                            ),
-                            const Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.center,
+                            Row(
                               children: [
-                                Text(
-                                  "Monthly",
-                                  style: TextStyle(
-                                    color: AppColors.primaryColor,
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w600,
-                                    fontFamily: 'Poppins',
-                                  ),
+                                Image.asset(
+                                  selectedId == 1
+                                      ? "assest/images/unSelectedRadio.png"
+                                      : "assest/images/selectedRadio.png",
+                                  height: 20,
+                                  width: 20,
                                 ),
-                                Text(
-                                  "Pay monthly, cancel any time",
-                                  style: TextStyle(
-                                    color: AppColors.primaryColor,
-                                    fontSize: 9,
-                                    fontWeight: FontWeight.w400,
-                                    fontFamily: 'Poppins',
-                                  ),
+                                SizedBox(
+                                  width: 20,
+                                ),
+                                const Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      "Monthly",
+                                      style: TextStyle(
+                                        color: AppColors.primaryColor,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w600,
+                                        fontFamily: 'Poppins',
+                                      ),
+                                    ),
+                                    Text(
+                                      "Pay monthly, cancel any time",
+                                      style: TextStyle(
+                                        color: AppColors.primaryColor,
+                                        fontSize: 9,
+                                        fontWeight: FontWeight.w400,
+                                        fontFamily: 'Poppins',
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),
-                            const Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
+                            const Row(
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
                                 Text(
-                                  "\$ 19.99/-",
+                                  "\$ 19.99",
                                   style: TextStyle(
                                     color: AppColors.primaryColor,
                                     fontSize: 20,
@@ -153,14 +159,14 @@ class _ChoosePlanState extends State<ChoosePlan> {
                                     fontFamily: 'Poppins',
                                   ),
                                 ),
-                                SizedBox(
-                                  height: 5,
-                                ),
                                 Text(
-                                  "Monthly Subscription",
+                                  "/m",
                                   style: TextStyle(
-                                      fontSize: 9,
-                                      color: AppColors.primaryColor),
+                                    color: AppColors.primaryColor,
+                                    fontSize: 11,
+                                    fontWeight: FontWeight.w400,
+                                    fontFamily: 'Poppins',
+                                  ),
                                   textAlign: TextAlign.center,
                                 ),
                               ],
@@ -194,43 +200,49 @@ class _ChoosePlanState extends State<ChoosePlan> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Image.asset(
-                              selectedId == 0
-                                  ? "assest/images/unSelectedRadio.png"
-                                  : "assest/images/selectedRadio.png",
-                              height: 20,
-                              width: 20,
-                            ),
-                            const Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.center,
+                            Row(
                               children: [
-                                Text(
-                                  "Yearly",
-                                  style: TextStyle(
-                                    color: AppColors.primaryColor,
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w600,
-                                    fontFamily: 'Poppins',
-                                  ),
+                                Image.asset(
+                                  selectedId == 0
+                                      ? "assest/images/unSelectedRadio.png"
+                                      : "assest/images/selectedRadio.png",
+                                  height: 20,
+                                  width: 20,
                                 ),
-                                Text(
-                                  "Pay for a full year",
-                                  style: TextStyle(
-                                    color: AppColors.primaryColor,
-                                    fontSize: 9,
-                                    fontWeight: FontWeight.w400,
-                                    fontFamily: 'Poppins',
-                                  ),
+                                SizedBox(
+                                  width: 20,
+                                ),
+                                const Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      "Yearly",
+                                      style: TextStyle(
+                                        color: AppColors.primaryColor,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w600,
+                                        fontFamily: 'Poppins',
+                                      ),
+                                    ),
+                                    Text(
+                                      "Pay for a full year",
+                                      style: TextStyle(
+                                        color: AppColors.primaryColor,
+                                        fontSize: 9,
+                                        fontWeight: FontWeight.w400,
+                                        fontFamily: 'Poppins',
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),
-                            const Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
+                            const Row(
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
                                 Text(
-                                  "\$ 129.99/-",
+                                  "\$ 129.99",
                                   style: TextStyle(
                                     color: AppColors.primaryColor,
                                     fontSize: 20,
@@ -238,15 +250,14 @@ class _ChoosePlanState extends State<ChoosePlan> {
                                     fontFamily: 'Poppins',
                                   ),
                                 ),
-                                SizedBox(
-                                  height: 5,
-                                ),
                                 Text(
-                                  "Yearly Subscription",
+                                  "/y",
                                   style: TextStyle(
-                                      fontSize: 9,
-                                      fontFamily: 'Poppins',
-                                      color: AppColors.primaryColor),
+                                    color: AppColors.primaryColor,
+                                    fontSize: 11,
+                                    fontWeight: FontWeight.w400,
+                                    fontFamily: 'Poppins',
+                                  ),
                                   textAlign: TextAlign.center,
                                 ),
                               ],
