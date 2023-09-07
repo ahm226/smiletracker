@@ -1,8 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 import 'package:smiletracker/Helpers/custom_validator.dart';
 import 'package:smiletracker/Helpers/globalvariables.dart';
 import 'package:smiletracker/Helpers/page_navigation.dart';
+import 'package:smiletracker/models/user_model.dart';
 import 'package:smiletracker/views/auth/forgotPasswordScreen.dart';
 import 'package:smiletracker/views/auth/signupScreen.dart';
 import 'package:smiletracker/views/home/smily_face.dart';
@@ -19,6 +23,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   bool _obscureText = true;
+  bool isEmailVerified = false;
   final TextEditingController emailEditingController = TextEditingController();
   final TextEditingController passwordEditingController =
       TextEditingController();
@@ -40,7 +45,7 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
           child: SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.all(15.0),
+              padding: const EdgeInsets.only(left: 18.0, right: 18.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -52,7 +57,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     style: TextStyle(
                         fontFamily: 'Poppins',
                         color: AppColors.primaryColor,
-                        fontSize: 40,
+                        fontSize: 42,
                         fontWeight: FontWeight.w600),
                   ),
                   SizedBox(
@@ -64,21 +69,22 @@ class _LoginScreenState extends State<LoginScreen> {
                       fontWeight: FontWeight.w400,
                       fontFamily: 'Poppins',
                       color: Colors.grey.shade800,
-                      fontSize: 15,
+                      fontSize: 17,
                     ),
                   ),
                   SizedBox(
                     height: 12.h,
                   ),
                   Padding(
-                    padding: EdgeInsets.only(top: 18.0, bottom: 8.0),
+                    padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
                     child: CustomTextField(
                       validator: (value) => CustomValidator.email(value),
                       controller: emailEditingController,
                       hintText: 'Email Address',
+                      keyboardType: TextInputType.emailAddress,
                       prefixIcon: Padding(
                         padding:
-                            EdgeInsetsDirectional.only(start: 12.0, end: 5.0),
+                            EdgeInsetsDirectional.only(start: 18.0, end: 12.0),
                         child: Image.asset(
                           "assest/images/EmailIcon.png",
                           height: 20,
@@ -88,7 +94,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(top: 18.0, bottom: 8.0),
+                    padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
                     child: CustomTextField(
                       controller: passwordEditingController,
                       validator: (value) => CustomValidator.password(value),
@@ -102,7 +108,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         },
                         child: Padding(
                           padding:
-                              EdgeInsetsDirectional.only(start: 5.0, end: 12.0),
+                              EdgeInsetsDirectional.only(start: 5.0, end: 18.0),
                           child: Image.asset(
                             !_obscureText
                                 ? "assest/images/openEye.png"
@@ -113,7 +119,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       prefixIcon: Padding(
                         padding:
-                            EdgeInsetsDirectional.only(start: 12.0, end: 5.0),
+                            EdgeInsetsDirectional.only(start: 18.0, end: 12.0),
                         child: Image.asset(
                           "assest/images/LockIcon.png",
                           height: 20,
@@ -128,10 +134,33 @@ class _LoginScreenState extends State<LoginScreen> {
                   Center(
                     child: CustomButton(
                       buttonText: 'Login',
-                      onTap: () {
+                      onTap: () async {
                         if (signInFormField.currentState!.validate()) {
-                          PageTransition.pageProperNavigation(
-                              page: const EmojiRatingApp());
+                          // PageTransition.pageProperNavigation(
+                          //     page: const EmojiRatingApp());
+
+                          Get.defaultDialog(
+                              barrierDismissible: false,
+                              title: "Mood Meter",
+                              titleStyle: const TextStyle(
+                                color: AppColors.primaryColor,
+                                fontSize: 18,
+                                fontWeight: FontWeight.w500,
+                                fontFamily: 'Poppins',
+                              ),
+                              middleText: "",
+                              content: const Column(
+                                children: [
+                                  Center(
+                                      child: CircularProgressIndicator(
+                                    color: AppColors.primaryColor,
+                                  ))
+                                ],
+                              ));
+                          await validateUser(
+                              emailEditingController.text.removeAllWhitespace
+                                  .toLowerCase(),
+                              passwordEditingController.text);
                         }
                       },
                       width: 90.w,
@@ -149,8 +178,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: Text(
                       "Forgot Password?",
                       style: TextStyle(
-                        color: Colors.grey.shade900,
-                        fontSize: 15,
+                        color: Colors.grey.shade800,
+                        fontSize: 16,
                         fontWeight: FontWeight.w500,
                         fontFamily: 'Poppins',
                       ),
@@ -168,7 +197,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           "Don't have an account?",
                           style: TextStyle(
                             color: Colors.grey.shade700,
-                            fontSize: 12,
+                            fontSize: 14,
                             fontWeight: FontWeight.w500,
                             fontFamily: 'Poppins',
                           ),
@@ -186,7 +215,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             "Sign up",
                             style: TextStyle(
                               color: AppColors.primaryColor,
-                              fontSize: 12,
+                              fontSize: 15,
                               fontWeight: FontWeight.w600,
                               fontFamily: 'Poppins',
                             ),
@@ -203,5 +232,53 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
+  }
+
+  validateUser(email, password) async {
+    try {
+      UserCredential user = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: email, password: password);
+      userDocId.value = user.user!.uid;
+
+      await FirebaseAuth.instance.currentUser?.reload();
+
+      isEmailVerified = FirebaseAuth.instance.currentUser!.emailVerified;
+      if (isEmailVerified) {
+        FirebaseFirestore.instance
+            .collection('users')
+            .doc(user.user!.uid)
+            .get()
+            .then((value) async {
+          setState(() {
+            userData = UserModel.fromDocument(value.data());
+          });
+          saveUserData(userID: userDocId.value);
+          setUserLoggedIn(true);
+          setState(() {
+            loggedInGlobal.value = true;
+          });
+          Get.back();
+          setState(() {});
+          setState(() {});
+          PageTransition.pageProperNavigation(page: const EmojiRatingApp());
+        });
+      } else {
+        Get.back();
+        setState(() {});
+        errorPopUp(
+            context, "Sorry, There is some issue in proceeding. Try later");
+      }
+    } on FirebaseAuthException catch (e) {
+      Get.back();
+      setState(() {});
+      errorPopUp(
+        context,
+        e.code == 'user-not-found'
+            ? "User not found"
+            : (e.code == 'wrong-password')
+                ? "The Password you have entered is not correct"
+                : e.toString().replaceRange(0, 14, '').split(']')[1],
+      );
+    }
   }
 }

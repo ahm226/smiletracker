@@ -1,4 +1,4 @@
-package com.example.smiletracker
+package com.moodMeter.app
 
 import io.flutter.embedding.android.FlutterActivity
 

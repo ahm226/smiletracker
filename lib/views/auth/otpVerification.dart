@@ -31,7 +31,7 @@ class _VerifyEmailState extends State<VerifyEmail> {
         ),
         child: Padding(
           padding:
-              EdgeInsets.only(top: 5.h, left: 15.0, right: 15.0, bottom: 15.0),
+              EdgeInsets.only(top: 5.h, left: 18.0, right: 18.0, bottom: 15.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -47,13 +47,13 @@ class _VerifyEmailState extends State<VerifyEmail> {
                 ),
               ),
               const SizedBox(
-                height: 30,
+                height: 40,
               ),
               const Text(
                 "OTP",
                 style: TextStyle(
                   color: AppColors.primaryColor,
-                  fontSize: 40,
+                  fontSize: 42,
                   fontWeight: FontWeight.w600,
                   fontFamily: 'Poppins',
                 ),
@@ -62,7 +62,7 @@ class _VerifyEmailState extends State<VerifyEmail> {
                 "Verification",
                 style: TextStyle(
                   color: AppColors.primaryColor,
-                  fontSize: 40,
+                  fontSize: 42,
                   fontWeight: FontWeight.w600,
                   fontFamily: 'Poppins',
                 ),
@@ -74,25 +74,29 @@ class _VerifyEmailState extends State<VerifyEmail> {
                 "We have sent an email to your email account with a verification code!",
                 style: TextStyle(
                   color: Colors.grey.shade900,
-                  fontSize: 15,
+                  fontSize: 17,
                   fontWeight: FontWeight.w400,
                   fontFamily: 'Poppins',
                 ),
               ),
               const Expanded(child: SizedBox()),
-              Stack(
-                children: [
-                  const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 22),
-                    child: OtpField(),
-                  ),
-                  Container(
-                    width: 100.w,
-                    height: 10.h,
-                    color: Colors.transparent,
-                  ),
-                ],
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 22),
+                child: OtpField(),
               ),
+              // Stack(
+              //   children: [
+              //     const Padding(
+              //       padding: EdgeInsets.symmetric(horizontal: 22),
+              //       child: OtpField(),
+              //     ),
+              //     Container(
+              //       width: 100.w,
+              //       height: 10.h,
+              //       color: Colors.transparent,
+              //     ),
+              //   ],
+              // ),
               const Expanded(child: SizedBox()),
               // Padding(
               //   padding: const EdgeInsets.all(10.0),

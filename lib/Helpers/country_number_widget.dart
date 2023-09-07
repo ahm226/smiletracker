@@ -33,6 +33,7 @@ class _CountryCodePickerState extends State<CountryCodePicker> {
       },
       onInputValidated: (bool value) {},
       selectorConfig: const SelectorConfig(
+        leadingPadding: 18,
         selectorType: PhoneInputSelectorType.BOTTOM_SHEET,
         setSelectorButtonAsPrefixIcon: true,
       ),
@@ -42,9 +43,10 @@ class _CountryCodePickerState extends State<CountryCodePicker> {
       hintText: 'Phone Number',
       initialValue: number,
       inputDecoration: InputDecoration(
+          contentPadding: EdgeInsets.symmetric(horizontal: 10.0),
           prefixIconConstraints:
-              const BoxConstraints(maxHeight: 18, minHeight: 18, minWidth: 60),
-          fillColor: AppColors.primaryColor.withOpacity(0.1),
+              const BoxConstraints(maxHeight: 20, minHeight: 20, minWidth: 60),
+          fillColor: AppColors.primaryColor.withOpacity(0.12),
           filled: true,
           border: InputBorder.none,
           errorBorder: OutlineInputBorder(
@@ -69,7 +71,11 @@ class _CountryCodePickerState extends State<CountryCodePicker> {
             ),
           ),
           hintText: 'Phone Number',
-          hintStyle: const TextStyle(color: Colors.grey)),
+          hintStyle: TextStyle(
+            color: Colors.grey.shade600,
+            fontSize: 16,
+            fontFamily: 'Poppins',
+          )),
       textStyle: const TextStyle(
         color: Colors.black,
       ),

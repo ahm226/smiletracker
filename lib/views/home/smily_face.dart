@@ -73,21 +73,22 @@ class _EmojiRatingAppState extends State<EmojiRatingApp> {
             ),
           ),
           child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(
-                  height: 5.h,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
+            child: Padding(
+              padding: const EdgeInsets.only(
+                  left: 18.0, right: 18.0, top: 8.0, bottom: 8.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    height: 5.h,
+                  ),
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
                         _selectedDate.isEmpty
-                            ? DateFormat('EEEE , d MMMM,y')
+                            ? DateFormat('EEEE, d MMMM, y')
                                 .format(DateTime.now())
                                 .toString()
                             : _selectedDate,
@@ -98,116 +99,127 @@ class _EmojiRatingAppState extends State<EmojiRatingApp> {
                           fontSize: 15,
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          children: [
-                            InkWell(
-                                onTap: () {
-                                  _selectDate(context);
-                                },
-                                child: Image.asset(
-                                  "assest/images/calenderIcon.png",
-                                  height: 16,
-                                  width: 17,
-                                )),
-                            InkWell(
+                      Row(
+                        children: [
+                          InkWell(
                               onTap: () {
-                                PageTransition.pageNavigation(
-                                    page: const ProfileScreen());
+                                _selectDate(context);
                               },
-                              child: Padding(
-                                padding: const EdgeInsets.only(left: 8.0),
-                                child: Image.asset(
-                                  "assest/images/profileImage.png",
-                                  height: 27,
-                                  width: 27,
-                                ),
+                              child: Image.asset(
+                                "assest/images/calenderIcon.png",
+                                height: 22,
+                                width: 22,
+                              )),
+                          SizedBox(
+                            width: 1.5.w,
+                          ),
+                          InkWell(
+                            onTap: () {
+                              PageTransition.pageNavigation(
+                                  page: const ProfileScreen());
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 8.0),
+                              child: Image.asset(
+                                "assest/images/profileImage.png",
+                                height: 32,
+                                width: 32,
                               ),
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       )
                     ],
                   ),
-                ),
-                Text(
-                  "How Are you Feeling today?",
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 25,
-                    fontWeight: FontWeight.w500,
-                    fontFamily: 'Poppins',
+                  SizedBox(
+                    height: 14,
                   ),
-                ),
-                SizedBox(
-                  height: 10.h,
-                ),
-                CustomPaint(
-                  painter: EmojiPainter(_rating),
-                  size: Size(300, 300),
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-                Text(
-                  _rating.toStringAsFixed(2) == "0.00"
-                      ? "Sad"
-                      : _rating.toStringAsFixed(2) == "5.00"
-                          ? "Happy"
-                          : "Normal",
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 25,
-                    fontWeight: FontWeight.w400,
-                    fontFamily: 'Poppins',
+                  Text(
+                    "How Are you Feeling today?",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 26,
+                      fontWeight: FontWeight.w500,
+                      fontFamily: 'Poppins',
+                    ),
                   ),
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-                Stack(
-                  children: [
-                    Center(
-                      child: RatingBar.builder(
-                        initialRating: _rating,
-                        minRating: 0,
-                        direction: Axis.horizontal,
-                        allowHalfRating: true,
-                        itemCount: 5,
-                        itemPadding:
-                            const EdgeInsets.symmetric(horizontal: 4.0),
-                        itemBuilder: (context, _) => const Icon(
-                          Icons.star,
-                          color: Colors.amber,
-                        ),
-                        onRatingUpdate: (rating) {
-                          if (kDebugMode) {
-                            print(rating);
-                          }
-                        },
+                  SizedBox(
+                    height: 8.h,
+                  ),
+                  Center(
+                    child: CustomPaint(
+                      painter: EmojiPainter(_rating),
+                      size: Size(300, 300),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 6.h,
+                  ),
+                  Center(
+                    child: Text(
+                      _rating.toStringAsFixed(2) == "0.00"
+                          ? "Sad"
+                          : _rating.toStringAsFixed(2) == "5.00"
+                              ? "Happy"
+                              : "Normal",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 27,
+                        fontWeight: FontWeight.w400,
+                        fontFamily: 'Poppins',
                       ),
                     ),
-                    Container(
-                      width: 100.w,
-                      height: 40,
-                      color: Colors.transparent,
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-                InkWell(
-                    onTap: () {
-                      PageTransition.pageNavigation(
-                          page: const ReminderScreen());
-                    },
-                    child: Container(
-                        height: 10.h,
-                        width: 20.w,
-                        child: Image.asset("assest/images/moveAhead.png"))),
-              ],
+                  ),
+                  SizedBox(
+                    height: 6.h,
+                  ),
+                  Stack(
+                    children: [
+                      Center(
+                        child: RatingBar.builder(
+                          initialRating: _rating,
+                          minRating: 0,
+                          direction: Axis.horizontal,
+                          allowHalfRating: true,
+                          itemCount: 5,
+                          itemPadding:
+                              const EdgeInsets.symmetric(horizontal: 4.0),
+                          itemBuilder: (context, _) => const Icon(
+                            Icons.star,
+                            color: Colors.amber,
+                          ),
+                          onRatingUpdate: (rating) {
+                            if (kDebugMode) {
+                              print(rating);
+                            }
+                          },
+                        ),
+                      ),
+                      Container(
+                        width: 100.w,
+                        height: 40,
+                        color: Colors.transparent,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  Center(
+                    child: InkWell(
+                        onTap: () {
+                          PageTransition.pageNavigation(
+                              page: ReminderScreen(
+                            rating: _rating,
+                          ));
+                        },
+                        child: Container(
+                            height: 10.h,
+                            width: 20.w,
+                            child: Image.asset("assest/images/moveAhead.png"))),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

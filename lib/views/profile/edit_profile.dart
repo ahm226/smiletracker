@@ -24,7 +24,7 @@ class _EditProfileState extends State<EditProfile> {
     return Form(
       key: key,
       child: Scaffold(
-        resizeToAvoidBottomInset: false,
+        // resizeToAvoidBottomInset: false,
         body: Container(
           height: 100.h,
           decoration: const BoxDecoration(
@@ -36,7 +36,7 @@ class _EditProfileState extends State<EditProfile> {
           child: SingleChildScrollView(
             child: Padding(
               padding: EdgeInsets.only(
-                  top: 5.h, left: 15.0, right: 15.0, bottom: 15.0),
+                  top: 5.h, left: 18.0, right: 18.0, bottom: 15.0),
               child: Column(
                 children: [
                   CustomAppBar(
@@ -77,8 +77,8 @@ class _EditProfileState extends State<EditProfile> {
                         //   ),
                         // ),
                         Positioned(
-                          right: 93,
-                          bottom: 10,
+                          right: 26.w,
+                          bottom: 1.h,
                           child: ZoomTapAnimation(
                             onTap: () {},
                             onLongTap: () {},
@@ -155,6 +155,7 @@ class _EditProfileState extends State<EditProfile> {
                         CustomTextField(
                           validator: (value) => CustomValidator.isEmpty(value),
                           hintText: "27 years",
+                          keyboardType: TextInputType.phone,
                         ),
                       ],
                     ),
@@ -183,7 +184,7 @@ class _EditProfileState extends State<EditProfile> {
                           hintText: "robert123@gmail.com",
                           prefixIcon: Padding(
                             padding: EdgeInsetsDirectional.only(
-                                start: 10.0, end: 5.0),
+                                start: 18.0, end: 15.0),
                             child: Image.asset(
                               "assest/images/EmailIcon.png",
                               height: 20,

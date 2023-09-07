@@ -41,7 +41,7 @@ class _ResetPasswordState extends State<ResetPassword> {
           child: SingleChildScrollView(
             child: Padding(
               padding: EdgeInsets.only(
-                  top: 5.h, left: 15.0, right: 15.0, bottom: 15.0),
+                  top: 5.h, left: 18.0, right: 18.0, bottom: 15.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -58,7 +58,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                     ),
                   ),
                   const SizedBox(
-                    height: 30,
+                    height: 40,
                   ),
                   Text(
                     "Reset ",
@@ -66,7 +66,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                       fontWeight: FontWeight.w600,
                       fontFamily: 'Poppins',
                       color: AppColors.primaryColor,
-                      fontSize: 40,
+                      fontSize: 42,
                     ),
                   ),
                   Text(
@@ -75,7 +75,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                       fontWeight: FontWeight.w600,
                       fontFamily: 'Poppins',
                       color: AppColors.primaryColor,
-                      fontSize: 40,
+                      fontSize: 42,
                     ),
                   ),
                   const SizedBox(
@@ -85,7 +85,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                     "Set your new password to login into your account!",
                     style: TextStyle(
                       color: Colors.grey.shade900,
-                      fontSize: 16,
+                      fontSize: 17,
                       fontWeight: FontWeight.w400,
                       fontFamily: 'Poppins',
                     ),
@@ -108,7 +108,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                         },
                         child: Padding(
                           padding:
-                              EdgeInsetsDirectional.only(start: 5.0, end: 12.0),
+                              EdgeInsetsDirectional.only(start: 5.0, end: 18.0),
                           child: Image.asset(
                             !_obscureText
                                 ? "assest/images/openEye.png"
@@ -119,7 +119,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                       ),
                       prefixIcon: Padding(
                         padding:
-                            EdgeInsetsDirectional.only(start: 12.0, end: 5.0),
+                            EdgeInsetsDirectional.only(start: 18.0, end: 12.0),
                         child: Image.asset(
                           "assest/images/LockIcon.png",
                           height: 20,
@@ -144,7 +144,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                         },
                         child: Padding(
                           padding:
-                              EdgeInsetsDirectional.only(start: 5.0, end: 12.0),
+                              EdgeInsetsDirectional.only(start: 5.0, end: 18.0),
                           child: Image.asset(
                             !_obscureTextConfirm
                                 ? "assest/images/openEye.png"
@@ -155,7 +155,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                       ),
                       prefixIcon: Padding(
                         padding:
-                            EdgeInsetsDirectional.only(start: 12.0, end: 5.0),
+                            EdgeInsetsDirectional.only(start: 18.0, end: 12.0),
                         child: Image.asset(
                           "assest/images/LockIcon.png",
                           height: 20,

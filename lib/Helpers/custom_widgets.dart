@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:smiletracker/Helpers/page_navigation.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
-
-import 'globalvariables.dart';
 
 class CustomButton extends StatefulWidget {
   final String buttonText;
   final Function onTap;
   final double? height;
   final double? width;
+
   const CustomButton(
       {Key? key,
       required this.buttonText,
       required this.onTap,
-      this.height = 52.0,
+      this.height = 58.0,
       this.width = 100.0})
       : super(key: key);
 
@@ -43,9 +43,11 @@ class _CustomButtonState extends State<CustomButton> {
             width: widget.width,
             height: widget.height,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(16),
               image: DecorationImage(
-                image: AssetImage("assest/images/btnRectangle.png"),
+                image: AssetImage(
+                  "assest/images/btnRectangle.png",
+                ),
                 fit: BoxFit.cover,
               ),
               // gradient: LinearGradient(
@@ -83,6 +85,7 @@ class CustomAppBar extends StatefulWidget {
   final String pageTitle;
   final Function onTap;
   final Widget? leadingButton;
+
   const CustomAppBar(
       {Key? key,
       required this.pageTitle,
@@ -116,13 +119,16 @@ class _CustomAppBarState extends State<CustomAppBar> {
             beginCurve: Curves.decelerate,
             endCurve: Curves.fastOutSlowIn,
             child: Container(
-                height: 30,
-                width: 30,
-                padding: EdgeInsets.only(left: 10),
-                decoration: BoxDecoration(
-                    color: AppColors.primaryColor,
-                    borderRadius: BorderRadius.circular(10)),
-                child: widget.leadingButton),
+                height: 31,
+                width: 31,
+                // decoration: BoxDecoration(
+                //     color: AppColors.primaryColor,
+                //     borderRadius: BorderRadius.circular(10)),
+                child: Image.asset(
+                  "assest/images/backSquare.png",
+                  height: 31,
+                  width: 31,
+                )),
           ),
           Text(
             widget.pageTitle,
@@ -130,7 +136,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
               fontWeight: FontWeight.w700,
               fontFamily: 'Poppins',
               color: Colors.black,
-              fontSize: 20,
+              fontSize: 22,
             ),
           ),
           SizedBox(
@@ -140,4 +146,148 @@ class _CustomAppBarState extends State<CustomAppBar> {
       ),
     );
   }
+}
+
+successPopUp(BuildContext context, page, message) {
+  // set up the AlertDialog
+  return showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return StatefulBuilder(builder: (context, setState) {
+          return AlertDialog(
+            backgroundColor: Colors.white,
+            elevation: 0,
+            contentPadding: EdgeInsets.zero,
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(13)),
+            // title: Text("Notice"),
+            // content: Text("Launching this missile will destroy the entire universe. Is this what you intended to do?"),
+            actions: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                      ),
+                      alignment: Alignment.center,
+                      child: Padding(
+                        padding: const EdgeInsets.all(18.0),
+                        child: Column(
+                          children: [
+                            Image.asset(
+                              "assest/images/success.png",
+                              height: 170,
+                              width: 150,
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(left: 15.0, right: 15.0),
+                              child: Text(
+                                message.toString(),
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  height: 1.4,
+                                  fontWeight: FontWeight.w600,
+                                  fontFamily: 'Poppins',
+                                  color: Colors.black,
+                                  fontSize: 17,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            CustomButton(
+                              buttonText: 'Done',
+                              onTap: () {
+                                Navigator.pop(context);
+                                PageTransition.pageNavigation(page: page);
+                              },
+                              width: 170,
+                            )
+                          ],
+                        ),
+                      )),
+                ],
+              ),
+            ],
+          );
+        });
+      });
+}
+
+errorPopUp(BuildContext context, String message) {
+  // set up the AlertDialog
+  return showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return StatefulBuilder(builder: (context, setState) {
+          return AlertDialog(
+            backgroundColor: Colors.white,
+            elevation: 0,
+            contentPadding: EdgeInsets.zero,
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(13)),
+            // title: Text("Notice"),
+            // content: Text("Launching this missile will destroy the entire universe. Is this what you intended to do?"),
+            actions: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                      ),
+                      alignment: Alignment.center,
+                      child: Padding(
+                        padding: const EdgeInsets.all(18.0),
+                        child: Column(
+                          children: [
+                            Image.asset(
+                              "assest/images/error.png",
+                              height: 170,
+                              width: 150,
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(left: 15.0, right: 15.0),
+                              child: Text(
+                                message.toString(),
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  height: 1.4,
+                                  fontWeight: FontWeight.w600,
+                                  fontFamily: 'Poppins',
+                                  color: Colors.black,
+                                  fontSize: 17,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            CustomButton(
+                              buttonText: 'Done',
+                              onTap: () {
+                                Navigator.pop(context);
+                                // PageTransition.pageNavigation(page: page);
+                              },
+                              width: 170,
+                            )
+                          ],
+                        ),
+                      )),
+                ],
+              ),
+            ],
+          );
+        });
+      });
 }

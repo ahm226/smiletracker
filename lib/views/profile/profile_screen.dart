@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -42,7 +43,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
         child: Padding(
           padding:
-              EdgeInsets.only(top: 5.h, left: 15.0, right: 15.0, bottom: 15.0),
+              EdgeInsets.only(top: 5.h, left: 18.0, right: 18.0, bottom: 15.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -68,14 +69,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
               ),
               SizedBox(
-                height: 3.h,
+                height: 2.h,
               ),
               const Text(
                 "Esther Howard",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.black,
-                  fontSize: 20,
+                  fontSize: 21,
                   fontWeight: FontWeight.w600,
                   fontFamily: 'Poppins',
                 ),
@@ -95,13 +96,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     decoration: BoxDecoration(
                       color: AppColors.primaryColor.withOpacity(0.1),
                       borderRadius: BorderRadius.circular(
-                          10.0), // Adjust the radius as needed
+                          12.0), // Adjust the radius as needed
                     ),
                     child: const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Padding(
-                          padding: EdgeInsets.all(8.0),
+                          padding: EdgeInsets.all(12.0),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -110,7 +111,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 "Upgrade to Premium",
                                 style: TextStyle(
                                   color: Colors.black,
-                                  fontSize: 15,
+                                  fontSize: 17,
                                   fontWeight: FontWeight.w500,
                                   fontFamily: 'Poppins',
                                 ),
@@ -122,7 +123,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 "This subscription is auto-renewable",
                                 style: TextStyle(
                                   color: Colors.black,
-                                  fontSize: 13,
+                                  fontSize: 14,
                                   fontWeight: FontWeight.w400,
                                   fontFamily: 'Poppins',
                                 ),
@@ -155,13 +156,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     decoration: BoxDecoration(
                       color: AppColors.primaryColor.withOpacity(0.1),
                       borderRadius: BorderRadius.circular(
-                          10.0), // Adjust the radius as needed
+                          12.0), // Adjust the radius as needed
                     ),
                     child: const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Padding(
-                          padding: EdgeInsets.all(8.0),
+                          padding: EdgeInsets.all(12.0),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -170,7 +171,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 "Edit Profile",
                                 style: TextStyle(
                                   color: Colors.black,
-                                  fontSize: 15,
+                                  fontSize: 17,
                                   fontWeight: FontWeight.w500,
                                   fontFamily: 'Poppins',
                                 ),
@@ -203,13 +204,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     decoration: BoxDecoration(
                       color: AppColors.primaryColor.withOpacity(0.1),
                       borderRadius: BorderRadius.circular(
-                          10.0), // Adjust the radius as needed
+                          12.0), // Adjust the radius as needed
                     ),
                     child: const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Padding(
-                          padding: EdgeInsets.all(8.0),
+                          padding: EdgeInsets.all(12.0),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -218,7 +219,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 "Change Password",
                                 style: TextStyle(
                                   color: Colors.black,
-                                  fontSize: 15,
+                                  fontSize: 17,
                                   fontWeight: FontWeight.w500,
                                   fontFamily: 'Poppins',
                                 ),
@@ -241,7 +242,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
               InkWell(
                 onTap: () {
-                  PageTransition.pageNavigation(page: const LoginScreen());
+                  setUserLoggedIn(false);
+                  FirebaseAuth.instance.signOut();
+                  PageTransition.pageProperNavigation(
+                      page: const LoginScreen());
                 },
                 child: Padding(
                   padding: const EdgeInsets.all(10.0),
@@ -251,13 +255,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     decoration: BoxDecoration(
                       color: AppColors.primaryColor.withOpacity(0.1),
                       borderRadius: BorderRadius.circular(
-                          10.0), // Adjust the radius as needed
+                          12.0), // Adjust the radius as needed
                     ),
                     child: const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Padding(
-                          padding: EdgeInsets.all(8.0),
+                          padding: EdgeInsets.all(12.0),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -266,7 +270,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 "Sign Out",
                                 style: TextStyle(
                                   color: Colors.black,
-                                  fontSize: 15,
+                                  fontSize: 17,
                                   fontWeight: FontWeight.w500,
                                   fontFamily: 'Poppins',
                                 ),
