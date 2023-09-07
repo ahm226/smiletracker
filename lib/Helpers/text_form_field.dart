@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:smiletracker/Helpers/globalvariables.dart';
 
 class CustomTextField extends StatefulWidget {
@@ -47,10 +47,10 @@ class _CustomTextFieldState extends State<CustomTextField> {
       readOnly: widget.isReadOnly ?? false,
       keyboardType: widget.keyboardType,
       decoration: InputDecoration(
-        fillColor: AppColors.primaryColor.withOpacity(0.1),
+        fillColor: AppColors.primaryColor.withOpacity(0.12),
         filled: true,
         contentPadding:
-            const EdgeInsets.symmetric(horizontal: 36, vertical: 15),
+            const EdgeInsets.symmetric(horizontal: 36, vertical: 20),
         hintStyle: TextStyle(
           color: Colors.grey.shade600,
           fontSize: 16,
@@ -58,14 +58,21 @@ class _CustomTextFieldState extends State<CustomTextField> {
         ),
         border: InputBorder.none,
         errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
-          borderSide: BorderSide(
+          borderRadius: BorderRadius.circular(14.0),
+          borderSide: const BorderSide(
+            color: Colors.transparent, // Make the border transparent
+            width: 0, // Set the width to 0 to make it disappear
+          ),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(14.0),
+          borderSide: const BorderSide(
             color: Colors.transparent, // Make the border transparent
             width: 0, // Set the width to 0 to make it disappear
           ),
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
+          borderRadius: BorderRadius.circular(14.0),
           borderSide: BorderSide(
             color: Colors.transparent, // Make the border transparent
             width: 0, // Set the width to 0 to make it disappear
@@ -73,7 +80,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
         ),
         hintText: widget.hintText,
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
+          borderRadius: BorderRadius.circular(14.0),
           borderSide: BorderSide(
             color: Colors.transparent, // Make the border transparent
             width: 0, // Set the width to 0 to make it disappear
@@ -179,36 +186,84 @@ class OtpField extends StatefulWidget {
 class _OtpFieldState extends State<OtpField> {
   @override
   Widget build(BuildContext context) {
-    return OtpTextField(
-      autoFocus: true,
-      fillColor: AppColors.primaryColor.withOpacity(0.1),
-      filled: true,
-      numberOfFields: 4,
-      fieldWidth: 55,
-      margin: const EdgeInsets.fromLTRB(2, 0, 4, 2),
-      keyboardType: TextInputType.number,
-      borderRadius: BorderRadius.circular(15),
-      borderColor: Colors.transparent,
-      focusedBorderColor: Colors.transparent,
-      enabledBorderColor: Colors.transparent,
-      disabledBorderColor: Colors.transparent,
-      cursorColor: AppColors.primaryColor,
-      showFieldAsBox: true,
-      textStyle: TextStyle(
-          fontSize: 30,
-          fontFamily: 'Poppins',
-          color: AppColors.primaryColor,
-          fontWeight: FontWeight.w500),
-      // bodyNormal.copyWith(fontSize: 22, fontFamily: "InterSemiBold"),
-      //runs when a code is typed in
-      onCodeChanged: (String code) {
-        //handle validation or checks here
+    return PinCodeTextField(
+      appContext: context,
+      textStyle: TextStyle(color: AppColors.primaryColor, fontSize: 30),
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      length: 4,
+      obscureText: false,
+      blinkWhenObscuring: true,
+      animationType: AnimationType.fade,
+      validator: (v) {
+        return null;
       },
-      //runs when every textField is filled
-      onSubmit: (String verificationCode) {
-        // showCustomDialog(context, 'OTP Verified!', 'Continue', '');
-        // Get.to(() => ResetPassword(controller: TextEditingController()));
-      }, // end onSubmit
+
+      pinTheme: PinTheme(
+        borderWidth: 0.0,
+        selectedColor: Colors.transparent,
+        selectedFillColor: AppColors.primaryColor.withOpacity(0.1),
+        activeColor: Colors.transparent,
+        activeFillColor: AppColors.primaryColor.withOpacity(0.1),
+        shape: PinCodeFieldShape.box,
+        errorBorderColor: Colors.transparent,
+        errorBorderWidth: 0.0,
+        inactiveColor: Colors.transparent,
+        inactiveFillColor: AppColors.primaryColor.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(10),
+        fieldHeight: 55,
+        fieldWidth: 50,
+      ),
+      cursorColor: AppColors.primaryColor,
+      animationDuration: const Duration(milliseconds: 300),
+      enableActiveFill: true,
+      // errorAnimationController: errorController,
+      // controller: textEditingController,
+      keyboardType: TextInputType.number,
+      onCompleted: (v) {},
+      onChanged: (value) {
+        if (value.isNotEmpty) {
+          // setState(() {
+          //   currentText = value;
+          //   error = "";
+          //   hasError = false;
+          // });
+        }
+      },
+      beforeTextPaste: (text) {
+        print("Allowing to paste $text");
+        return true;
+      },
     );
+    // return OtpTextField(
+    //   autoFocus: true,
+    //   fillColor: AppColors.primaryColor.withOpacity(0.1),
+    //   filled: true,
+    //   numberOfFields: 4,
+    //   fieldWidth: 55,
+    //   margin: const EdgeInsets.fromLTRB(2, 0, 4, 2),
+    //   keyboardType: TextInputType.number,
+    //   borderRadius: BorderRadius.circular(15),
+    //   borderColor: Colors.transparent,
+    //   focusedBorderColor: Colors.transparent,
+    //   enabledBorderColor: Colors.transparent,
+    //   disabledBorderColor: Colors.transparent,
+    //   cursorColor: AppColors.primaryColor,
+    //   showFieldAsBox: true,
+    //   textStyle: TextStyle(
+    //       fontSize: 30,
+    //       fontFamily: 'Poppins',
+    //       color: AppColors.primaryColor,
+    //       fontWeight: FontWeight.w500),
+    //   // bodyNormal.copyWith(fontSize: 22, fontFamily: "InterSemiBold"),
+    //   //runs when a code is typed in
+    //   onCodeChanged: (String code) {
+    //     print("wds");
+    //   },
+    //   //runs when every textField is filled
+    //   onSubmit: (String verificationCode) {
+    //     // showCustomDialog(context, 'OTP Verified!', 'Continue', '');
+    //     // Get.to(() => ResetPassword(controller: TextEditingController()));
+    //   }, // end onSubmit
+    // );
   }
 }

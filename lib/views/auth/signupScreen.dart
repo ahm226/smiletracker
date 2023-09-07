@@ -1,4 +1,8 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 import 'package:smiletracker/Helpers/custom_validator.dart';
 import 'package:smiletracker/Helpers/globalvariables.dart';
@@ -39,20 +43,20 @@ class _LoginScreenState extends State<SignupScreen> {
           ),
           child: SingleChildScrollView(
             child: Padding(
-              padding: EdgeInsets.all(15.0),
+              padding: const EdgeInsets.only(left: 18.0, right: 18.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(
                     height: 12.h,
                   ),
-                  Text(
+                  const Text(
                     "Let's Start",
                     style: TextStyle(
                       fontWeight: FontWeight.w600,
                       fontFamily: 'Poppins',
                       color: AppColors.primaryColor,
-                      fontSize: 40,
+                      fontSize: 42,
                     ),
                   ),
                   SizedBox(
@@ -64,30 +68,39 @@ class _LoginScreenState extends State<SignupScreen> {
                       fontWeight: FontWeight.w400,
                       fontFamily: 'Poppins',
                       color: Colors.grey.shade800,
-                      fontSize: 15,
+                      fontSize: 17,
                     ),
                   ),
                   SizedBox(
                     height: 7.h,
                   ),
                   Padding(
-                    padding: EdgeInsets.only(top: 18.0, bottom: 8.0),
+                    padding: const EdgeInsets.only(top: 18.0, bottom: 8.0),
                     child: CustomTextField(
-                      controller: nameEditingController,
-                      validator: (value) =>
-                          CustomValidator.isEmptyUserName(value),
-                      hintText: 'Full Name',
-                    ),
+                        controller: nameEditingController,
+                        validator: (value) =>
+                            CustomValidator.isEmptyUserName(value),
+                        hintText: 'Full Name',
+                        prefixIcon: Padding(
+                          padding: EdgeInsetsDirectional.only(
+                              start: 18.0, end: 12.0),
+                          child: Image.asset(
+                            "assest/images/user.png",
+                            height: 20,
+                            width: 20,
+                          ),
+                        )),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(top: 18.0, bottom: 8.0),
+                    padding: const EdgeInsets.only(top: 18.0, bottom: 8.0),
                     child: CustomTextField(
                         controller: emailEditingController,
                         validator: (value) => CustomValidator.email(value),
                         hintText: 'Email Address',
+                        keyboardType: TextInputType.emailAddress,
                         prefixIcon: Padding(
-                          padding:
-                              EdgeInsetsDirectional.only(start: 12.0, end: 5.0),
+                          padding: EdgeInsetsDirectional.only(
+                              start: 18.0, end: 12.0),
                           child: Image.asset(
                             "assest/images/EmailIcon.png",
                             height: 20,
@@ -109,8 +122,8 @@ class _LoginScreenState extends State<SignupScreen> {
                           });
                         },
                         child: Padding(
-                          padding:
-                              EdgeInsetsDirectional.only(start: 5.0, end: 12.0),
+                          padding: const EdgeInsetsDirectional.only(
+                              start: 5.0, end: 18.0),
                           child: Image.asset(
                             !_obscureText
                                 ? "assest/images/openEye.png"
@@ -121,7 +134,7 @@ class _LoginScreenState extends State<SignupScreen> {
                       ),
                       prefixIcon: Padding(
                         padding:
-                            EdgeInsetsDirectional.only(start: 12.0, end: 5.0),
+                            EdgeInsetsDirectional.only(start: 18.0, end: 12.0),
                         child: Image.asset(
                           "assest/images/LockIcon.png",
                           height: 20,
@@ -131,15 +144,40 @@ class _LoginScreenState extends State<SignupScreen> {
                     ),
                   ),
                   SizedBox(
-                    height: 8.h,
+                    height: 5.h,
                   ),
                   Center(
                     child: CustomButton(
                       buttonText: 'Sign Up',
-                      onTap: () {
+                      onTap: () async {
                         if (signInFormField.currentState!.validate()) {
-                          PageTransition.pageProperNavigation(
-                              page: const LoginScreen());
+                          // PageTransition.pageProperNavigation(
+                          //     page: const LoginScreen());
+
+                          Get.defaultDialog(
+                              barrierDismissible: false,
+                              title: "Mood Meter",
+                              titleStyle: const TextStyle(
+                                color: AppColors.primaryColor,
+                                fontSize: 18,
+                                fontWeight: FontWeight.w500,
+                                fontFamily: 'Poppins',
+                              ),
+                              middleText: "",
+                              content: const Column(
+                                children: [
+                                  Center(
+                                      child: CircularProgressIndicator(
+                                    color: AppColors.primaryColor,
+                                  ))
+                                ],
+                              ));
+                          await registerUser(
+                            emailEditingController.text.removeAllWhitespace
+                                .toLowerCase(),
+                            passwordEditingController.text,
+                            nameEditingController.text,
+                          );
                         }
                       },
                       width: 90.w,
@@ -152,20 +190,20 @@ class _LoginScreenState extends State<SignupScreen> {
                       child: Text(
                     "--- Sign Up with ---",
                     style: TextStyle(
-                      color: Colors.grey.shade900,
-                      fontSize: 15,
+                      color: Colors.grey.shade800,
+                      fontSize: 16,
                       fontWeight: FontWeight.w500,
                       fontFamily: 'Poppins',
                     ),
                   )),
                   SizedBox(
-                    height: 4.h,
+                    height: 3.h,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Container(
-                        height: 56,
+                        height: 50,
                         width: 31.w,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(16),
@@ -180,7 +218,7 @@ class _LoginScreenState extends State<SignupScreen> {
                                   height: 30,
                                   child: Image.asset(
                                       "assest/images/Facebook.png")),
-                              Text(
+                              const Text(
                                 "Facebook",
                                 style: TextStyle(
                                   color: Colors.black,
@@ -193,11 +231,11 @@ class _LoginScreenState extends State<SignupScreen> {
                           ),
                         ),
                       ),
-                      SizedBox(
-                        width: 10,
+                      const SizedBox(
+                        width: 17,
                       ),
                       Container(
-                        height: 56,
+                        height: 50,
                         width: 31.w,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(16),
@@ -212,7 +250,7 @@ class _LoginScreenState extends State<SignupScreen> {
                                   height: 30,
                                   child:
                                       Image.asset("assest/images/google.png")),
-                              Text(
+                              const Text(
                                 "Google",
                                 style: TextStyle(
                                   color: Colors.black,
@@ -228,7 +266,7 @@ class _LoginScreenState extends State<SignupScreen> {
                     ],
                   ),
                   SizedBox(
-                    height: 2.h,
+                    height: 4.h,
                   ),
                   Padding(
                     padding: const EdgeInsets.all(10.0),
@@ -239,7 +277,7 @@ class _LoginScreenState extends State<SignupScreen> {
                           "Already have an account?",
                           style: TextStyle(
                             color: Colors.grey.shade700,
-                            fontSize: 12,
+                            fontSize: 14,
                             fontWeight: FontWeight.w500,
                             fontFamily: 'Poppins',
                           ),
@@ -257,7 +295,7 @@ class _LoginScreenState extends State<SignupScreen> {
                             "Sign In",
                             style: TextStyle(
                               color: AppColors.primaryColor,
-                              fontSize: 12,
+                              fontSize: 15,
                               fontWeight: FontWeight.w600,
                               fontFamily: 'Poppins',
                             ),
@@ -274,5 +312,42 @@ class _LoginScreenState extends State<SignupScreen> {
         ),
       ),
     );
+  }
+
+  registerUser(emails, pass, name) async {
+    try {
+      UserCredential user = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(email: emails, password: pass);
+      await FirebaseAuth.instance.currentUser?.updateDisplayName(name);
+      FirebaseFirestore.instance.collection('users').doc(user.user!.uid).set({
+        'email': emails,
+        'displayName': name,
+        'id': user.user!.uid,
+        'imageUrl': ''
+      });
+      FirebaseAuth.instance.currentUser?.sendEmailVerification();
+      Get.back();
+      setState(() {});
+      successPopUp(context, const LoginScreen(),
+          'Successfully registered,\n Verification link sent to your email.');
+      // return AwesomeDialog(
+      //   context: context,
+      //   dialogType: DialogType.success,
+      //   desc:
+      //       'Successfully registered,\n Verification link sent to your email',
+      //   btnOkOnPress: () {
+      //     PageTransition.pageProperNavigation(page: const LoginScreen());
+      //   },
+      // ).show();
+    } catch (error) {
+      Get.back();
+      setState(() {});
+      return AwesomeDialog(
+        context: context,
+        dialogType: DialogType.error,
+        btnOkOnPress: () {},
+        desc: error.toString().replaceRange(0, 14, '').split(']')[1],
+      ).show();
+    }
   }
 }

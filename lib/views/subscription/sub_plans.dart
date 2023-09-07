@@ -32,11 +32,11 @@ class _ChoosePlanState extends State<ChoosePlan> {
             height: 100.h,
             child: Padding(
               padding: EdgeInsets.only(
-                  top: 5.h, left: 15.0, right: 15.0, bottom: 15.0),
+                  top: 5.h, left: 18.0, right: 18.0, bottom: 15.0),
               child: Column(
                 children: [
                   CustomAppBar(
-                    pageTitle: "Change Password",
+                    pageTitle: "",
                     onTap: () {
                       Get.back();
                     },
@@ -54,7 +54,7 @@ class _ChoosePlanState extends State<ChoosePlan> {
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: AppColors.primaryColor,
-                      fontSize: 30,
+                      fontSize: 32,
                       fontWeight: FontWeight.w700,
                       fontFamily: 'Poppins',
                     ),
@@ -66,21 +66,21 @@ class _ChoosePlanState extends State<ChoosePlan> {
                     "PREMIUM",
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      letterSpacing: 5,
+                      letterSpacing: 6,
                       color: AppColors.primaryColor,
-                      fontSize: 40,
+                      fontSize: 42,
                       fontWeight: FontWeight.w700,
                       fontFamily: 'Poppins',
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 40.0, vertical: 10),
+                        horizontal: 40.0, vertical: 14),
                     child: Text(
                       "When you subscribe, you’ll get instant unlimited acess",
                       style: TextStyle(
                         color: Colors.grey.shade900,
-                        fontSize: 15,
+                        fontSize: 16,
                         fontWeight: FontWeight.w400,
                         fontFamily: 'Poppins',
                       ),
@@ -96,7 +96,7 @@ class _ChoosePlanState extends State<ChoosePlan> {
                     },
                     child: Container(
                       padding: const EdgeInsets.symmetric(horizontal: 20),
-                      height: 80,
+                      height: 90,
                       width: double.infinity,
                       decoration: BoxDecoration(
                           color: AppColors.primaryColor.withOpacity(0.1),
@@ -129,16 +129,19 @@ class _ChoosePlanState extends State<ChoosePlan> {
                                       "Monthly",
                                       style: TextStyle(
                                         color: AppColors.primaryColor,
-                                        fontSize: 15,
+                                        fontSize: 17,
                                         fontWeight: FontWeight.w600,
                                         fontFamily: 'Poppins',
                                       ),
+                                    ),
+                                    SizedBox(
+                                      height: 5,
                                     ),
                                     Text(
                                       "Pay monthly, cancel any time",
                                       style: TextStyle(
                                         color: AppColors.primaryColor,
-                                        fontSize: 9,
+                                        fontSize: 11,
                                         fontWeight: FontWeight.w400,
                                         fontFamily: 'Poppins',
                                       ),
@@ -154,7 +157,7 @@ class _ChoosePlanState extends State<ChoosePlan> {
                                   "\$ 19.99",
                                   style: TextStyle(
                                     color: AppColors.primaryColor,
-                                    fontSize: 20,
+                                    fontSize: 21,
                                     fontWeight: FontWeight.w600,
                                     fontFamily: 'Poppins',
                                   ),
@@ -163,7 +166,7 @@ class _ChoosePlanState extends State<ChoosePlan> {
                                   "/m",
                                   style: TextStyle(
                                     color: AppColors.primaryColor,
-                                    fontSize: 11,
+                                    fontSize: 12,
                                     fontWeight: FontWeight.w400,
                                     fontFamily: 'Poppins',
                                   ),
@@ -187,7 +190,7 @@ class _ChoosePlanState extends State<ChoosePlan> {
                     },
                     child: Container(
                       padding: const EdgeInsets.symmetric(horizontal: 20),
-                      height: 80,
+                      height: 90,
                       width: double.infinity,
                       decoration: BoxDecoration(
                           color: AppColors.primaryColor.withOpacity(0.1),
@@ -220,16 +223,19 @@ class _ChoosePlanState extends State<ChoosePlan> {
                                       "Yearly",
                                       style: TextStyle(
                                         color: AppColors.primaryColor,
-                                        fontSize: 15,
+                                        fontSize: 17,
                                         fontWeight: FontWeight.w600,
                                         fontFamily: 'Poppins',
                                       ),
+                                    ),
+                                    SizedBox(
+                                      height: 5,
                                     ),
                                     Text(
                                       "Pay for a full year",
                                       style: TextStyle(
                                         color: AppColors.primaryColor,
-                                        fontSize: 9,
+                                        fontSize: 11,
                                         fontWeight: FontWeight.w400,
                                         fontFamily: 'Poppins',
                                       ),
@@ -245,7 +251,7 @@ class _ChoosePlanState extends State<ChoosePlan> {
                                   "\$ 129.99",
                                   style: TextStyle(
                                     color: AppColors.primaryColor,
-                                    fontSize: 20,
+                                    fontSize: 21,
                                     fontWeight: FontWeight.w600,
                                     fontFamily: 'Poppins',
                                   ),
@@ -254,7 +260,7 @@ class _ChoosePlanState extends State<ChoosePlan> {
                                   "/y",
                                   style: TextStyle(
                                     color: AppColors.primaryColor,
-                                    fontSize: 11,
+                                    fontSize: 12,
                                     fontWeight: FontWeight.w400,
                                     fontFamily: 'Poppins',
                                   ),
@@ -272,14 +278,17 @@ class _ChoosePlanState extends State<ChoosePlan> {
                     "Free for 3 days",
                     style: TextStyle(
                       color: Colors.black,
-                      fontSize: 15,
+                      fontSize: 16,
                       fontWeight: FontWeight.w600,
                       fontFamily: 'Poppins',
                     ),
                   ),
+                  SizedBox(
+                    height: 5,
+                  ),
                   CustomButton(
                     width: 100.w,
-                    buttonText: "Continue with free trail",
+                    buttonText: "Continue with free trial",
                     onTap: () {},
                   ),
                   Padding(
@@ -292,8 +301,8 @@ class _ChoosePlanState extends State<ChoosePlan> {
                           "Privacy Policy",
                           style: TextStyle(
                             color: Colors.black,
-                            fontSize: 12,
-                            fontWeight: FontWeight.w500,
+                            fontSize: 13,
+                            fontWeight: FontWeight.w600,
                             fontFamily: 'Poppins',
                           ),
                         ),
@@ -306,8 +315,8 @@ class _ChoosePlanState extends State<ChoosePlan> {
                           "Restore Purchase",
                           style: TextStyle(
                             color: Colors.black,
-                            fontSize: 12,
-                            fontWeight: FontWeight.w500,
+                            fontSize: 13,
+                            fontWeight: FontWeight.w600,
                             fontFamily: 'Poppins',
                           ),
                         ),
@@ -320,8 +329,8 @@ class _ChoosePlanState extends State<ChoosePlan> {
                           "Terms of use",
                           style: TextStyle(
                             color: Colors.black,
-                            fontSize: 12,
-                            fontWeight: FontWeight.w500,
+                            fontSize: 13,
+                            fontWeight: FontWeight.w600,
                             fontFamily: 'Poppins',
                           ),
                         ),
@@ -331,8 +340,8 @@ class _ChoosePlanState extends State<ChoosePlan> {
                   Text(
                     "You can cancel your subscription or trial anytime by cancelling your subscription through your iTunes account settings, or it will automatically renew. This must be done 24 hours before the end of the trial or any subscription period to avoid being charged. Subscription",
                     style: TextStyle(
-                      color: Colors.grey.shade500,
-                      fontSize: 10,
+                      color: Colors.grey.shade600,
+                      fontSize: 11,
                       fontWeight: FontWeight.w500,
                       fontFamily: 'Poppins',
                     ),

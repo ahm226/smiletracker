@@ -1,7 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
+import 'package:smiletracker/Helpers/globalvariables.dart';
+import 'package:smiletracker/Helpers/page_navigation.dart';
+import 'package:smiletracker/models/user_model.dart';
+import 'package:smiletracker/views/auth/loginScreen.dart';
 import 'package:smiletracker/views/home/smily_face.dart';
 
 class splashScreen extends StatefulWidget {
@@ -12,11 +16,38 @@ class splashScreen extends StatefulWidget {
 }
 
 class _splashScreenState extends State<splashScreen> {
-  getData() {
-    Future.delayed(const Duration(milliseconds: 5000), () {
-      // Get.offAll(() => const LoginScreen());
-      Get.offAll(() => const EmojiRatingApp());
-    });
+  late bool login;
+
+  getData() async {
+    // Future.delayed(const Duration(milliseconds: 10000), () {
+    //   PageTransition.pageProperNavigation(page: const EmojiRatingApp());
+    // });
+
+    login = await getUserLoggedIn();
+    if (login == true) {
+      var userid = await getUserData();
+      userDocId.value = userid.toString();
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(userDocId.value)
+          .get()
+          .then((value) async {
+        setState(() {
+          userData = UserModel.fromDocument(value.data());
+        });
+      });
+      Future.delayed(const Duration(milliseconds: 5000), () {
+        PageTransition.pageProperNavigation(page: const EmojiRatingApp());
+        // PageTransition.pageProperNavigation(
+        //     page: MoodsScreen(
+        //   date: DateTime.now(),
+        // ));
+      });
+    } else {
+      Future.delayed(const Duration(milliseconds: 5000), () {
+        PageTransition.pageProperNavigation(page: const LoginScreen());
+      });
+    }
   }
 
   @override
@@ -38,7 +69,7 @@ class _splashScreenState extends State<splashScreen> {
             fit: BoxFit.cover,
           ),
         ),
-        child: Column(
+        child: const Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -52,7 +83,7 @@ class _splashScreenState extends State<splashScreen> {
                     "Mood",
                     style: TextStyle(
                       color: Colors.black,
-                      fontSize: 50,
+                      fontSize: 54,
                       fontWeight: FontWeight.w600,
                       fontFamily: 'Poppins',
                     ),
@@ -62,7 +93,7 @@ class _splashScreenState extends State<splashScreen> {
                   "Meter",
                   style: TextStyle(
                     color: Colors.black,
-                    fontSize: 50,
+                    fontSize: 54,
                     fontWeight: FontWeight.w600,
                     fontFamily: 'Poppins',
                   ),
@@ -74,7 +105,7 @@ class _splashScreenState extends State<splashScreen> {
             ),
             SpinKitCircle(
               color: Colors.black, // Set the spinner color
-              size: 50.0, // Set the size of the spinner
+              size: 52.0, // Set the size of the spinner
             )
           ],
         ),

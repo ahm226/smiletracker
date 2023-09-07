@@ -40,7 +40,7 @@ class _ResetPasswordState extends State<ChangePassword> {
           child: SingleChildScrollView(
             child: Padding(
               padding: EdgeInsets.only(
-                  top: 5.h, left: 15.0, right: 15.0, bottom: 15.0),
+                  top: 5.h, left: 18.0, right: 18.0, bottom: 15.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
