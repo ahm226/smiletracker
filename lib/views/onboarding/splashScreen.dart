@@ -38,10 +38,6 @@ class _splashScreenState extends State<splashScreen> {
       });
       Future.delayed(const Duration(milliseconds: 5000), () {
         PageTransition.pageProperNavigation(page: const EmojiRatingApp());
-        // PageTransition.pageProperNavigation(
-        //     page: MoodsScreen(
-        //   date: DateTime.now(),
-        // ));
       });
     } else {
       Future.delayed(const Duration(milliseconds: 5000), () {

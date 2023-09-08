@@ -14,7 +14,15 @@
       },
       "oauth_client": [
         {
-          "client_id": "852757385903-ffcgg827nfag5kbnp486vecoankvrov3.apps.googleusercontent.com",
+          "client_id": "852757385903-hna8squ457q4jk2etg20erp3rtl0ssbc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.moodMeter.app",
+            "certificate_hash": "03a6345fdd62f434cbf9d64541c584a086671cec"
+          }
+        },
+        {
+          "client_id": "852757385903-7km447i5viohvq2618ev9uaeqn3dqr8e.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -27,7 +35,7 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "852757385903-ffcgg827nfag5kbnp486vecoankvrov3.apps.googleusercontent.com",
+              "client_id": "852757385903-7km447i5viohvq2618ev9uaeqn3dqr8e.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

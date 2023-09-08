@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:sizer/sizer.dart';
 import 'package:smiletracker/Helpers/globalvariables.dart';
 import 'package:smiletracker/Helpers/page_navigation.dart';
+import 'package:smiletracker/views/home/mood_screen.dart';
 import 'package:smiletracker/views/home/reminder_screen.dart';
 import 'package:smiletracker/views/profile/profile_screen.dart';
 
@@ -103,7 +104,10 @@ class _EmojiRatingAppState extends State<EmojiRatingApp> {
                         children: [
                           InkWell(
                               onTap: () {
-                                _selectDate(context);
+                                PageTransition.pageNavigation(
+                                    page: MoodsScreen(
+                                  date: DateTime.now(),
+                                ));
                               },
                               child: Image.asset(
                                 "assest/images/calenderIcon.png",
@@ -120,21 +124,27 @@ class _EmojiRatingAppState extends State<EmojiRatingApp> {
                             },
                             child: Padding(
                               padding: const EdgeInsets.only(left: 8.0),
-                              child: Image.asset(
-                                "assest/images/profileImage.png",
-                                height: 32,
-                                width: 32,
-                              ),
+                              child: userData.imageUrl == ""
+                                  ? Image.asset(
+                                      "assest/images/profileImage.png",
+                                      height: 32,
+                                      width: 32,
+                                    )
+                                  : Image.network(
+                                      userData.imageUrl,
+                                      height: 32,
+                                      width: 32,
+                                    ),
                             ),
                           ),
                         ],
                       )
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 14,
                   ),
-                  Text(
+                  const Text(
                     "How Are you Feeling today?",
                     style: TextStyle(
                       color: Colors.black,
@@ -149,7 +159,7 @@ class _EmojiRatingAppState extends State<EmojiRatingApp> {
                   Center(
                     child: CustomPaint(
                       painter: EmojiPainter(_rating),
-                      size: Size(300, 300),
+                      size: const Size(300, 300),
                     ),
                   ),
                   SizedBox(
@@ -162,7 +172,7 @@ class _EmojiRatingAppState extends State<EmojiRatingApp> {
                           : _rating.toStringAsFixed(2) == "5.00"
                               ? "Happy"
                               : "Normal",
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.black,
                         fontSize: 27,
                         fontWeight: FontWeight.w400,
@@ -233,17 +243,45 @@ class EmojiPainter extends CustomPainter {
 
   EmojiPainter(this.rating);
 
-  Color getColorForRating(double rating) {
+  getColorForRating(double rating, faceCenter, radius) {
     if (rating > 2.6) {
-      return Color(0xff2F00FF);
+      return const LinearGradient(
+        begin: Alignment.centerLeft,
+        end: Alignment.centerRight,
+        colors: [
+          Color(0xFF2F00FF), // Start color (#2F00FF)
+          Color(0xFF4895FF), // End color (#4895FF)
+        ],
+      ).createShader(Rect.fromCircle(center: faceCenter, radius: radius));
     } else if (rating == 0.0) {
-      return AppColors.primaryColor;
+      return const LinearGradient(
+        begin: Alignment.centerLeft,
+        end: Alignment.centerRight,
+        colors: [
+          Color(0xFFFF0000), // Start color (#FF0000)
+          Color(0xFFFF8A00),
+        ],
+      ).createShader(Rect.fromCircle(center: faceCenter, radius: radius));
     } else if (rating < 2.4) {
-      return Colors.orange;
+      return const LinearGradient(
+        begin: Alignment.centerLeft,
+        end: Alignment.centerRight,
+        colors: [
+          Color(0xFFFF0000), // Start color (#FF0000)
+          Color(0xFFFF8A00),
+        ],
+      ).createShader(Rect.fromCircle(center: faceCenter, radius: radius));
     } else if (rating < 2.6 && rating > 2.4) {
-      return Colors.yellow;
+      return const LinearGradient(
+        begin: Alignment.centerLeft,
+        end: Alignment.centerRight,
+        colors: [
+          Color(0xFFFDE030), // Start color (#FDE030)
+          Color(0xFFEBFF00), // End color (#EBFF00)
+        ],
+      ).createShader(Rect.fromCircle(center: faceCenter, radius: radius));
     } else {
-      return Color(0x2F00FF);
+      return const Color(0x2F00FF);
     }
   }
 
@@ -263,7 +301,7 @@ class EmojiPainter extends CustomPainter {
     final Offset faceCenter = Offset(centerX, centerY);
 
     final Paint facePaint = Paint()
-      ..color = getColorForRating(rating)
+      ..shader = getColorForRating(rating, faceCenter, radius)
       ..style = PaintingStyle.stroke
       ..strokeWidth = 5.0;
 
@@ -277,7 +315,7 @@ class EmojiPainter extends CustomPainter {
 
     const double eyeBorderWidth = 5.0;
     final Paint eyeBorderPaint = Paint()
-      ..color = getColorForRating(rating)
+      ..shader = getColorForRating(rating, faceCenter, radius)
       ..style = PaintingStyle.stroke
       ..strokeWidth = eyeBorderWidth;
 
@@ -293,8 +331,6 @@ class EmojiPainter extends CustomPainter {
       final double minMouthControlY = centerY + radius * 0.9;
       mouthControlY = maxMouthControlY -
           (maxMouthControlY - minMouthControlY) * (rating / 5.0);
-      print("mouthControlY");
-      print(mouthControlY);
       // Calculate the vertical position of the eyes based on the rating
       final double maxEyeY = leftEyeCenter.dy + eyeRadius * 0.5;
       final double minEyeY = centerY - radius * 0.6;
@@ -349,7 +385,7 @@ class EmojiPainter extends CustomPainter {
     canvas.drawPath(rightEyePath, eyeBorderPaint);
 
     final Paint mouthPaint = Paint()
-      ..color = getColorForRating(rating)
+      ..shader = getColorForRating(rating, faceCenter, radius)
       ..style = PaintingStyle.stroke
       ..strokeWidth = 5.0;
 

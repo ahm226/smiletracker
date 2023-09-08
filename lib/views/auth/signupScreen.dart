@@ -3,11 +3,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
+import 'package:smiletracker/Helpers/auth_provider.dart';
 import 'package:smiletracker/Helpers/custom_validator.dart';
 import 'package:smiletracker/Helpers/globalvariables.dart';
 import 'package:smiletracker/Helpers/page_navigation.dart';
+import 'package:smiletracker/models/user_model.dart';
 import 'package:smiletracker/views/auth/loginScreen.dart';
+import 'package:smiletracker/views/home/smily_face.dart';
 
 import '../../Helpers/custom_widgets.dart';
 import '../../Helpers/text_form_field.dart';
@@ -234,32 +238,77 @@ class _LoginScreenState extends State<SignupScreen> {
                       const SizedBox(
                         width: 17,
                       ),
-                      Container(
-                        height: 50,
-                        width: 31.w,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(16),
-                          border: Border.all(color: Colors.black12, width: 1.4),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              SizedBox(
-                                  height: 30,
-                                  child:
-                                      Image.asset("assest/images/google.png")),
-                              const Text(
-                                "Google",
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 13,
-                                  fontWeight: FontWeight.w500,
-                                  fontFamily: 'Poppins',
-                                ),
-                              )
-                            ],
+                      InkWell(
+                        onTap: () async {
+                          Get.defaultDialog(
+                              barrierDismissible: false,
+                              title: "Mood Meter",
+                              titleStyle: const TextStyle(
+                                color: AppColors.primaryColor,
+                                fontSize: 18,
+                                fontWeight: FontWeight.w500,
+                                fontFamily: 'Poppins',
+                              ),
+                              middleText: "",
+                              content: const Column(
+                                children: [
+                                  Center(
+                                      child: CircularProgressIndicator(
+                                    color: AppColors.primaryColor,
+                                  ))
+                                ],
+                              ));
+                          await Provider.of<GoogleAuthenticateProvider>(context,
+                                  listen: false)
+                              .loginWithGoogle();
+                          loggedInGlobal.value = true;
+                          FirebaseFirestore.instance
+                              .collection('users')
+                              .doc(FirebaseAuth.instance.currentUser!.uid)
+                              .get()
+                              .then((value) async {
+                            setState(() {
+                              userData = UserModel.fromDocument(value.data());
+                            });
+                            print("userData.displayName");
+                            print(userData.userID);
+                            print(userData.displayName);
+                            print(userData.email);
+                            saveUserData(userID: userData.userID);
+                            setUserLoggedIn(true);
+                          });
+                          Get.back();
+                          successPopUp(context, const EmojiRatingApp(),
+                              'Successfully registered,\n Verification link sent to your email.');
+                        },
+                        child: Container(
+                          height: 50,
+                          width: 31.w,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(16),
+                            border:
+                                Border.all(color: Colors.black12, width: 1.4),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                SizedBox(
+                                    height: 30,
+                                    child: Image.asset(
+                                        "assest/images/google.png")),
+                                const Text(
+                                  "Google",
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.w500,
+                                    fontFamily: 'Poppins',
+                                  ),
+                                )
+                              ],
+                            ),
                           ),
                         ),
                       ),
@@ -323,7 +372,9 @@ class _LoginScreenState extends State<SignupScreen> {
         'email': emails,
         'displayName': name,
         'id': user.user!.uid,
-        'imageUrl': ''
+        'imageUrl': '',
+        'age': '',
+        'phoneNumber': ''
       });
       FirebaseAuth.instance.currentUser?.sendEmailVerification();
       Get.back();
