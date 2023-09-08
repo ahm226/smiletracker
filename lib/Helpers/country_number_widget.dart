@@ -4,7 +4,9 @@ import 'package:smiletracker/Helpers/custom_validator.dart';
 import 'package:smiletracker/Helpers/globalvariables.dart';
 
 class CountryCodePicker extends StatefulWidget {
-  const CountryCodePicker({super.key});
+  TextEditingController phoneController;
+
+  CountryCodePicker({super.key, required this.phoneController});
 
   @override
   State<CountryCodePicker> createState() => _CountryCodePickerState();
@@ -14,15 +16,15 @@ class _CountryCodePickerState extends State<CountryCodePicker> {
   String _countryCode = '';
   String initialCountry = 'PK';
   PhoneNumber number = PhoneNumber(isoCode: 'PK');
-  final TextEditingController _phoneController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return InternationalPhoneNumberInput(
       onInputChanged: (PhoneNumber number) {
-        if (_phoneController.text.isNotEmpty &&
-            _phoneController.text.startsWith('0')) {
-          print('_PHONECONTROLLER: ${_phoneController.text}');
-          _phoneController.clear();
+        if (widget.phoneController.text.isNotEmpty &&
+            widget.phoneController.text.startsWith('0')) {
+          print('_PHONECONTROLLER: ${widget.phoneController.text}');
+          widget.phoneController.clear();
           setState(() {});
           return;
         }
@@ -82,7 +84,7 @@ class _CountryCodePickerState extends State<CountryCodePicker> {
       cursorColor: Colors.black,
       spaceBetweenSelectorAndTextField: 0,
       validator: (String? value) => CustomValidator.number(value),
-      textFieldController: _phoneController,
+      textFieldController: widget.phoneController,
       formatInput: true,
       keyboardType:
           const TextInputType.numberWithOptions(signed: false, decimal: false),

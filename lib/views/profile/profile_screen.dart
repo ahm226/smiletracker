@@ -64,15 +64,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
               Container(
                 height: 15.h,
                 width: 15.h,
-                child: Image.asset(
-                  "assest/images/profile.png",
-                ),
+                child: userData.imageUrl == ""
+                    ? Image.asset(
+                        "assest/images/profileImage.png",
+                      )
+                    : Image.network(
+                        userData.imageUrl,
+                      ),
               ),
               SizedBox(
                 height: 2.h,
               ),
-              const Text(
-                "Esther Howard",
+              Text(
+                userData.displayName,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.black,

@@ -205,7 +205,7 @@ successPopUp(BuildContext context, page, message) {
                               buttonText: 'Done',
                               onTap: () {
                                 Navigator.pop(context);
-                                PageTransition.pageNavigation(page: page);
+                                PageTransition.pageProperNavigation(page: page);
                               },
                               width: 170,
                             )

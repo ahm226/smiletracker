@@ -1,8 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 import 'package:smiletracker/Helpers/custom_validator.dart';
 import 'package:smiletracker/Helpers/globalvariables.dart';
+import 'package:smiletracker/views/home/smily_face.dart';
 
 import '../../Helpers/custom_widgets.dart';
 import '../../Helpers/text_form_field.dart';
@@ -19,7 +21,7 @@ class _ResetPasswordState extends State<ChangePassword> {
   bool _obscureTextConfirm = true;
   final TextEditingController passwordEditingController =
       TextEditingController();
-  final TextEditingController confirmPasswordEditingController =
+  final TextEditingController newPasswordEditingController =
       TextEditingController();
   final GlobalKey<FormState> resetFormField = GlobalKey();
 
@@ -49,7 +51,7 @@ class _ResetPasswordState extends State<ChangePassword> {
                     onTap: () {
                       Get.back();
                     },
-                    leadingButton: Icon(
+                    leadingButton: const Icon(
                       Icons.arrow_back_ios,
                       color: Colors.white,
                       size: 20,
@@ -58,7 +60,7 @@ class _ResetPasswordState extends State<ChangePassword> {
                   SizedBox(
                     height: 10.h,
                   ),
-                  Text(
+                  const Text(
                     "Reset Password?",
                     style: TextStyle(
                       color: AppColors.primaryColor,
@@ -87,7 +89,7 @@ class _ResetPasswordState extends State<ChangePassword> {
                     child: CustomTextField(
                       controller: passwordEditingController,
                       validator: (value) => CustomValidator.password(value),
-                      hintText: 'Password',
+                      hintText: 'Current Password',
                       isObscure: _obscureText,
                       suffixIcon: InkWell(
                         onTap: () {
@@ -96,8 +98,8 @@ class _ResetPasswordState extends State<ChangePassword> {
                           });
                         },
                         child: Padding(
-                          padding:
-                              EdgeInsetsDirectional.only(start: 5.0, end: 12.0),
+                          padding: const EdgeInsetsDirectional.only(
+                              start: 5.0, end: 12.0),
                           child: Image.asset(
                             !_obscureText
                                 ? "assest/images/openEye.png"
@@ -107,8 +109,8 @@ class _ResetPasswordState extends State<ChangePassword> {
                         ),
                       ),
                       prefixIcon: Padding(
-                        padding:
-                            EdgeInsetsDirectional.only(start: 12.0, end: 5.0),
+                        padding: const EdgeInsetsDirectional.only(
+                            start: 12.0, end: 5.0),
                         child: Image.asset(
                           "assest/images/LockIcon.png",
                           height: 20,
@@ -120,10 +122,9 @@ class _ResetPasswordState extends State<ChangePassword> {
                   Padding(
                     padding: const EdgeInsets.only(top: 18.0, bottom: 8.0),
                     child: CustomTextField(
-                      validator: (value) => CustomValidator.confirmPassword(
-                          value, passwordEditingController.text),
-                      controller: confirmPasswordEditingController,
-                      hintText: 'Confirm Password',
+                      validator: (value) => CustomValidator.password(value),
+                      controller: newPasswordEditingController,
+                      hintText: 'New Password',
                       isObscure: _obscureTextConfirm,
                       suffixIcon: InkWell(
                         onTap: () {
@@ -132,8 +133,8 @@ class _ResetPasswordState extends State<ChangePassword> {
                           });
                         },
                         child: Padding(
-                          padding:
-                              EdgeInsetsDirectional.only(start: 5.0, end: 12.0),
+                          padding: const EdgeInsetsDirectional.only(
+                              start: 5.0, end: 12.0),
                           child: Image.asset(
                             !_obscureTextConfirm
                                 ? "assest/images/openEye.png"
@@ -143,8 +144,8 @@ class _ResetPasswordState extends State<ChangePassword> {
                         ),
                       ),
                       prefixIcon: Padding(
-                        padding:
-                            EdgeInsetsDirectional.only(start: 12.0, end: 5.0),
+                        padding: const EdgeInsetsDirectional.only(
+                            start: 12.0, end: 5.0),
                         child: Image.asset(
                           "assest/images/LockIcon.png",
                           height: 20,
@@ -162,8 +163,21 @@ class _ResetPasswordState extends State<ChangePassword> {
                         width: 85.w,
                         onTap: () {
                           if (resetFormField.currentState!.validate()) {
-                            // PageTransition.pageProperNavigation(
-                            //     page: const LoginScreen());
+                            Get.defaultDialog(
+                                barrierDismissible: false,
+                                title: "Mood Meter",
+                                middleText: "",
+                                content: const Column(
+                                  children: [
+                                    Center(
+                                        child: CircularProgressIndicator(
+                                      color: AppColors.primaryColor,
+                                    ))
+                                  ],
+                                ));
+
+                            changePassword(passwordEditingController.text,
+                                newPasswordEditingController.text);
                           }
                         }),
                   ),
@@ -174,5 +188,31 @@ class _ResetPasswordState extends State<ChangePassword> {
         ),
       ),
     );
+  }
+
+  void changePassword(String currentPassword, String newPassword) async {
+    final user = await FirebaseAuth.instance.currentUser;
+    final cred = EmailAuthProvider.credential(
+        email: userData.email, password: currentPassword);
+
+    user?.reauthenticateWithCredential(cred).then((value) {
+      user.updatePassword(newPassword).then((_) {
+        //Success, do something
+        Get.back();
+        setState(() {});
+        successPopUp(
+            context, const EmojiRatingApp(), 'Password Changed Successfully');
+      }).catchError((error) {
+        //Error, show something
+        Get.back();
+        setState(() {});
+        errorPopUp(
+            context, 'Error occurred while changing password! Try Again ');
+      });
+    }).catchError((err) {
+      Get.back();
+      setState(() {});
+      errorPopUp(context, 'Error occurred while changing password! Try Again ');
+    });
   }
 }

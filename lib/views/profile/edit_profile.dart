@@ -1,12 +1,20 @@
+import 'dart:io';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:delayed_display/delayed_display.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:path/path.dart' as path;
 import 'package:sizer/sizer.dart';
 import 'package:smiletracker/Helpers/country_number_widget.dart';
 import 'package:smiletracker/Helpers/custom_validator.dart';
 import 'package:smiletracker/Helpers/custom_widgets.dart';
 import 'package:smiletracker/Helpers/globalvariables.dart';
 import 'package:smiletracker/Helpers/text_form_field.dart';
+import 'package:smiletracker/models/user_model.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 
 class EditProfile extends StatefulWidget {
@@ -18,6 +26,35 @@ class EditProfile extends StatefulWidget {
 
 class _EditProfileState extends State<EditProfile> {
   final GlobalKey<FormState> key = GlobalKey<FormState>();
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController ageController = TextEditingController();
+  final TextEditingController phoneController = TextEditingController();
+
+  bool loader = false;
+  late PickedFile pickedFile;
+  String? imageUrl;
+  File? imageFile;
+  final picker = ImagePicker();
+  bool processingStatus = false;
+  FirebaseStorage storage = FirebaseStorage.instance;
+  XFile? pickedImage;
+  final GlobalKey<FormState> profileField = GlobalKey();
+
+  getData() {
+    setState(() {
+      nameController.text = userData.displayName;
+      ageController.text = userData.age;
+      phoneController.text = userData.phoneNumber;
+      imageUrl = userData.imageUrl;
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getData();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,25 +99,28 @@ class _EditProfileState extends State<EditProfile> {
                           height: 15.h,
                           width: double.infinity,
                           child: Container(
-                            child: Image.asset(
-                              "assest/images/profile.png",
-                            ),
+                            child: imageFile != null
+                                ? Image.file(imageFile!)
+                                : (userData.imageUrl != "" &&
+                                        userData.imageUrl != null)
+                                    ? Image.network(userData.imageUrl)
+                                    : Image.asset(
+                                        "assest/images/profile.png",
+                                      ),
+
+                            //-------
+                            // Image.asset(
+                            //   "assest/images/profile.png",
+                            // ),
                           ),
                         ),
-                        // CircleAvatar(
-                        //   radius: 60,
-                        //   backgroundColor: AppColors.primaryColor,
-                        //   child: CircleAvatar(
-                        //     radius: 58,
-                        //     backgroundImage:
-                        //         AssetImage("assest/images/profile.png"),
-                        //   ),
-                        // ),
                         Positioned(
                           right: 26.w,
                           bottom: 1.h,
                           child: ZoomTapAnimation(
-                            onTap: () {},
+                            onTap: () {
+                              _upload("gallery");
+                            },
                             onLongTap: () {},
                             enableLongTapRepeatEvent: false,
                             longTapRepeatDuration:
@@ -126,9 +166,10 @@ class _EditProfileState extends State<EditProfile> {
                           height: 10,
                         ),
                         CustomTextField(
+                          controller: nameController,
                           validator: (value) =>
                               CustomValidator.isEmptyUserName(value),
-                          hintText: "Robert Fox",
+                          hintText: userData.displayName,
                         ),
                       ],
                     ),
@@ -153,9 +194,10 @@ class _EditProfileState extends State<EditProfile> {
                           height: 10,
                         ),
                         CustomTextField(
+                          controller: ageController,
                           validator: (value) => CustomValidator.isEmpty(value),
                           hintText: "27 years",
-                          keyboardType: TextInputType.phone,
+                          keyboardType: TextInputType.number,
                         ),
                       ],
                     ),
@@ -180,8 +222,8 @@ class _EditProfileState extends State<EditProfile> {
                           height: 10,
                         ),
                         CustomTextField(
-                          validator: (value) => CustomValidator.email(value),
-                          hintText: "robert123@gmail.com",
+                          hintText: userData.email,
+                          isReadOnly: true,
                           prefixIcon: Padding(
                             padding: EdgeInsetsDirectional.only(
                                 start: 18.0, end: 15.0),
@@ -196,7 +238,7 @@ class _EditProfileState extends State<EditProfile> {
                     ),
                   ),
                   const SizedBox(height: 20),
-                  const DelayedDisplay(
+                  DelayedDisplay(
                     delay: Duration(milliseconds: 700),
                     slidingBeginOffset: Offset(0, -1),
                     child: Column(
@@ -214,7 +256,9 @@ class _EditProfileState extends State<EditProfile> {
                         SizedBox(
                           height: 10,
                         ),
-                        CountryCodePicker(),
+                        CountryCodePicker(
+                          phoneController: phoneController,
+                        ),
                       ],
                     ),
                   ),
@@ -229,8 +273,24 @@ class _EditProfileState extends State<EditProfile> {
                       child: CustomButton(
                         width: 100.w,
                         buttonText: "Save Changes",
-                        onTap: () {
-                          if (key.currentState!.validate()) {}
+                        onTap: () async {
+                          if (key.currentState!.validate()) {
+                            Get.defaultDialog(
+                                barrierDismissible: false,
+                                title: "Mood Meter",
+                                middleText: "",
+                                content: const Column(
+                                  children: [
+                                    Center(
+                                        child: CircularProgressIndicator(
+                                      color: AppColors.primaryColor,
+                                    ))
+                                  ],
+                                ));
+
+                            await editProfile();
+                            Get.back();
+                          }
                         },
                       ),
                     ),
@@ -245,5 +305,81 @@ class _EditProfileState extends State<EditProfile> {
         ),
       ),
     );
+  }
+
+  editProfile() async {
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(userDocId.value)
+        .update({
+      "displayName": nameController.text,
+      "imageUrl": imageUrl,
+      'age': ageController.text,
+      'phoneNumber': phoneController.text
+    });
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(userDocId.value)
+        .get()
+        .then((value) async {
+      setState(() {
+        userData = UserModel.fromDocument(value.data());
+      });
+    });
+    return;
+  }
+
+  Future<void> _upload(String inputSource) async {
+    Get.defaultDialog(
+        barrierDismissible: false,
+        title: "Mood Meter",
+        middleText: "",
+        content: const Column(
+          children: [
+            Center(
+                child: CircularProgressIndicator(
+              color: AppColors.primaryColor,
+            ))
+          ],
+        ));
+    try {
+      pickedImage = await picker.pickImage(
+          source: inputSource == 'camera'
+              ? ImageSource.camera
+              : ImageSource.gallery,
+          maxWidth: 1920);
+      setState(() {
+        processingStatus = true;
+      });
+      final String fileName = path.basename(pickedImage!.path);
+      try {
+        // Uploading the selected image with some custom meta data
+        {
+          imageFile = File(pickedImage!.path);
+          await storage.ref(fileName).putFile(imageFile!).then((p0) async {
+            imageUrl = await p0.ref.getDownloadURL();
+            setState(() {});
+            if (p0.state == TaskState.success) {
+              setState(() {
+                processingStatus = false;
+              });
+            }
+          });
+        }
+        // Refresh the UI
+        Get.back();
+        setState(() {});
+      } on FirebaseException catch (error) {
+        Get.back();
+        if (kDebugMode) {
+          print(error);
+        }
+      }
+    } catch (err) {
+      Get.back();
+      if (kDebugMode) {
+        print(err);
+      }
+    }
   }
 }

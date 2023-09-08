@@ -47,6 +47,8 @@ final userDocId = ValueNotifier("");
 final loggedInGlobal = ValueNotifier(false);
 
 UserModel userData = UserModel(
+  age: '',
+  phoneNumber: '',
   userID: "",
   displayName: "",
   email: "",
