@@ -1,11 +1,11 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:sizer/sizer.dart';
-import 'package:smiletracker/Helpers/custom_widgets.dart';
-import 'package:smiletracker/Helpers/globalvariables.dart';
-import 'package:smiletracker/Helpers/page_navigation.dart';
+import 'package:smiletracker/helpers/custom_widgets.dart';
+import 'package:smiletracker/helpers/data_helper.dart';
+import 'package:smiletracker/helpers/globalvariables.dart';
+import 'package:smiletracker/helpers/page_navigation.dart';
 import 'package:smiletracker/views/home/mood_screen.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 
@@ -19,6 +19,7 @@ class ReminderScreen extends StatefulWidget {
 }
 
 class _ReminderScreenState extends State<ReminderScreen> {
+  final DataHelper _dataController = Get.find<DataHelper>();
   final TextEditingController noteController = TextEditingController();
   final GlobalKey<FormState> noteForm = GlobalKey();
   DateTime date = DateTime.now();
@@ -502,7 +503,8 @@ class _ReminderScreenState extends State<ReminderScreen> {
                       children: [
                         InkWell(
                           onTap: () async {
-                            await postMood();
+                            await _dataController.postMood(noteController.text,
+                                widget.rating, date.microsecondsSinceEpoch);
                             if (widget.rating > 2.4) {
                               reminderSuccess(context);
                             } else {
@@ -527,7 +529,8 @@ class _ReminderScreenState extends State<ReminderScreen> {
                             // if (noteForm.currentState!.validate()) {
                             //
                             // }
-                            await postMood();
+                            await _dataController.postMood(noteController.text,
+                                widget.rating, date.microsecondsSinceEpoch);
                             if (widget.rating > 2.4) {
                               reminderSuccess(context);
                             } else {
@@ -592,18 +595,5 @@ class _ReminderScreenState extends State<ReminderScreen> {
         ),
       ),
     );
-  }
-
-  postMood() async {
-    await FirebaseFirestore.instance
-        .collection("users")
-        .doc(userData.userID)
-        .collection("myMoods")
-        .doc()
-        .set({
-      "note": noteController.text,
-      "rating": widget.rating,
-      "date": date.microsecondsSinceEpoch,
-    });
   }
 }

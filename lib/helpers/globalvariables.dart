@@ -44,7 +44,6 @@ TextStyle bodySmall = const TextStyle(
 
 ///----------App variable
 final userDocId = ValueNotifier("");
-final loggedInGlobal = ValueNotifier(false);
 
 UserModel userData = UserModel(
   age: '',

@@ -2,20 +2,20 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:sizer/sizer.dart';
-import 'package:smiletracker/Helpers/globalvariables.dart';
-import 'package:smiletracker/Helpers/page_navigation.dart';
+import 'package:smiletracker/helpers/globalvariables.dart';
+import 'package:smiletracker/helpers/page_navigation.dart';
 import 'package:smiletracker/models/user_model.dart';
-import 'package:smiletracker/views/auth/loginScreen.dart';
+import 'package:smiletracker/views/auth/login_screen.dart';
 import 'package:smiletracker/views/home/smily_face.dart';
 
-class splashScreen extends StatefulWidget {
-  const splashScreen({Key? key}) : super(key: key);
+class SplashScreen extends StatefulWidget {
+  const SplashScreen({Key? key}) : super(key: key);
 
   @override
-  State<splashScreen> createState() => _splashScreenState();
+  State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _splashScreenState extends State<splashScreen> {
+class _SplashScreenState extends State<SplashScreen> {
   late bool login;
 
   getData() async {

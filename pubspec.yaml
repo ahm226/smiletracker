@@ -50,6 +50,7 @@ dependencies:
   intl_phone_number_input: ^0.7.3+1
   google_sign_in: ^6.1.4
   provider:
+  connectivity_plus: ^3.0.6
   firebase_core: ^2.10.0
   firebase_auth: ^4.4.2
   firebase_storage: ^11.2.0

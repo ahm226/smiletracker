@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
-import 'package:smiletracker/Helpers/globalvariables.dart';
+import 'package:smiletracker/helpers/globalvariables.dart';
 
 class CustomTextField extends StatefulWidget {
   final String hintText;
@@ -40,7 +40,6 @@ class _CustomTextFieldState extends State<CustomTextField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      textCapitalization: widget.textCapitalization,
       validator: widget.validator,
       obscureText: widget.isObscure ?? false,
       controller: widget.controller,

@@ -1,13 +1,12 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
-import 'package:smiletracker/Helpers/custom_validator.dart';
-import 'package:smiletracker/Helpers/globalvariables.dart';
-import 'package:smiletracker/views/home/smily_face.dart';
+import 'package:smiletracker/helpers/custom_validator.dart';
+import 'package:smiletracker/helpers/data_helper.dart';
+import 'package:smiletracker/helpers/globalvariables.dart';
 
-import '../../Helpers/custom_widgets.dart';
-import '../../Helpers/text_form_field.dart';
+import '../../helpers/custom_widgets.dart';
+import '../../helpers/text_form_field.dart';
 
 class ChangePassword extends StatefulWidget {
   const ChangePassword({Key? key}) : super(key: key);
@@ -17,6 +16,7 @@ class ChangePassword extends StatefulWidget {
 }
 
 class _ResetPasswordState extends State<ChangePassword> {
+  final DataHelper _dataController = Get.find<DataHelper>();
   bool _obscureText = true;
   bool _obscureTextConfirm = true;
   final TextEditingController passwordEditingController =
@@ -176,8 +176,11 @@ class _ResetPasswordState extends State<ChangePassword> {
                                   ],
                                 ));
 
-                            changePassword(passwordEditingController.text,
+                            _dataController.changePassword(
+                                context,
+                                passwordEditingController.text,
                                 newPasswordEditingController.text);
+                            setState(() {});
                           }
                         }),
                   ),
@@ -188,31 +191,5 @@ class _ResetPasswordState extends State<ChangePassword> {
         ),
       ),
     );
-  }
-
-  void changePassword(String currentPassword, String newPassword) async {
-    final user = await FirebaseAuth.instance.currentUser;
-    final cred = EmailAuthProvider.credential(
-        email: userData.email, password: currentPassword);
-
-    user?.reauthenticateWithCredential(cred).then((value) {
-      user.updatePassword(newPassword).then((_) {
-        //Success, do something
-        Get.back();
-        setState(() {});
-        successPopUp(
-            context, const EmojiRatingApp(), 'Password Changed Successfully');
-      }).catchError((error) {
-        //Error, show something
-        Get.back();
-        setState(() {});
-        errorPopUp(
-            context, 'Error occurred while changing password! Try Again ');
-      });
-    }).catchError((err) {
-      Get.back();
-      setState(() {});
-      errorPopUp(context, 'Error occurred while changing password! Try Again ');
-    });
   }
 }

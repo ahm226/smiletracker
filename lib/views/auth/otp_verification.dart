@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
-import 'package:smiletracker/Helpers/custom_widgets.dart';
-import 'package:smiletracker/Helpers/globalvariables.dart';
-import 'package:smiletracker/Helpers/page_navigation.dart';
-import 'package:smiletracker/Helpers/text_form_field.dart';
-import 'package:smiletracker/views/auth/loginScreen.dart';
-import 'package:smiletracker/views/auth/resetPassword.dart';
+import 'package:smiletracker/helpers/custom_widgets.dart';
+import 'package:smiletracker/helpers/globalvariables.dart';
+import 'package:smiletracker/helpers/page_navigation.dart';
+import 'package:smiletracker/helpers/text_form_field.dart';
+import 'package:smiletracker/views/auth/login_screen.dart';
+import 'package:smiletracker/views/auth/reset_password.dart';
 
 class VerifyEmail extends StatefulWidget {
   const VerifyEmail({

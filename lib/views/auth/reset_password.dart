@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
-import 'package:smiletracker/Helpers/custom_validator.dart';
-import 'package:smiletracker/Helpers/globalvariables.dart';
-import 'package:smiletracker/Helpers/page_navigation.dart';
-import 'package:smiletracker/views/auth/loginScreen.dart';
+import 'package:smiletracker/helpers/custom_validator.dart';
+import 'package:smiletracker/helpers/globalvariables.dart';
+import 'package:smiletracker/helpers/page_navigation.dart';
+import 'package:smiletracker/views/auth/login_screen.dart';
 
-import '../../Helpers/custom_widgets.dart';
-import '../../Helpers/text_form_field.dart';
+import '../../helpers/custom_widgets.dart';
+import '../../helpers/text_form_field.dart';
 
 class ResetPassword extends StatefulWidget {
   const ResetPassword({Key? key}) : super(key: key);
