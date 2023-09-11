@@ -1,14 +1,11 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:delayed_display/delayed_display.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_event_calendar/flutter_event_calendar.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:sizer/sizer.dart';
-import 'package:smiletracker/Helpers/custom_widgets.dart';
-import 'package:smiletracker/Helpers/globalvariables.dart';
-import 'package:smiletracker/Helpers/page_navigation.dart';
-import 'package:smiletracker/Helpers/time_date_functions.dart';
+import 'package:smiletracker/helpers/custom_widgets.dart';
+import 'package:smiletracker/helpers/data_helper.dart';
+import 'package:smiletracker/helpers/globalvariables.dart';
+import 'package:smiletracker/helpers/page_navigation.dart';
 import 'package:smiletracker/views/home/smily_face.dart';
 
 class MoodsScreen extends StatefulWidget {
@@ -24,92 +21,13 @@ class MoodsScreen extends StatefulWidget {
 }
 
 class _MoodsScreenState extends State<MoodsScreen> {
-  List<Event> moods = [];
+  final DataHelper _dataController = Get.find<DataHelper>();
   bool isLoading = false;
-
-  addMoods() async {
+  getData() async {
     setState(() {
       isLoading = true;
     });
-    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-        .collection("users")
-        .doc(userData.userID)
-        .collection("myMoods")
-        .get();
-    for (int i = 0; i < querySnapshot.docs.length; i++) {
-      var a = querySnapshot.docs[i].data() as Map;
-      print(TimeDateFunctions.dateInDigits(a['date']));
-      DateTime date = TimeDateFunctions.dateInDigits(a['date']);
-      setState(() {
-        moods.add(
-          Event(
-            child: DelayedDisplay(
-              delay: const Duration(milliseconds: 150),
-              slidingBeginOffset: const Offset(0, 1),
-              child: Container(
-                margin: const EdgeInsets.symmetric(vertical: 4),
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 22, vertical: 10),
-                width: double.infinity,
-                decoration: BoxDecoration(
-                    color: AppColors.primaryColor.withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(16)),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            a['rating'] > 2.4 ? "Feeling Happy" : "Feeling Sad",
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 15,
-                            ),
-                          ),
-                          Image.asset(a['rating'] > 2.4
-                              ? "assest/images/happyIcon.png"
-                              : "assest/images/happyIcon.png"),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Text(a["note"]),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Text(
-                            DateFormat('EEEE , d MMMM').format(date).toString(),
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.grey,
-                              fontSize: 12,
-                            ),
-                          )
-                        ],
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            dateTime: CalendarDateTime(
-              year: date.year,
-              month: date.month,
-              day: date.day,
-              calendarType: CalendarType.GREGORIAN,
-            ),
-          ),
-        );
-      });
-    }
+    await _dataController.addMoods();
     setState(() {
       isLoading = false;
     });
@@ -119,7 +37,7 @@ class _MoodsScreenState extends State<MoodsScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    addMoods();
+    getData();
   }
 
   @override
@@ -213,7 +131,7 @@ class _MoodsScreenState extends State<MoodsScreen> {
                                     emptyIcon: Icons.hourglass_empty_sharp,
                                     emptyTextColor: AppColors.primaryColor,
                                     emptyText: "No Data"),
-                                events: moods),
+                                events: _dataController.moods),
                           ),
                         ),
                       ),

@@ -1,15 +1,17 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
-import 'package:smiletracker/Helpers/auth_provider.dart';
-import 'package:smiletracker/views/onboarding/splashScreen.dart';
+import 'package:smiletracker/helpers/auth_provider.dart';
+import 'package:smiletracker/helpers/data_helper.dart';
+import 'package:smiletracker/views/onboarding/splash_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
+  Get.put(DataHelper());
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (_) => GoogleAuthenticateProvider()),
   ], child: const MyApp()));
@@ -38,7 +40,7 @@ class _MyAppState extends State<MyApp> {
         theme: ThemeData(
           scaffoldBackgroundColor: Colors.transparent,
         ),
-        home: const splashScreen(),
+        home: const SplashScreen(),
       );
     });
   }

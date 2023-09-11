@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
-import 'package:smiletracker/Helpers/custom_widgets.dart';
-import 'package:smiletracker/Helpers/globalvariables.dart';
+import 'package:smiletracker/helpers/custom_widgets.dart';
+import 'package:smiletracker/helpers/globalvariables.dart';
 
 class ChoosePlan extends StatefulWidget {
   const ChoosePlan({super.key});

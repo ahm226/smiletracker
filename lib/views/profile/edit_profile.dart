@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:delayed_display/delayed_display.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
@@ -9,12 +8,12 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart' as path;
 import 'package:sizer/sizer.dart';
-import 'package:smiletracker/Helpers/country_number_widget.dart';
-import 'package:smiletracker/Helpers/custom_validator.dart';
-import 'package:smiletracker/Helpers/custom_widgets.dart';
-import 'package:smiletracker/Helpers/globalvariables.dart';
-import 'package:smiletracker/Helpers/text_form_field.dart';
-import 'package:smiletracker/models/user_model.dart';
+import 'package:smiletracker/helpers/country_number_widget.dart';
+import 'package:smiletracker/helpers/custom_validator.dart';
+import 'package:smiletracker/helpers/custom_widgets.dart';
+import 'package:smiletracker/helpers/data_helper.dart';
+import 'package:smiletracker/helpers/globalvariables.dart';
+import 'package:smiletracker/helpers/text_form_field.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 
 class EditProfile extends StatefulWidget {
@@ -25,6 +24,7 @@ class EditProfile extends StatefulWidget {
 }
 
 class _EditProfileState extends State<EditProfile> {
+  final DataHelper _dataController = Get.find<DataHelper>();
   final GlobalKey<FormState> key = GlobalKey<FormState>();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController ageController = TextEditingController();
@@ -47,13 +47,6 @@ class _EditProfileState extends State<EditProfile> {
       phoneController.text = userData.phoneNumber;
       imageUrl = userData.imageUrl;
     });
-  }
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    getData();
   }
 
   @override
@@ -288,7 +281,12 @@ class _EditProfileState extends State<EditProfile> {
                                   ],
                                 ));
 
-                            await editProfile();
+                            await _dataController.editProfile(
+                                nameController.text,
+                                imageUrl,
+                                ageController.text,
+                                phoneController.text);
+                            setState(() {});
                             Get.back();
                           }
                         },
@@ -305,28 +303,6 @@ class _EditProfileState extends State<EditProfile> {
         ),
       ),
     );
-  }
-
-  editProfile() async {
-    await FirebaseFirestore.instance
-        .collection('users')
-        .doc(userDocId.value)
-        .update({
-      "displayName": nameController.text,
-      "imageUrl": imageUrl,
-      'age': ageController.text,
-      'phoneNumber': phoneController.text
-    });
-    await FirebaseFirestore.instance
-        .collection('users')
-        .doc(userDocId.value)
-        .get()
-        .then((value) async {
-      setState(() {
-        userData = UserModel.fromDocument(value.data());
-      });
-    });
-    return;
   }
 
   Future<void> _upload(String inputSource) async {

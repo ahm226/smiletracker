@@ -1,12 +1,11 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
-import 'package:smiletracker/Helpers/custom_validator.dart';
-import 'package:smiletracker/Helpers/custom_widgets.dart';
-import 'package:smiletracker/Helpers/globalvariables.dart';
-import 'package:smiletracker/Helpers/text_form_field.dart';
-import 'package:smiletracker/views/auth/loginScreen.dart';
+import 'package:smiletracker/helpers/custom_validator.dart';
+import 'package:smiletracker/helpers/custom_widgets.dart';
+import 'package:smiletracker/helpers/data_helper.dart';
+import 'package:smiletracker/helpers/globalvariables.dart';
+import 'package:smiletracker/helpers/text_form_field.dart';
 
 class ForgotPassword extends StatefulWidget {
   const ForgotPassword({
@@ -18,6 +17,7 @@ class ForgotPassword extends StatefulWidget {
 }
 
 class _ForgotPasswordState extends State<ForgotPassword> {
+  final DataHelper _dataController = Get.find<DataHelper>();
   final GlobalKey<FormState> key = GlobalKey<FormState>();
   final TextEditingController emailEditingController = TextEditingController();
 
@@ -116,8 +116,8 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                       buttonText: "Send Code",
                       onTap: () async {
                         if (key.currentState!.validate()) {
-                          await resetPassword(
-                              email: emailEditingController.text);
+                          await _dataController.resetPassword(
+                              context, emailEditingController.text);
                           // PageTransition.pageBackNavigation(
                           //     page: const VerifyEmail());
                         }
@@ -134,17 +134,5 @@ class _ForgotPasswordState extends State<ForgotPassword> {
         ),
       ),
     );
-  }
-
-  Future resetPassword({required String email}) async {
-    try {
-      await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
-      successPopUp(context, LoginScreen(),
-          'To change password an email send to your email account.');
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        errorPopUp(context, "There is no record of this email");
-      }
-    }
   }
 }

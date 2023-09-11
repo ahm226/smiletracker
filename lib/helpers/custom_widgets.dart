@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:smiletracker/Helpers/page_navigation.dart';
+import 'package:smiletracker/helpers/page_navigation.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 
 class CustomButton extends StatefulWidget {

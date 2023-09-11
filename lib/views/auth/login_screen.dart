@@ -1,18 +1,15 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
-import 'package:smiletracker/Helpers/custom_validator.dart';
-import 'package:smiletracker/Helpers/globalvariables.dart';
-import 'package:smiletracker/Helpers/page_navigation.dart';
-import 'package:smiletracker/models/user_model.dart';
-import 'package:smiletracker/views/auth/forgotPasswordScreen.dart';
-import 'package:smiletracker/views/auth/signupScreen.dart';
-import 'package:smiletracker/views/home/smily_face.dart';
+import 'package:smiletracker/helpers/custom_validator.dart';
+import 'package:smiletracker/helpers/globalvariables.dart';
+import 'package:smiletracker/helpers/page_navigation.dart';
+import 'package:smiletracker/helpers/data_helper.dart';
+import 'package:smiletracker/views/auth/forgot_password_screen.dart';
+import 'package:smiletracker/views/auth/signup_screen.dart';
 
-import '../../Helpers/custom_widgets.dart';
-import '../../Helpers/text_form_field.dart';
+import '../../helpers/custom_widgets.dart';
+import '../../helpers/text_form_field.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -22,12 +19,18 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final DataHelper _dataController = Get.find<DataHelper>();
   bool _obscureText = true;
-  bool isEmailVerified = false;
   final TextEditingController emailEditingController = TextEditingController();
   final TextEditingController passwordEditingController =
       TextEditingController();
   final GlobalKey<FormState> signInFormField = GlobalKey();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -157,7 +160,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                   ))
                                 ],
                               ));
-                          await validateUser(
+                          await _dataController.validateUser(
+                              context,
                               emailEditingController.text.removeAllWhitespace
                                   .toLowerCase(),
                               passwordEditingController.text);
@@ -232,53 +236,5 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
-  }
-
-  validateUser(email, password) async {
-    try {
-      UserCredential user = await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: email, password: password);
-      userDocId.value = user.user!.uid;
-
-      await FirebaseAuth.instance.currentUser?.reload();
-
-      isEmailVerified = FirebaseAuth.instance.currentUser!.emailVerified;
-      if (isEmailVerified) {
-        FirebaseFirestore.instance
-            .collection('users')
-            .doc(user.user!.uid)
-            .get()
-            .then((value) async {
-          setState(() {
-            userData = UserModel.fromDocument(value.data());
-          });
-          saveUserData(userID: userDocId.value);
-          setUserLoggedIn(true);
-          setState(() {
-            loggedInGlobal.value = true;
-          });
-          Get.back();
-          setState(() {});
-          setState(() {});
-          PageTransition.pageProperNavigation(page: const EmojiRatingApp());
-        });
-      } else {
-        Get.back();
-        setState(() {});
-        errorPopUp(
-            context, "Sorry, There is some issue in proceeding. Try later");
-      }
-    } on FirebaseAuthException catch (e) {
-      Get.back();
-      setState(() {});
-      errorPopUp(
-        context,
-        e.code == 'user-not-found'
-            ? "User not found"
-            : (e.code == 'wrong-password')
-                ? "The Password you have entered is not correct"
-                : e.toString().replaceRange(0, 14, '').split(']')[1],
-      );
-    }
   }
 }

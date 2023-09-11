@@ -1,20 +1,20 @@
-import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
-import 'package:smiletracker/Helpers/auth_provider.dart';
-import 'package:smiletracker/Helpers/custom_validator.dart';
-import 'package:smiletracker/Helpers/globalvariables.dart';
-import 'package:smiletracker/Helpers/page_navigation.dart';
+import 'package:smiletracker/helpers/auth_provider.dart';
+import 'package:smiletracker/helpers/custom_validator.dart';
+import 'package:smiletracker/helpers/data_helper.dart';
+import 'package:smiletracker/helpers/globalvariables.dart';
+import 'package:smiletracker/helpers/page_navigation.dart';
 import 'package:smiletracker/models/user_model.dart';
-import 'package:smiletracker/views/auth/loginScreen.dart';
+import 'package:smiletracker/views/auth/login_screen.dart';
 import 'package:smiletracker/views/home/smily_face.dart';
 
-import '../../Helpers/custom_widgets.dart';
-import '../../Helpers/text_form_field.dart';
+import '../../helpers/custom_widgets.dart';
+import '../../helpers/text_form_field.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({Key? key}) : super(key: key);
@@ -24,6 +24,7 @@ class SignupScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<SignupScreen> {
+  final DataHelper _dataController = Get.find<DataHelper>();
   bool _obscureText = true;
   final TextEditingController nameEditingController = TextEditingController();
   final TextEditingController emailEditingController = TextEditingController();
@@ -176,7 +177,8 @@ class _LoginScreenState extends State<SignupScreen> {
                                   ))
                                 ],
                               ));
-                          await registerUser(
+                          await _dataController.registerUser(
+                            context,
                             emailEditingController.text.removeAllWhitespace
                                 .toLowerCase(),
                             passwordEditingController.text,
@@ -261,7 +263,7 @@ class _LoginScreenState extends State<SignupScreen> {
                           await Provider.of<GoogleAuthenticateProvider>(context,
                                   listen: false)
                               .loginWithGoogle();
-                          loggedInGlobal.value = true;
+                          _dataController.loggedInGlobal.value = true;
                           FirebaseFirestore.instance
                               .collection('users')
                               .doc(FirebaseAuth.instance.currentUser!.uid)
@@ -270,10 +272,6 @@ class _LoginScreenState extends State<SignupScreen> {
                             setState(() {
                               userData = UserModel.fromDocument(value.data());
                             });
-                            print("userData.displayName");
-                            print(userData.userID);
-                            print(userData.displayName);
-                            print(userData.email);
                             saveUserData(userID: userData.userID);
                             setUserLoggedIn(true);
                           });
@@ -361,44 +359,5 @@ class _LoginScreenState extends State<SignupScreen> {
         ),
       ),
     );
-  }
-
-  registerUser(emails, pass, name) async {
-    try {
-      UserCredential user = await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(email: emails, password: pass);
-      await FirebaseAuth.instance.currentUser?.updateDisplayName(name);
-      FirebaseFirestore.instance.collection('users').doc(user.user!.uid).set({
-        'email': emails,
-        'displayName': name,
-        'id': user.user!.uid,
-        'imageUrl': '',
-        'age': '',
-        'phoneNumber': ''
-      });
-      FirebaseAuth.instance.currentUser?.sendEmailVerification();
-      Get.back();
-      setState(() {});
-      successPopUp(context, const LoginScreen(),
-          'Successfully registered,\n Verification link sent to your email.');
-      // return AwesomeDialog(
-      //   context: context,
-      //   dialogType: DialogType.success,
-      //   desc:
-      //       'Successfully registered,\n Verification link sent to your email',
-      //   btnOkOnPress: () {
-      //     PageTransition.pageProperNavigation(page: const LoginScreen());
-      //   },
-      // ).show();
-    } catch (error) {
-      Get.back();
-      setState(() {});
-      return AwesomeDialog(
-        context: context,
-        dialogType: DialogType.error,
-        btnOkOnPress: () {},
-        desc: error.toString().replaceRange(0, 14, '').split(']')[1],
-      ).show();
-    }
   }
 }
