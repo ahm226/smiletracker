@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 import 'package:smiletracker/helpers/custom_validator.dart';
+import 'package:smiletracker/helpers/data_helper.dart';
 import 'package:smiletracker/helpers/globalvariables.dart';
 import 'package:smiletracker/helpers/page_navigation.dart';
-import 'package:smiletracker/helpers/data_helper.dart';
 import 'package:smiletracker/views/auth/forgot_password_screen.dart';
 import 'package:smiletracker/views/auth/signup_screen.dart';
 
@@ -40,12 +40,6 @@ class _LoginScreenState extends State<LoginScreen> {
         resizeToAvoidBottomInset: false,
         body: Container(
           height: 100.h,
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage("assest/images/Background.png"),
-              fit: BoxFit.cover,
-            ),
-          ),
           child: SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.only(left: 18.0, right: 18.0),
@@ -55,25 +49,13 @@ class _LoginScreenState extends State<LoginScreen> {
                   SizedBox(
                     height: 12.h,
                   ),
-                  const Text(
-                    "Welcome Back!",
-                    style: TextStyle(
-                        fontFamily: 'Poppins',
-                        color: AppColors.primaryColor,
-                        fontSize: 42,
-                        fontWeight: FontWeight.w600),
-                  ),
+                  Text("Welcome Back!", style: headingLarge),
                   SizedBox(
                     height: 2.h,
                   ),
                   Text(
-                    "Login to your account",
-                    style: TextStyle(
-                      fontWeight: FontWeight.w400,
-                      fontFamily: 'Poppins',
-                      color: Colors.grey.shade800,
-                      fontSize: 17,
-                    ),
+                    "Log in to your account",
+                    style: headingMedium,
                   ),
                   SizedBox(
                     height: 12.h,
@@ -131,8 +113,28 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                   ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          PageTransition.pageNavigation(
+                              page: const ForgotPassword());
+                        },
+                        child: Text(
+                          "Forgot Password?",
+                          style: TextStyle(
+                            color: Colors.grey.shade800,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                            fontFamily: 'Poppins',
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                   SizedBox(
-                    height: 15.h,
+                    height: 17.h,
                   ),
                   Center(
                     child: CustomButton(
@@ -171,25 +173,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   SizedBox(
-                    height: 2.h,
-                  ),
-                  Center(
-                      child: InkWell(
-                    onTap: () {
-                      PageTransition.pageNavigation(
-                          page: const ForgotPassword());
-                    },
-                    child: Text(
-                      "Forgot Password?",
-                      style: TextStyle(
-                        color: Colors.grey.shade800,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                        fontFamily: 'Poppins',
-                      ),
-                    ),
-                  )),
-                  SizedBox(
                     height: 10.h,
                   ),
                   Padding(
@@ -218,7 +201,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: const Text(
                             "Sign up",
                             style: TextStyle(
-                              color: AppColors.primaryColor,
+                              decoration: TextDecoration.underline,
                               fontSize: 15,
                               fontWeight: FontWeight.w600,
                               fontFamily: 'Poppins',

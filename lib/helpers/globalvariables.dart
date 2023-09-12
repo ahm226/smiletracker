@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smiletracker/models/user_model.dart';
 
 ///---------App Colors
+RxBool mode = false.obs;
 
 class AppColors {
-  static const Color primaryColor = Color(0xffff5C00);
+  static const Color primaryColor = Color(0xff2899B4);
   static const Color secondaryColor = Color(0xffeceaef);
   static const Color scaffoldColor = Colors.white;
   static const Color buttonColor = Color(0xff033d94);
@@ -15,14 +17,12 @@ class AppColors {
 
 ///---------App Texts
 TextStyle headingLarge = const TextStyle(
-    fontSize: 22,
-    color: Colors.black,
-    fontFamily: 'Poppins',
-    fontWeight: FontWeight.w700);
-TextStyle headingMedium = const TextStyle(
-  fontSize: 18,
-  color: Colors.black,
+    fontFamily: 'Poppins', fontSize: 42, fontWeight: FontWeight.w600);
+TextStyle headingMedium = TextStyle(
+  fontWeight: FontWeight.w600,
   fontFamily: 'Poppins',
+  color: Colors.grey.shade800,
+  fontSize: 17,
 );
 TextStyle headingSmall = const TextStyle(
   fontSize: 17,

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
-import 'package:smiletracker/helpers/custom_validator.dart';
 import 'package:smiletracker/helpers/globalvariables.dart';
 
 class CountryCodePicker extends StatefulWidget {
@@ -40,7 +39,7 @@ class _CountryCodePickerState extends State<CountryCodePicker> {
         setSelectorButtonAsPrefixIcon: true,
       ),
       ignoreBlank: true,
-      autoValidateMode: AutovalidateMode.disabled,
+      autoValidateMode: AutovalidateMode.always,
       selectorTextStyle: const TextStyle(color: Colors.black),
       hintText: 'Phone Number',
       initialValue: number,
@@ -51,6 +50,13 @@ class _CountryCodePickerState extends State<CountryCodePicker> {
           fillColor: AppColors.primaryColor.withOpacity(0.12),
           filled: true,
           border: InputBorder.none,
+          focusedErrorBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10.0),
+            borderSide: BorderSide(
+              color: Colors.transparent, // Make the border transparent
+              width: 0, // Set the width to 0 to make it disappear
+            ),
+          ),
           errorBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10.0),
             borderSide: BorderSide(
@@ -83,7 +89,7 @@ class _CountryCodePickerState extends State<CountryCodePicker> {
       ),
       cursorColor: Colors.black,
       spaceBetweenSelectorAndTextField: 0,
-      validator: (String? value) => CustomValidator.number(value),
+      // validator: (String? value) => CustomValidator.number(value),
       textFieldController: widget.phoneController,
       formatInput: true,
       keyboardType:

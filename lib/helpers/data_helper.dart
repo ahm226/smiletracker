@@ -12,6 +12,7 @@ import 'package:smiletracker/helpers/time_date_functions.dart';
 import 'package:smiletracker/models/user_model.dart';
 import 'package:smiletracker/views/auth/login_screen.dart';
 import 'package:smiletracker/views/home/smily_face.dart';
+import 'package:smiletracker/views/navbar/bottom_nav_bar.dart';
 
 class DataHelper extends GetxController {
   RxList<Event> moods = <Event>[].obs;
@@ -68,7 +69,7 @@ class DataHelper extends GetxController {
           Get.back();
           // setState(() {});
           // setState(() {});
-          PageTransition.pageProperNavigation(page: const EmojiRatingApp());
+          PageTransition.pageProperNavigation(page: BottomNavBar());
         });
       } else {
         Get.back();
