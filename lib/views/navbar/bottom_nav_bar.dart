@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:smiletracker/helpers/globalvariables.dart';
+import 'package:smiletracker/views/home/diary_screen.dart';
 import 'package:smiletracker/views/home/mood_screen.dart';
 import 'package:smiletracker/views/home/reminder_screen.dart';
 import 'package:smiletracker/views/home/smily_face.dart';
@@ -44,7 +45,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
       ReminderScreen(
         rating: 2.5,
       ),
-      Container(),
+      DiaryScreen(),
       ProfileScreen()
     ];
     return Scaffold(

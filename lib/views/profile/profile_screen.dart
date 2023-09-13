@@ -20,6 +20,7 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  bool isSwitched = ThemeService().isDarkMode;
   bool loader = false;
   late PickedFile pickedFile;
   String? imageUrl;
@@ -219,55 +220,62 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
               ),
             ),
-            InkWell(
-              onTap: () {
-                ThemeService().switchTheme();
-                mode.value = ThemeService().isDarkMode;
-                setState(() {});
-              },
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Container(
-                  width: 100.w,
-                  height: 50,
-                  decoration: BoxDecoration(
-                    color: AppColors.primaryColor.withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(
-                        12.0), // Adjust the radius as needed
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.all(12.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              ThemeService().isDarkMode
-                                  ? "Light Mode"
-                                  : "Dark Mode",
-                              style: TextStyle(
-                                fontSize: 17,
-                                fontWeight: FontWeight.w500,
-                                fontFamily: 'Poppins',
-                              ),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Container(
+                width: 100.w,
+                height: 50,
+                decoration: BoxDecoration(
+                  color: AppColors.primaryColor.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(
+                      12.0), // Adjust the radius as needed
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.all(12.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            ThemeService().isDarkMode
+                                ? "Light Mode"
+                                : "Dark Mode",
+                            style: TextStyle(
+                              fontSize: 17,
+                              fontWeight: FontWeight.w500,
+                              fontFamily: 'Poppins',
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
-                      Padding(
+                    ),
+                    Padding(
                         padding: EdgeInsets.only(right: 10.0),
-                        child: Icon(
-                          ThemeService().isDarkMode
-                              ? Icons.brightness_4
-                              : Icons.brightness_2,
-                          size: 20,
-                        ),
-                      )
-                    ],
-                  ),
+                        child: Center(
+                          child: Switch(
+                            value: isSwitched,
+                            onChanged: (value) {
+                              setState(() {
+                                ThemeService().switchTheme();
+                                mode.value = ThemeService().isDarkMode;
+                                setState(() {});
+                                isSwitched = value;
+                              });
+                            },
+                            activeTrackColor: Colors.black,
+                            activeColor: Colors.white,
+                          ),
+                        )),
+                    // Icon(
+                    //   ThemeService().isDarkMode
+                    //       ? Icons.brightness_4
+                    //       : Icons.brightness_2,
+                    //   size: 20,
+                    // ),
+                  ],
                 ),
               ),
             ),

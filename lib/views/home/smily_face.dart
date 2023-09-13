@@ -32,7 +32,7 @@ class _EmojiRatingAppState extends State<EmojiRatingApp> {
         body: Center(
           child: Padding(
             padding: const EdgeInsets.only(
-                left: 18.0, right: 18.0, top: 8.0, bottom: 8.0),
+                left: 18.0, right: 18.0, top: 18.0, bottom: 8.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,

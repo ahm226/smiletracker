@@ -21,8 +21,7 @@ TextStyle headingLarge = const TextStyle(
 TextStyle headingMedium = TextStyle(
   fontWeight: FontWeight.w600,
   fontFamily: 'Poppins',
-  color: Colors.grey.shade800,
-  fontSize: 17,
+  fontSize: 25,
 );
 TextStyle headingSmall = const TextStyle(
   fontSize: 17,
