@@ -6,13 +6,13 @@ import 'package:smiletracker/helpers/custom_widgets.dart';
 import 'package:smiletracker/helpers/data_helper.dart';
 import 'package:smiletracker/helpers/globalvariables.dart';
 import 'package:smiletracker/helpers/page_navigation.dart';
-import 'package:smiletracker/views/home/mood_screen.dart';
+import 'package:smiletracker/views/navbar/bottom_nav_bar.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 
 class ReminderScreen extends StatefulWidget {
-  final rating;
-
-  const ReminderScreen({Key? key, required this.rating}) : super(key: key);
+  const ReminderScreen({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<ReminderScreen> createState() => _ReminderScreenState();
@@ -102,7 +102,7 @@ class _ReminderScreenState extends State<ReminderScreen> {
         builder: (context) {
           return StatefulBuilder(builder: (context, setState) {
             return AlertDialog(
-              backgroundColor: Colors.white,
+              backgroundColor: const Color(0xffFFF8BC),
               elevation: 0,
               contentPadding: EdgeInsets.zero,
               shape: RoundedRectangleBorder(
@@ -115,7 +115,7 @@ class _ReminderScreenState extends State<ReminderScreen> {
                   children: [
                     Container(
                         decoration: const BoxDecoration(
-                          color: Colors.white,
+                          color: Color(0xffFFF8BC),
                         ),
                         alignment: Alignment.center,
                         child: Padding(
@@ -137,10 +137,10 @@ class _ReminderScreenState extends State<ReminderScreen> {
                                   'It is very good to see you very happy!',
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
+                                    color: Colors.black,
                                     height: 1.4,
                                     fontWeight: FontWeight.w600,
                                     fontFamily: 'Poppins',
-                                    color: Colors.black,
                                     fontSize: 17,
                                   ),
                                 ),
@@ -152,12 +152,16 @@ class _ReminderScreenState extends State<ReminderScreen> {
                                 buttonText: 'Done',
                                 onTap: () {
                                   Navigator.pop(context);
-                                  PageTransition.pageBackNavigation(
-                                      page: MoodsScreen(
-                                    note: noteController.text,
-                                    rating: widget.rating,
-                                    date: date,
+                                  PageTransition.pageProperNavigation(
+                                      page: BottomNavBar(
+                                    index: 1,
                                   ));
+                                  // PageTransition.pageBackNavigation(
+                                  //     page: MoodsScreen(
+                                  //   note: noteController.text,
+                                  //   rating: _dataController.rating,
+                                  //   date: date,
+                                  // ));
                                 },
                                 width: 170,
                               )
@@ -180,7 +184,7 @@ class _ReminderScreenState extends State<ReminderScreen> {
         builder: (context) {
           return StatefulBuilder(builder: (context, setState) {
             return AlertDialog(
-              backgroundColor: Colors.white,
+              backgroundColor: const Color(0xffFFAEA9),
               elevation: 0,
               contentPadding: EdgeInsets.zero,
 
@@ -194,7 +198,7 @@ class _ReminderScreenState extends State<ReminderScreen> {
                   children: [
                     Container(
                         decoration: const BoxDecoration(
-                          color: Colors.white,
+                          color: Color(0xffFFAEA9),
                         ),
                         alignment: Alignment.center,
                         child: Padding(
@@ -216,10 +220,10 @@ class _ReminderScreenState extends State<ReminderScreen> {
                                   'It is very sad to see you unhappy!',
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
+                                    color: Colors.black,
                                     height: 1.4,
                                     fontWeight: FontWeight.w600,
                                     fontFamily: 'Poppins',
-                                    color: Colors.black,
                                     fontSize: 17,
                                   ),
                                 ),
@@ -231,12 +235,16 @@ class _ReminderScreenState extends State<ReminderScreen> {
                                 buttonText: 'Done',
                                 onTap: () {
                                   Navigator.pop(context);
-                                  PageTransition.pageBackNavigation(
-                                      page: MoodsScreen(
-                                    note: noteController.text,
-                                    rating: widget.rating,
-                                    date: date,
+                                  PageTransition.pageProperNavigation(
+                                      page: BottomNavBar(
+                                    index: 1,
                                   ));
+                                  // PageTransition.pageBackNavigation(
+                                  //     page: MoodsScreen(
+                                  //   note: noteController.text,
+                                  //   rating: _dataController.rating,
+                                  //   date: date,
+                                  // ));
                                 },
                                 width: 170,
                               )
@@ -252,6 +260,14 @@ class _ReminderScreenState extends State<ReminderScreen> {
   }
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    print("_dataController.rating");
+    print(_dataController.rating);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
@@ -262,333 +278,319 @@ class _ReminderScreenState extends State<ReminderScreen> {
         key: noteForm,
         child: Scaffold(
           resizeToAvoidBottomInset: false,
-          body: Container(
-            height: 100.h,
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage("assest/images/Background.png"),
-                fit: BoxFit.cover,
-              ),
-            ),
-            child: Padding(
-              padding: EdgeInsets.only(
-                  top: 5.h, left: 15.0, right: 15.0, bottom: 15.0),
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    CustomAppBar(
-                      pageTitle: "Want to add note?",
-                      onTap: () {
-                        Get.back();
-                      },
-                      leadingButton: const Icon(
-                        Icons.arrow_back_ios,
-                        color: Colors.white,
-                        size: 20,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
+          body: Padding(
+            padding: EdgeInsets.only(
+                top: 2.h, left: 15.0, right: 15.0, bottom: 15.0),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Center(
                       child: Text(
-                        "Date:",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontFamily: 'Poppins',
-                          color: Colors.black,
-                          fontSize: 17,
-                        ),
+                    "Want to add note?",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontFamily: 'Poppins',
+                      fontSize: 17,
+                    ),
+                  )),
+                  const Padding(
+                    padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
+                    child: Text(
+                      "Date:",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontFamily: 'Poppins',
+                        fontSize: 17,
                       ),
                     ),
-                    const SizedBox(
-                      height: 3,
-                    ),
-                    InkWell(
-                      onTap: () {
-                        _selectDate(context);
-                      },
-                      child: Container(
-                        height: 53,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12),
-                          color: AppColors.primaryColor.withOpacity(0.1),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              Row(
-                                children: [
-                                  IconButton(
-                                    icon: Image.asset(
-                                      "assest/images/calenderIcon.png",
-                                      height: 30,
-                                      width: 30,
-                                    ),
-                                    tooltip: 'Select date',
-                                    onPressed: () {
-                                      _selectDate(context);
-                                    },
-                                  ),
-                                  InkWell(
-                                    child: Text(
-                                      _selectedDate,
-                                      textAlign: TextAlign.center,
-                                      style: const TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.w500,
-                                        fontFamily: 'Poppins',
-                                      ),
-                                    ),
-                                    onTap: () {
-                                      _selectDate(context);
-                                    },
-                                  ),
-                                ],
-                              ),
-                              IconButton(
-                                icon: Image.asset(
-                                  "assest/images/dropDown.png",
-                                  height: 10,
-                                  width: 10,
-                                ),
-                                tooltip: 'Select date',
-                                onPressed: () {
-                                  _selectDate(context);
-                                },
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 12,
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
-                      child: Text(
-                        "Time:",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontFamily: 'Poppins',
-                          color: Colors.black,
-                          fontSize: 16,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 3,
-                    ),
-                    InkWell(
-                      onTap: () {
-                        _selectTime(context);
-                      },
-                      child: Container(
-                        height: 53,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12),
-                          color: AppColors.primaryColor.withOpacity(0.1),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              Row(
-                                children: [
-                                  IconButton(
-                                    icon: Image.asset(
-                                      "assest/images/clock.png",
-                                      height: 30,
-                                      width: 30,
-                                    ),
-                                    tooltip: 'Select Time',
-                                    onPressed: () {
-                                      _selectTime(context);
-                                    },
-                                  ),
-                                  InkWell(
-                                    child: Text(
-                                      _selectedTime,
-                                      textAlign: TextAlign.center,
-                                      style: const TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.w500,
-                                        fontFamily: 'Poppins',
-                                      ),
-                                    ),
-                                    onTap: () {
-                                      _selectTime(context);
-                                    },
-                                  ),
-                                ],
-                              ),
-                              IconButton(
-                                icon: Image.asset(
-                                  "assest/images/dropDown.png",
-                                  height: 10,
-                                  width: 10,
-                                ),
-                                tooltip: 'Select Time',
-                                onPressed: () {
-                                  _selectTime(context);
-                                },
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 12,
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
-                      child: Text(
-                        "Explain your feeling of today:",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontFamily: 'Poppins',
-                          color: Colors.black,
-                          fontSize: 15,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 3,
-                    ),
-                    Container(
-                      height: 20.h,
-                      width: 100.w,
+                  ),
+                  const SizedBox(
+                    height: 3,
+                  ),
+                  InkWell(
+                    onTap: () {
+                      _selectDate(context);
+                    },
+                    child: Container(
+                      height: 53,
                       decoration: BoxDecoration(
-                          color: AppColors.primaryColor.withOpacity(0.1),
-                          borderRadius: BorderRadius.circular(12),
-                          border: Border.all(
-                              color: Colors.transparent, width: 1.4)),
-                      child: SingleChildScrollView(
-                        child: TextFormField(
-                          controller: noteController,
-                          textCapitalization: TextCapitalization.sentences,
-                          textInputAction: TextInputAction.none,
-                          maxLines: null,
-                          cursorColor: AppColors.primaryColor,
-                          style: const TextStyle(
-                              color: Colors.black, fontSize: 17),
-                          decoration: InputDecoration(
-                            contentPadding: const EdgeInsets.symmetric(
-                                horizontal: 12, vertical: 12),
-                            border: InputBorder.none,
-                            hintText: "How are you feeling today...",
-                            hintStyle: TextStyle(
-                                color: Colors.grey.shade700, fontSize: 17),
-                            prefixIconColor: Colors.white,
-                          ),
+                        borderRadius: BorderRadius.circular(12),
+                        color: AppColors.primaryColor.withOpacity(0.1),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Row(
+                              children: [
+                                IconButton(
+                                  icon: Image.asset(
+                                    "assest/images/calenderIcon.png",
+                                    height: 30,
+                                    width: 30,
+                                  ),
+                                  tooltip: 'Select date',
+                                  onPressed: () {
+                                    _selectDate(context);
+                                  },
+                                ),
+                                InkWell(
+                                  child: Text(
+                                    _selectedDate,
+                                    textAlign: TextAlign.center,
+                                    style: const TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w500,
+                                      fontFamily: 'Poppins',
+                                    ),
+                                  ),
+                                  onTap: () {
+                                    _selectDate(context);
+                                  },
+                                ),
+                              ],
+                            ),
+                            IconButton(
+                              icon: Image.asset(
+                                "assest/images/dropDown.png",
+                                height: 10,
+                                width: 10,
+                                color: Colors.grey,
+                              ),
+                              tooltip: 'Select date',
+                              onPressed: () {
+                                _selectDate(context);
+                              },
+                            ),
+                          ],
                         ),
                       ),
                     ),
-                    SizedBox(
-                      height: 23.h,
+                  ),
+                  const SizedBox(
+                    height: 12,
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
+                    child: Text(
+                      "Time:",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontFamily: 'Poppins',
+                        fontSize: 16,
+                      ),
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        InkWell(
-                          onTap: () async {
-                            await _dataController.postMood(noteController.text,
-                                widget.rating, date.microsecondsSinceEpoch);
-                            if (widget.rating > 2.4) {
-                              reminderSuccess(context);
-                            } else {
-                              reminderFail(context);
-                            }
-                          },
-                          child: Text(
-                            "Skip",
-                            style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Poppins',
-                              color: Colors.grey.shade800,
-                              fontSize: 15,
+                  ),
+                  const SizedBox(
+                    height: 3,
+                  ),
+                  InkWell(
+                    onTap: () {
+                      _selectTime(context);
+                    },
+                    child: Container(
+                      height: 53,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        color: AppColors.primaryColor.withOpacity(0.1),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Row(
+                              children: [
+                                IconButton(
+                                  icon: Image.asset(
+                                    "assest/images/clock.png",
+                                    height: 30,
+                                    width: 30,
+                                    color: Colors.grey,
+                                  ),
+                                  tooltip: 'Select Time',
+                                  onPressed: () {
+                                    _selectTime(context);
+                                  },
+                                ),
+                                InkWell(
+                                  child: Text(
+                                    _selectedTime,
+                                    textAlign: TextAlign.center,
+                                    style: const TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w500,
+                                      fontFamily: 'Poppins',
+                                    ),
+                                  ),
+                                  onTap: () {
+                                    _selectTime(context);
+                                  },
+                                ),
+                              ],
                             ),
+                            IconButton(
+                              icon: Image.asset(
+                                "assest/images/dropDown.png",
+                                height: 10,
+                                width: 10,
+                                color: Colors.grey,
+                              ),
+                              tooltip: 'Select Time',
+                              onPressed: () {
+                                _selectTime(context);
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 12,
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
+                    child: Text(
+                      "Explain your feeling of today:",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontFamily: 'Poppins',
+                        fontSize: 15,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 3,
+                  ),
+                  Container(
+                    height: 20.h,
+                    width: 100.w,
+                    decoration: BoxDecoration(
+                        color: AppColors.primaryColor.withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(12),
+                        border:
+                            Border.all(color: Colors.transparent, width: 1.4)),
+                    child: SingleChildScrollView(
+                      child: TextFormField(
+                        controller: noteController,
+                        textCapitalization: TextCapitalization.sentences,
+                        textInputAction: TextInputAction.none,
+                        maxLines: null,
+                        cursorColor: AppColors.primaryColor,
+                        style: const TextStyle(fontSize: 17),
+                        decoration: InputDecoration(
+                          contentPadding: const EdgeInsets.symmetric(
+                              horizontal: 12, vertical: 12),
+                          border: InputBorder.none,
+                          hintText: "How are you feeling today...",
+                          hintStyle: TextStyle(
+                              color: Colors.grey.shade700, fontSize: 17),
+                          prefixIconColor: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      InkWell(
+                        onTap: () async {
+                          await _dataController.postMood(
+                              noteController.text,
+                              _dataController.rating,
+                              date.microsecondsSinceEpoch);
+                          if (_dataController.rating > 2.4) {
+                            reminderSuccess(context);
+                          } else {
+                            reminderFail(context);
+                          }
+                        },
+                        child: Text(
+                          "Skip",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontFamily: 'Poppins',
+                            color: Colors.grey.shade800,
+                            fontSize: 15,
                           ),
                         ),
-                        SizedBox(
-                          width: 25.w,
-                        ),
-                        ZoomTapAnimation(
-                          onTap: () async {
-                            // if (noteForm.currentState!.validate()) {
-                            //
-                            // }
-                            await _dataController.postMood(noteController.text,
-                                widget.rating, date.microsecondsSinceEpoch);
-                            if (widget.rating > 2.4) {
-                              reminderSuccess(context);
-                            } else {
-                              reminderFail(context);
-                            }
-                          },
-                          onLongTap: () {},
-                          enableLongTapRepeatEvent: false,
-                          longTapRepeatDuration:
-                              const Duration(milliseconds: 100),
-                          begin: 1.0,
-                          end: 0.93,
-                          beginDuration: const Duration(milliseconds: 20),
-                          endDuration: const Duration(milliseconds: 120),
-                          beginCurve: Curves.decelerate,
-                          endCurve: Curves.fastOutSlowIn,
-                          child: Container(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 20),
-                              width: 45.w,
-                              height: 52,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(14),
-                                image: const DecorationImage(
-                                  image: AssetImage(
-                                      "assest/images/btnRectangle.png"),
-                                  fit: BoxFit.cover,
+                      ),
+                      SizedBox(
+                        width: 25.w,
+                      ),
+                      ZoomTapAnimation(
+                        onTap: () async {
+                          // if (noteForm.currentState!.validate()) {
+                          //
+                          // }
+                          await _dataController.postMood(
+                              noteController.text,
+                              _dataController.rating,
+                              date.microsecondsSinceEpoch);
+                          if (_dataController.rating > 2.4) {
+                            reminderSuccess(context);
+                          } else {
+                            reminderFail(context);
+                          }
+                        },
+                        onLongTap: () {},
+                        enableLongTapRepeatEvent: false,
+                        longTapRepeatDuration:
+                            const Duration(milliseconds: 100),
+                        begin: 1.0,
+                        end: 0.93,
+                        beginDuration: const Duration(milliseconds: 20),
+                        endDuration: const Duration(milliseconds: 120),
+                        beginCurve: Curves.decelerate,
+                        endCurve: Curves.fastOutSlowIn,
+                        child: Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            width: 45.w,
+                            height: 52,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(14),
+                              image: const DecorationImage(
+                                image: AssetImage(
+                                    "assest/images/btnRectangle.png"),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            child: const Center(
+                              child: Padding(
+                                padding: EdgeInsets.only(left: 10, right: 10),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      "Submit",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w500,
+                                        fontFamily: 'Poppins',
+                                      ),
+                                    ),
+                                    Icon(
+                                      Icons.arrow_forward,
+                                      color: Colors.white,
+                                    )
+                                  ],
                                 ),
                               ),
-                              child: const Center(
-                                child: Padding(
-                                  padding: EdgeInsets.only(left: 10, right: 10),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        "Submit",
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.w500,
-                                          fontFamily: 'Poppins',
-                                        ),
-                                      ),
-                                      Icon(
-                                        Icons.arrow_forward,
-                                        color: Colors.white,
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              )),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+                            )),
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
           ),

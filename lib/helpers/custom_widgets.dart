@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:smiletracker/helpers/page_navigation.dart';
+import 'package:smiletracker/helpers/theme_service.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 
 class CustomButton extends StatefulWidget {
@@ -43,7 +44,7 @@ class _CustomButtonState extends State<CustomButton> {
             width: widget.width,
             height: widget.height,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(16),
+              borderRadius: BorderRadius.circular(40),
               image: DecorationImage(
                 image: AssetImage(
                   "assest/images/btnRectangle.png",
@@ -68,7 +69,6 @@ class _CustomButtonState extends State<CustomButton> {
                 child: Text(
                   widget.buttonText.toString(),
                   style: TextStyle(
-                    color: Colors.white,
                     fontSize: 18,
                     fontWeight: FontWeight.w500,
                     fontFamily: 'Poppins',
@@ -119,15 +119,17 @@ class _CustomAppBarState extends State<CustomAppBar> {
             beginCurve: Curves.decelerate,
             endCurve: Curves.fastOutSlowIn,
             child: Container(
-                height: 31,
-                width: 31,
+                height: 25,
+                width: 25,
                 // decoration: BoxDecoration(
                 //     color: AppColors.primaryColor,
                 //     borderRadius: BorderRadius.circular(10)),
                 child: Image.asset(
-                  "assest/images/backSquare.png",
-                  height: 31,
-                  width: 31,
+                  ThemeService().isDarkMode
+                      ? "assest/images/backSquareL.png"
+                      : "assest/images/backSquare.png",
+                  height: 14,
+                  width: 7,
                 )),
           ),
           Text(
@@ -135,7 +137,6 @@ class _CustomAppBarState extends State<CustomAppBar> {
             style: TextStyle(
               fontWeight: FontWeight.w700,
               fontFamily: 'Poppins',
-              color: Colors.black,
               fontSize: 22,
             ),
           ),

@@ -1,13 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:sizer/sizer.dart';
+import 'package:smiletracker/helpers/data_helper.dart';
 import 'package:smiletracker/helpers/globalvariables.dart';
-import 'package:smiletracker/helpers/page_navigation.dart';
-import 'package:smiletracker/views/home/mood_screen.dart';
-import 'package:smiletracker/views/home/reminder_screen.dart';
-import 'package:smiletracker/views/profile/profile_screen.dart';
 
 class EmojiRatingApp extends StatefulWidget {
   const EmojiRatingApp({super.key});
@@ -17,40 +15,8 @@ class EmojiRatingApp extends StatefulWidget {
 }
 
 class _EmojiRatingAppState extends State<EmojiRatingApp> {
-  double _rating = 2.5;
+  final DataHelper _dataController = Get.find<DataHelper>();
   String _selectedDate = '';
-
-  Future<void> _selectDate(BuildContext context) async {
-    final DateTime? d = await showDatePicker(
-      builder: (context, child) {
-        return Theme(
-          data: Theme.of(context).copyWith(
-            dialogBackgroundColor: Colors.white,
-            colorScheme: const ColorScheme.light(
-              primary: AppColors.primaryColor, // <-- SEE HERE
-              onPrimary: Colors.white, // <-- SEE HERE
-              onSurface: Colors.black, // <-- SEE HERE
-            ),
-            textButtonTheme: TextButtonThemeData(
-              style: TextButton.styleFrom(
-                primary: AppColors.primaryColor, // button text color
-              ),
-            ),
-          ),
-          child: child!,
-        );
-      },
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime.now(),
-      lastDate: DateTime(5090),
-    );
-    if (d != null) {
-      setState(() {
-        _selectedDate = DateFormat('EEEE , d MMMM,y').format(d);
-      });
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,178 +24,121 @@ class _EmojiRatingAppState extends State<EmojiRatingApp> {
       onPanUpdate: (details) {
         setState(() {
           double delta = details.delta.dy;
-          _rating = (_rating + delta / 20.0).clamp(0.0, 5.0);
+          _dataController.rating =
+              (_dataController.rating + delta / 20.0).clamp(0.0, 5.0);
           // _rating = double.parse(_rating.toStringAsFixed(3));
           // Adjust rating based on delta
         });
       },
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        body: Container(
-          height: 100.h,
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage("assest/images/Background.png"),
-              fit: BoxFit.cover,
-            ),
-          ),
-          child: Center(
-            child: Padding(
-              padding: const EdgeInsets.only(
-                  left: 18.0, right: 18.0, top: 8.0, bottom: 8.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    height: 5.h,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        _selectedDate.isEmpty
-                            ? DateFormat('EEEE, d MMMM, y')
-                                .format(DateTime.now())
-                                .toString()
-                            : _selectedDate,
-                        style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontFamily: 'Poppins',
-                          color: Colors.grey.shade700,
-                          fontSize: 15,
-                        ),
+        body: Center(
+          child: Padding(
+            padding: const EdgeInsets.only(
+                left: 18.0, right: 18.0, top: 18.0, bottom: 8.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Hey, " + userData.displayName,
+                      style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontFamily: 'Poppins',
+                        fontSize: 15,
                       ),
-                      Row(
-                        children: [
-                          InkWell(
-                              onTap: () {
-                                PageTransition.pageNavigation(
-                                    page: MoodsScreen(
-                                  date: DateTime.now(),
-                                ));
-                              },
-                              child: Image.asset(
-                                "assest/images/calenderIcon.png",
-                                height: 22,
-                                width: 22,
-                              )),
-                          SizedBox(
-                            width: 1.5.w,
-                          ),
-                          InkWell(
-                            onTap: () {
-                              PageTransition.pageNavigation(
-                                  page: const ProfileScreen());
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.only(left: 8.0),
-                              child: userData.imageUrl == ""
-                                  ? Image.asset(
-                                      "assest/images/profileImage.png",
-                                      height: 32,
-                                      width: 32,
-                                    )
-                                  : Image.network(
-                                      userData.imageUrl,
-                                      height: 32,
-                                      width: 32,
-                                    ),
-                            ),
-                          ),
-                        ],
-                      )
-                    ],
+                    ),
+                    Text(
+                      _selectedDate.isEmpty
+                          ? DateFormat('EEEE, d MMM,y')
+                              .format(DateTime.now())
+                              .toString()
+                          : _selectedDate,
+                      style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontFamily: 'Poppins',
+                        color: Colors.grey.shade700,
+                        fontSize: 15,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 14,
+                ),
+                const Text(
+                  "How Are you Feeling today?",
+                  style: TextStyle(
+                    fontSize: 26,
+                    fontWeight: FontWeight.w500,
+                    fontFamily: 'Poppins',
                   ),
-                  const SizedBox(
-                    height: 14,
+                ),
+                SizedBox(
+                  height: 8.h,
+                ),
+                Center(
+                  child: CustomPaint(
+                    painter: EmojiPainter(_dataController.rating),
+                    size: const Size(300, 300),
                   ),
-                  const Text(
-                    "How Are you Feeling today?",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 26,
-                      fontWeight: FontWeight.w500,
+                ),
+                SizedBox(
+                  height: 5.h,
+                ),
+                Center(
+                  child: Text(
+                    _dataController.rating.toStringAsFixed(2) == "0.00"
+                        ? "Sad"
+                        : _dataController.rating.toStringAsFixed(2) == "5.00"
+                            ? "Happy"
+                            : "Normal",
+                    style: const TextStyle(
+                      fontSize: 27,
+                      fontWeight: FontWeight.w400,
                       fontFamily: 'Poppins',
                     ),
                   ),
-                  SizedBox(
-                    height: 8.h,
-                  ),
-                  Center(
-                    child: CustomPaint(
-                      painter: EmojiPainter(_rating),
-                      size: const Size(300, 300),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 6.h,
-                  ),
-                  Center(
-                    child: Text(
-                      _rating.toStringAsFixed(2) == "0.00"
-                          ? "Sad"
-                          : _rating.toStringAsFixed(2) == "5.00"
-                              ? "Happy"
-                              : "Normal",
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 27,
-                        fontWeight: FontWeight.w400,
-                        fontFamily: 'Poppins',
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 6.h,
-                  ),
-                  Stack(
-                    children: [
-                      Center(
-                        child: RatingBar.builder(
-                          initialRating: _rating,
-                          minRating: 0,
-                          direction: Axis.horizontal,
-                          allowHalfRating: true,
-                          itemCount: 5,
-                          itemPadding:
-                              const EdgeInsets.symmetric(horizontal: 4.0),
-                          itemBuilder: (context, _) => const Icon(
-                            Icons.star,
-                            color: Colors.amber,
-                          ),
-                          onRatingUpdate: (rating) {
-                            if (kDebugMode) {
-                              print(rating);
-                            }
-                          },
+                ),
+                SizedBox(
+                  height: 5.h,
+                ),
+                Stack(
+                  children: [
+                    Center(
+                      child: RatingBar.builder(
+                        initialRating: _dataController.rating,
+                        minRating: 0,
+                        direction: Axis.horizontal,
+                        allowHalfRating: true,
+                        itemCount: 5,
+                        itemPadding:
+                            const EdgeInsets.symmetric(horizontal: 4.0),
+                        itemBuilder: (context, _) => const Icon(
+                          Icons.star,
+                          color: Colors.amber,
                         ),
-                      ),
-                      Container(
-                        width: 100.w,
-                        height: 40,
-                        color: Colors.transparent,
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  Center(
-                    child: InkWell(
-                        onTap: () {
-                          PageTransition.pageNavigation(
-                              page: ReminderScreen(
-                            rating: _rating,
-                          ));
+                        onRatingUpdate: (rating) {
+                          if (kDebugMode) {
+                            print(rating);
+                          }
                         },
-                        child: Container(
-                            height: 10.h,
-                            width: 20.w,
-                            child: Image.asset("assest/images/moveAhead.png"))),
-                  ),
-                ],
-              ),
+                      ),
+                    ),
+                    Container(
+                      width: 100.w,
+                      height: 40,
+                      color: Colors.transparent,
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+              ],
             ),
           ),
         ),

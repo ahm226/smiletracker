@@ -1,20 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:delayed_display/delayed_display.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_event_calendar/flutter_event_calendar.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:smiletracker/helpers/custom_widgets.dart';
 import 'package:smiletracker/helpers/globalvariables.dart';
 import 'package:smiletracker/helpers/page_navigation.dart';
-import 'package:smiletracker/helpers/time_date_functions.dart';
 import 'package:smiletracker/models/user_model.dart';
 import 'package:smiletracker/views/auth/login_screen.dart';
 import 'package:smiletracker/views/home/smily_face.dart';
+import 'package:smiletracker/views/navbar/bottom_nav_bar.dart';
 
 class DataHelper extends GetxController {
-  RxList<Event> moods = <Event>[].obs;
+  RxList<Map> moodData = <Map>[].obs;
+  double rating = 2.5;
   bool isEmailVerified = false;
   final loggedInGlobal = ValueNotifier(false);
 
@@ -68,7 +66,10 @@ class DataHelper extends GetxController {
           Get.back();
           // setState(() {});
           // setState(() {});
-          PageTransition.pageProperNavigation(page: const EmojiRatingApp());
+          PageTransition.pageProperNavigation(
+              page: BottomNavBar(
+            index: 0,
+          ));
         });
       } else {
         Get.back();
@@ -148,6 +149,7 @@ class DataHelper extends GetxController {
   }
 
   addMoods() async {
+    moodData.clear();
     QuerySnapshot querySnapshot = await FirebaseFirestore.instance
         .collection("users")
         .doc(userData.userID)
@@ -155,74 +157,10 @@ class DataHelper extends GetxController {
         .get();
     for (int i = 0; i < querySnapshot.docs.length; i++) {
       var a = querySnapshot.docs[i].data() as Map;
-      print(TimeDateFunctions.dateInDigits(a['date']));
-      DateTime date = TimeDateFunctions.dateInDigits(a['date']);
-      moods.add(
-        Event(
-          child: DelayedDisplay(
-            delay: const Duration(milliseconds: 150),
-            slidingBeginOffset: const Offset(0, 1),
-            child: Container(
-              margin: const EdgeInsets.symmetric(vertical: 4),
-              padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 10),
-              width: double.infinity,
-              decoration: BoxDecoration(
-                  color: AppColors.primaryColor.withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(16)),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          a['rating'] > 2.4 ? "Feeling Happy" : "Feeling Sad",
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 15,
-                          ),
-                        ),
-                        Image.asset(a['rating'] > 2.4
-                            ? "assest/images/happyIcon.png"
-                            : "assest/images/happyIcon.png"),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Text(a["note"]),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Text(
-                          DateFormat('EEEE , d MMMM').format(date).toString(),
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.grey,
-                            fontSize: 12,
-                          ),
-                        )
-                      ],
-                    )
-                  ],
-                ),
-              ),
-            ),
-          ),
-          dateTime: CalendarDateTime(
-            year: date.year,
-            month: date.month,
-            day: date.day,
-            calendarType: CalendarType.GREGORIAN,
-          ),
-        ),
-      );
+      moodData.add(a);
+      print("aaaa");
+      print(moodData[0]);
+      print(moodData.length);
     }
   }
 

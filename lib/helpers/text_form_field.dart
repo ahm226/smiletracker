@@ -3,7 +3,8 @@ import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:smiletracker/helpers/globalvariables.dart';
 
 class CustomTextField extends StatefulWidget {
-  final String hintText;
+  final bool isHint;
+  final String? hintText;
   final Widget? suffixIcon;
   final Widget? prefixIcon;
   final bool? isObscure;
@@ -16,7 +17,8 @@ class CustomTextField extends StatefulWidget {
 
   const CustomTextField(
       {Key? key,
-      required this.hintText,
+      this.isHint = true,
+      this.hintText,
       this.suffixIcon,
       this.isObscure,
       this.controller,
@@ -56,35 +58,42 @@ class _CustomTextFieldState extends State<CustomTextField> {
           fontFamily: 'Poppins',
         ),
         border: InputBorder.none,
+        disabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(40.0),
+          borderSide: BorderSide(
+            color: Colors.transparent, // Make the border transparent
+            width: 0, // Set the width to 0 to make it disappear
+          ),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(40.0),
+          borderSide: BorderSide(
+            color: Colors.transparent, // Make the border transparent
+            width: 0, // Set the width to 0 to make it disappear
+          ),
+        ),
         errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(14.0),
+          borderRadius: BorderRadius.circular(40.0),
           borderSide: const BorderSide(
             color: Colors.transparent, // Make the border transparent
             width: 0, // Set the width to 0 to make it disappear
           ),
         ),
         focusedErrorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(14.0),
+          borderRadius: BorderRadius.circular(40.0),
           borderSide: const BorderSide(
             color: Colors.transparent, // Make the border transparent
             width: 0, // Set the width to 0 to make it disappear
           ),
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(14.0),
+          borderRadius: BorderRadius.circular(40.0),
           borderSide: BorderSide(
             color: Colors.transparent, // Make the border transparent
             width: 0, // Set the width to 0 to make it disappear
           ),
         ),
-        hintText: widget.hintText,
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(14.0),
-          borderSide: BorderSide(
-            color: Colors.transparent, // Make the border transparent
-            width: 0, // Set the width to 0 to make it disappear
-          ),
-        ),
+        hintText: widget.isHint ? widget.hintText : null,
         suffixIcon: widget.suffixIcon,
         suffixIconColor: Colors.white.withOpacity(0.4),
         prefixIcon: widget.prefixIcon,

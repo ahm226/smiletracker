@@ -9,6 +9,7 @@ import 'package:smiletracker/helpers/custom_validator.dart';
 import 'package:smiletracker/helpers/data_helper.dart';
 import 'package:smiletracker/helpers/globalvariables.dart';
 import 'package:smiletracker/helpers/page_navigation.dart';
+import 'package:smiletracker/helpers/theme_service.dart';
 import 'package:smiletracker/models/user_model.dart';
 import 'package:smiletracker/views/auth/login_screen.dart';
 import 'package:smiletracker/views/home/smily_face.dart';
@@ -40,12 +41,6 @@ class _LoginScreenState extends State<SignupScreen> {
         resizeToAvoidBottomInset: false,
         body: Container(
           height: 100.h,
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage("assest/images/Background.png"),
-              fit: BoxFit.cover,
-            ),
-          ),
           child: SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.only(left: 18.0, right: 18.0),
@@ -55,26 +50,16 @@ class _LoginScreenState extends State<SignupScreen> {
                   SizedBox(
                     height: 12.h,
                   ),
-                  const Text(
+                  Text(
                     "Let's Start",
-                    style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontFamily: 'Poppins',
-                      color: AppColors.primaryColor,
-                      fontSize: 42,
-                    ),
+                    style: headingLarge,
                   ),
                   SizedBox(
                     height: 2.h,
                   ),
                   Text(
                     "Create a new account",
-                    style: TextStyle(
-                      fontWeight: FontWeight.w400,
-                      fontFamily: 'Poppins',
-                      color: Colors.grey.shade800,
-                      fontSize: 17,
-                    ),
+                    style: headingMedium,
                   ),
                   SizedBox(
                     height: 7.h,
@@ -213,7 +198,11 @@ class _LoginScreenState extends State<SignupScreen> {
                         width: 31.w,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(16),
-                          border: Border.all(color: Colors.black12, width: 1.4),
+                          border: Border.all(
+                              color: ThemeService().isDarkMode
+                                  ? Colors.white54
+                                  : Colors.black12,
+                              width: 1.4),
                         ),
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
@@ -227,7 +216,6 @@ class _LoginScreenState extends State<SignupScreen> {
                               const Text(
                                 "Facebook",
                                 style: TextStyle(
-                                  color: Colors.black,
                                   fontSize: 13,
                                   fontWeight: FontWeight.w500,
                                   fontFamily: 'Poppins',
@@ -284,8 +272,11 @@ class _LoginScreenState extends State<SignupScreen> {
                           width: 31.w,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(16),
-                            border:
-                                Border.all(color: Colors.black12, width: 1.4),
+                            border: Border.all(
+                                color: ThemeService().isDarkMode
+                                    ? Colors.white54
+                                    : Colors.black12,
+                                width: 1.4),
                           ),
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
@@ -299,7 +290,6 @@ class _LoginScreenState extends State<SignupScreen> {
                                 const Text(
                                   "Google",
                                   style: TextStyle(
-                                    color: Colors.black,
                                     fontSize: 13,
                                     fontWeight: FontWeight.w500,
                                     fontFamily: 'Poppins',
@@ -339,9 +329,9 @@ class _LoginScreenState extends State<SignupScreen> {
                                 page: const LoginScreen());
                           },
                           child: const Text(
-                            "Sign In",
+                            "Log In",
                             style: TextStyle(
-                              color: AppColors.primaryColor,
+                              decoration: TextDecoration.underline,
                               fontSize: 15,
                               fontWeight: FontWeight.w600,
                               fontFamily: 'Poppins',

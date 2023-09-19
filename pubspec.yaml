@@ -51,12 +51,16 @@ dependencies:
   google_sign_in: ^6.1.4
   provider:
   connectivity_plus: ^3.0.6
+  get_storage: ^2.1.1
+  better_page_turn: ^0.0.6
   firebase_core: ^2.10.0
   firebase_auth: ^4.4.2
   firebase_storage: ^11.2.0
   cloud_firestore: ^4.8.0
   awesome_dialog: ^3.0.2
   shared_preferences:
+  page_flip: ^0.1.0
+  flutter_timeline_calendar: ^1.0.9
 
 dev_dependencies:
   flutter_test:
@@ -105,6 +109,10 @@ flutter:
       fonts:
         - asset: assest/font/Poppins-Regular.ttf
         - asset: assest/font/Poppins-Bold.ttf
+    - family: GloriaHallelujah
+      fonts:
+        - asset: assest/font/GloriaHallelujah-Regular.ttf
+
   #   - family: Trajan Pro
   #     fonts:
   #       - asset: fonts/TrajanPro.ttf
