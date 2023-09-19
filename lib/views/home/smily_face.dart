@@ -1,8 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:sizer/sizer.dart';
+import 'package:smiletracker/helpers/data_helper.dart';
 import 'package:smiletracker/helpers/globalvariables.dart';
 
 class EmojiRatingApp extends StatefulWidget {
@@ -13,7 +15,7 @@ class EmojiRatingApp extends StatefulWidget {
 }
 
 class _EmojiRatingAppState extends State<EmojiRatingApp> {
-  double _rating = 2.5;
+  final DataHelper _dataController = Get.find<DataHelper>();
   String _selectedDate = '';
 
   @override
@@ -22,7 +24,8 @@ class _EmojiRatingAppState extends State<EmojiRatingApp> {
       onPanUpdate: (details) {
         setState(() {
           double delta = details.delta.dy;
-          _rating = (_rating + delta / 20.0).clamp(0.0, 5.0);
+          _dataController.rating =
+              (_dataController.rating + delta / 20.0).clamp(0.0, 5.0);
           // _rating = double.parse(_rating.toStringAsFixed(3));
           // Adjust rating based on delta
         });
@@ -79,7 +82,7 @@ class _EmojiRatingAppState extends State<EmojiRatingApp> {
                 ),
                 Center(
                   child: CustomPaint(
-                    painter: EmojiPainter(_rating),
+                    painter: EmojiPainter(_dataController.rating),
                     size: const Size(300, 300),
                   ),
                 ),
@@ -88,9 +91,9 @@ class _EmojiRatingAppState extends State<EmojiRatingApp> {
                 ),
                 Center(
                   child: Text(
-                    _rating.toStringAsFixed(2) == "0.00"
+                    _dataController.rating.toStringAsFixed(2) == "0.00"
                         ? "Sad"
-                        : _rating.toStringAsFixed(2) == "5.00"
+                        : _dataController.rating.toStringAsFixed(2) == "5.00"
                             ? "Happy"
                             : "Normal",
                     style: const TextStyle(
@@ -107,7 +110,7 @@ class _EmojiRatingAppState extends State<EmojiRatingApp> {
                   children: [
                     Center(
                       child: RatingBar.builder(
-                        initialRating: _rating,
+                        initialRating: _dataController.rating,
                         minRating: 0,
                         direction: Axis.horizontal,
                         allowHalfRating: true,

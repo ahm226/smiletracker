@@ -59,6 +59,8 @@ dependencies:
   cloud_firestore: ^4.8.0
   awesome_dialog: ^3.0.2
   shared_preferences:
+  page_flip: ^0.1.0
+  flutter_timeline_calendar: ^1.0.9
 
 dev_dependencies:
   flutter_test:
@@ -107,6 +109,10 @@ flutter:
       fonts:
         - asset: assest/font/Poppins-Regular.ttf
         - asset: assest/font/Poppins-Bold.ttf
+    - family: GloriaHallelujah
+      fonts:
+        - asset: assest/font/GloriaHallelujah-Regular.ttf
+
   #   - family: Trajan Pro
   #     fonts:
   #       - asset: fonts/TrajanPro.ttf

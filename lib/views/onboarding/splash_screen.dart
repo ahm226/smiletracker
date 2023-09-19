@@ -38,7 +38,10 @@ class _SplashScreenState extends State<SplashScreen> {
         });
       });
       Future.delayed(const Duration(milliseconds: 5000), () {
-        PageTransition.pageProperNavigation(page: BottomNavBar());
+        PageTransition.pageProperNavigation(
+            page: BottomNavBar(
+          index: 0,
+        ));
       });
     } else {
       Future.delayed(const Duration(milliseconds: 5000), () {

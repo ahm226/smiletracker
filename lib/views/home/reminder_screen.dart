@@ -6,13 +6,13 @@ import 'package:smiletracker/helpers/custom_widgets.dart';
 import 'package:smiletracker/helpers/data_helper.dart';
 import 'package:smiletracker/helpers/globalvariables.dart';
 import 'package:smiletracker/helpers/page_navigation.dart';
-import 'package:smiletracker/views/home/mood_screen.dart';
+import 'package:smiletracker/views/navbar/bottom_nav_bar.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 
 class ReminderScreen extends StatefulWidget {
-  final rating;
-
-  const ReminderScreen({Key? key, required this.rating}) : super(key: key);
+  const ReminderScreen({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<ReminderScreen> createState() => _ReminderScreenState();
@@ -137,6 +137,7 @@ class _ReminderScreenState extends State<ReminderScreen> {
                                   'It is very good to see you very happy!',
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
+                                    color: Colors.black,
                                     height: 1.4,
                                     fontWeight: FontWeight.w600,
                                     fontFamily: 'Poppins',
@@ -151,12 +152,16 @@ class _ReminderScreenState extends State<ReminderScreen> {
                                 buttonText: 'Done',
                                 onTap: () {
                                   Navigator.pop(context);
-                                  PageTransition.pageBackNavigation(
-                                      page: MoodsScreen(
-                                    note: noteController.text,
-                                    rating: widget.rating,
-                                    date: date,
+                                  PageTransition.pageProperNavigation(
+                                      page: BottomNavBar(
+                                    index: 1,
                                   ));
+                                  // PageTransition.pageBackNavigation(
+                                  //     page: MoodsScreen(
+                                  //   note: noteController.text,
+                                  //   rating: _dataController.rating,
+                                  //   date: date,
+                                  // ));
                                 },
                                 width: 170,
                               )
@@ -215,6 +220,7 @@ class _ReminderScreenState extends State<ReminderScreen> {
                                   'It is very sad to see you unhappy!',
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
+                                    color: Colors.black,
                                     height: 1.4,
                                     fontWeight: FontWeight.w600,
                                     fontFamily: 'Poppins',
@@ -229,12 +235,16 @@ class _ReminderScreenState extends State<ReminderScreen> {
                                 buttonText: 'Done',
                                 onTap: () {
                                   Navigator.pop(context);
-                                  PageTransition.pageBackNavigation(
-                                      page: MoodsScreen(
-                                    note: noteController.text,
-                                    rating: widget.rating,
-                                    date: date,
+                                  PageTransition.pageProperNavigation(
+                                      page: BottomNavBar(
+                                    index: 1,
                                   ));
+                                  // PageTransition.pageBackNavigation(
+                                  //     page: MoodsScreen(
+                                  //   note: noteController.text,
+                                  //   rating: _dataController.rating,
+                                  //   date: date,
+                                  // ));
                                 },
                                 width: 170,
                               )
@@ -247,6 +257,14 @@ class _ReminderScreenState extends State<ReminderScreen> {
             );
           });
         });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    print("_dataController.rating");
+    print(_dataController.rating);
   }
 
   @override
@@ -485,9 +503,11 @@ class _ReminderScreenState extends State<ReminderScreen> {
                     children: [
                       InkWell(
                         onTap: () async {
-                          await _dataController.postMood(noteController.text,
-                              widget.rating, date.microsecondsSinceEpoch);
-                          if (widget.rating > 2.4) {
+                          await _dataController.postMood(
+                              noteController.text,
+                              _dataController.rating,
+                              date.microsecondsSinceEpoch);
+                          if (_dataController.rating > 2.4) {
                             reminderSuccess(context);
                           } else {
                             reminderFail(context);
@@ -511,9 +531,11 @@ class _ReminderScreenState extends State<ReminderScreen> {
                           // if (noteForm.currentState!.validate()) {
                           //
                           // }
-                          await _dataController.postMood(noteController.text,
-                              widget.rating, date.microsecondsSinceEpoch);
-                          if (widget.rating > 2.4) {
+                          await _dataController.postMood(
+                              noteController.text,
+                              _dataController.rating,
+                              date.microsecondsSinceEpoch);
+                          if (_dataController.rating > 2.4) {
                             reminderSuccess(context);
                           } else {
                             reminderFail(context);
