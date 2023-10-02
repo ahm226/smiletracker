@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:sizer/sizer.dart';
@@ -481,6 +482,9 @@ class _ReminderScreenState extends State<ReminderScreen> {
                         textCapitalization: TextCapitalization.sentences,
                         textInputAction: TextInputAction.none,
                         maxLines: null,
+                        inputFormatters: [
+                          LengthLimitingTextInputFormatter(100),
+                        ],
                         cursorColor: AppColors.primaryColor,
                         style: const TextStyle(fontSize: 17),
                         decoration: InputDecoration(
@@ -506,7 +510,8 @@ class _ReminderScreenState extends State<ReminderScreen> {
                           await _dataController.postMood(
                               noteController.text,
                               _dataController.rating,
-                              date.microsecondsSinceEpoch);
+                              date.microsecondsSinceEpoch,
+                              date);
                           if (_dataController.rating > 2.4) {
                             reminderSuccess(context);
                           } else {
@@ -534,7 +539,8 @@ class _ReminderScreenState extends State<ReminderScreen> {
                           await _dataController.postMood(
                               noteController.text,
                               _dataController.rating,
-                              date.microsecondsSinceEpoch);
+                              date.microsecondsSinceEpoch,
+                              date);
                           if (_dataController.rating > 2.4) {
                             reminderSuccess(context);
                           } else {

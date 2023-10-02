@@ -158,13 +158,10 @@ class DataHelper extends GetxController {
     for (int i = 0; i < querySnapshot.docs.length; i++) {
       var a = querySnapshot.docs[i].data() as Map;
       moodData.add(a);
-      print("aaaa");
-      print(moodData[0]);
-      print(moodData.length);
     }
   }
 
-  postMood(note, rating, date) async {
+  postMood(note, rating, date, dateTime) async {
     await FirebaseFirestore.instance
         .collection("users")
         .doc(userData.userID)
@@ -174,6 +171,7 @@ class DataHelper extends GetxController {
       "note": note,
       "rating": rating,
       "date": date,
+      "timestamp": Timestamp.fromDate(dateTime),
     });
   }
 }

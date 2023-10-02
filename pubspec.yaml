@@ -61,6 +61,7 @@ dependencies:
   shared_preferences:
   page_flip: ^0.1.0
   flutter_timeline_calendar: ^1.0.9
+  fl_chart: ^0.63.0
 
 dev_dependencies:
   flutter_test:
