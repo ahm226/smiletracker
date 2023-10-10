@@ -17,6 +17,7 @@ class DiaryScreen extends StatefulWidget {
 class _DiaryScreenState extends State<DiaryScreen> {
   final DataHelper _dataController = Get.find<DataHelper>();
   bool isLoading = false;
+
   getData() async {
     setState(() {
       isLoading = true;
@@ -70,7 +71,12 @@ class _DiaryScreenState extends State<DiaryScreen> {
               ),
               InkWell(
                 onTap: () {
-                  PageTransition.pageNavigation(page: BookPageFlip());
+                  _dataController.moodData.isNotEmpty
+                      ? PageTransition.pageNavigation(page: BookPageFlip())
+                      : ScaffoldMessenger.of(context)
+                          .showSnackBar(const SnackBar(
+                          content: Text("No mood added yet"),
+                        ));
                 },
                 child: Stack(
                   alignment: Alignment.center,

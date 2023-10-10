@@ -200,7 +200,6 @@ import 'package:smiletracker/views/home/reminder_screen.dart';
 import 'package:smiletracker/views/home/smily_face.dart';
 import 'package:smiletracker/views/profile/profile_screen.dart';
 
-/////////////
 class BottomNavBar extends StatefulWidget {
   const BottomNavBar({Key? key, required this.index}) : super(key: key);
   final int index;
@@ -292,7 +291,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
             BottomNavigationBarItem(
               icon: Container(
                 padding: EdgeInsets.all(13),
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                     gradient: LinearGradient(
                       begin: Alignment.topRight,
                       end: Alignment.bottomLeft,

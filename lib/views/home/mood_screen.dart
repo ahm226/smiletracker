@@ -13,6 +13,7 @@ import 'package:intl/intl.dart';
 import 'package:sizer/sizer.dart';
 import 'package:smiletracker/helpers/data_helper.dart';
 import 'package:smiletracker/helpers/globalvariables.dart';
+import 'package:smiletracker/helpers/theme_service.dart';
 import 'package:smiletracker/helpers/time_date_functions.dart';
 
 class MoodsScreen extends StatefulWidget {
@@ -125,9 +126,11 @@ class _MoodsScreenState extends State<MoodsScreen> {
                         calendarLanguage: "en",
                         calendarOptions: CalendarOptions(
                           viewType: ViewType.DAILY,
-                          toggleViewType: true,
+                          toggleViewType: false,
                           headerMonthElevation: 10,
-                          headerMonthBackColor: Colors.transparent,
+                          headerMonthBackColor: ThemeService().isDarkMode
+                              ? Color(0xff292929)
+                              : Colors.transparent,
                         ),
                         dayOptions: DayOptions(
                             compactMode: true,
@@ -144,8 +147,14 @@ class _MoodsScreenState extends State<MoodsScreen> {
                             selectedDateTime = datetime;
                             isLoading = true;
                           });
-                          moodGraph = await fetchWeeklyAnalyticsData(
-                              datetime.toDateTime());
+                          if (isSameDate(
+                              DateTime.now(), datetime.toDateTime())) {
+                            moodGraph =
+                                await fetchWeeklyAnalyticsData(DateTime.now());
+                          } else {
+                            moodGraph = await fetchWeeklyAnalyticsData(
+                                datetime.toDateTime());
+                          }
                           setState(() {
                             isLoading = false;
                           });
@@ -159,7 +168,9 @@ class _MoodsScreenState extends State<MoodsScreen> {
                           width: 90.w,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
-                            color: Color(0xffF2F2F2),
+                            color: ThemeService().isDarkMode
+                                ? Color(0xff292929)
+                                : Color(0xffF2F2F2),
                           ),
                         ),
                         for (int i = 6; i >= 0; i--)
@@ -351,6 +362,15 @@ class _MoodsScreenState extends State<MoodsScreen> {
               ));
   }
 
+  bool isSameDate(DateTime date1, DateTime date2) {
+    // Create new DateTime objects with time portion set to midnight
+    DateTime date1WithoutTime = DateTime(date1.year, date1.month, date1.day);
+    DateTime date2WithoutTime = DateTime(date2.year, date2.month, date2.day);
+
+    // Compare the date portion
+    return date1WithoutTime.isAtSameMomentAs(date2WithoutTime);
+  }
+
   static Future<List<Map>> fetchWeeklyAnalyticsData(dateTime) async {
     final FirebaseFirestore firestore = FirebaseFirestore.instance;
     final CollectionReference moodsCollection = firestore
@@ -368,9 +388,6 @@ class _MoodsScreenState extends State<MoodsScreen> {
     // Convert DateTime to Timestamp
     final Timestamp startTimestamp = Timestamp.fromDate(lastWeekStart);
     final Timestamp endTimestamp = Timestamp.fromDate(lastWeekEnd);
-    print("xwsxs");
-    print(startTimestamp);
-    print(endTimestamp);
 
     // Query the analytics data within the last week's date range for the specific product
     final QuerySnapshot snapshot = await moodsCollection
@@ -392,8 +409,6 @@ class _MoodsScreenState extends State<MoodsScreen> {
       }
     }
 
-    print("moodsMap");
-    print(moodsMap);
     // Create a list to store the final result
     List<Map<dynamic, dynamic>> moods = [];
 

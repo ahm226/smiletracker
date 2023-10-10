@@ -318,6 +318,12 @@ class _EditProfileState extends State<EditProfile> {
                                 Get.defaultDialog(
                                     barrierDismissible: false,
                                     title: "Mood Meter",
+                                    titleStyle: const TextStyle(
+                                      color: AppColors.primaryColor,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w500,
+                                      fontFamily: 'Poppins',
+                                    ),
                                     middleText: "",
                                     content: const Column(
                                       children: [
@@ -358,6 +364,12 @@ class _EditProfileState extends State<EditProfile> {
     Get.defaultDialog(
         barrierDismissible: false,
         title: "Mood Meter",
+        titleStyle: const TextStyle(
+          color: AppColors.primaryColor,
+          fontSize: 18,
+          fontWeight: FontWeight.w500,
+          fontFamily: 'Poppins',
+        ),
         middleText: "",
         content: const Column(
           children: [
